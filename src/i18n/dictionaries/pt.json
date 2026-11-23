@@ -1,0 +1,579 @@
+{
+  "meta": {
+    "title": "Rafael Ferrés — Head of AI · IA Generativa & LLMs",
+    "description": "Rafael Ferrés, Head of Artificial Intelligence em São Paulo. Lidero estratégia e engenharia de IA e levo IA Generativa do protótipo à produção."
+  },
+  "nav": {
+    "skip": "Pular para o conteúdo",
+    "home": "Início",
+    "about": "Sobre",
+    "experience": "Carreira",
+    "highlights": "Destaques",
+    "education": "Formação",
+    "contact": "Contato",
+    "menu": "Menu",
+    "close": "Fechar",
+    "language": "Idioma",
+    "localTime": "São Paulo",
+    "hire": "Por que eu",
+    "projects": "Projetos"
+  },
+  "hero": {
+    "tag": "Portfólio / RF",
+    "edition": "Edição 2026",
+    "location": "São Paulo, BR",
+    "first": "Rafael",
+    "last": "Ferrés",
+    "subtitle": "Head of AI · IA Generativa & LLMs",
+    "bio": "Lidero estratégia e engenharia de Inteligência Artificial. Levo IA Generativa do protótipo à produção, conecto modelos a sistemas reais e formo os times que fazem isso acontecer.",
+    "ctaCareer": "Ver carreira",
+    "ctaContact": "Fale comigo",
+    "specTitle": "Ficha técnica",
+    "specCode": "RF-01",
+    "spec": [
+      {
+        "label": "Cargo",
+        "value": "Head of Artificial Intelligence"
+      },
+      {
+        "label": "Atual",
+        "value": "KHAL"
+      },
+      {
+        "label": "Foco",
+        "value": "IA Generativa · LLMs · Arquitetura de IA"
+      },
+      {
+        "label": "Base",
+        "value": "São Paulo, Brasil"
+      }
+    ],
+    "stats": [
+      {
+        "value": "9+",
+        "label": "anos de engenharia"
+      },
+      {
+        "value": "2023",
+        "label": "IA Generativa em produto desde"
+      },
+      {
+        "value": "8+",
+        "label": "projetos de IA que lidero hoje"
+      }
+    ],
+    "toolsLabel": "Ferramentas",
+    "available": "Aberto a conversas"
+  },
+  "about": {
+    "label": "Sobre",
+    "title": "Engenharia sólida, foco total em IA.",
+    "blocks": [
+      {
+        "kicker": "A/01 — Caminho até a IA",
+        "text": "Cheguei à IA pela engenharia. Comecei em 2017 com ERP, construí integrações na Cogna — <b>entre os primeiros no Brasil a implementar o WhatsApp oficial</b> — e no <b>início de 2023 já colocava IA Generativa em produto</b>, seguido de <b>um dos primeiros sistemas de criação de agentes do mercado</b>."
+      },
+      {
+        "kicker": "A/02 — Agora",
+        "text": "No <b>AI Pro Hub da Cogna</b> liderei <b>3 times de IA, cada um com o seu Tech Lead</b>, entregando agentes de vendas, IA para mídia paga e pricing dinâmico. Hoje, como <b>Head of Artificial Intelligence na KHAL</b>, <b>lidero todo o delivery de IA da empresa — mais de 8 projetos</b>: escolho onde a IA gera valor, arquiteto as soluções e formo o time que as entrega."
+      }
+    ],
+    "photoAlt": "Retrato de Rafael Ferrés"
+  },
+  "experience": {
+    "label": "Carreira",
+    "title": "Trajetória profissional.",
+    "current": "Atual",
+    "items": [
+      {
+        "code": "E/01",
+        "company": "KHAL",
+        "role": "Head of Artificial Intelligence",
+        "period": "nov 2026 — atual",
+        "location": "São Paulo",
+        "summary": "Lidero todo o delivery de IA da empresa: mais de 8 projetos em andamento, da estratégia à produção.",
+        "bullets": []
+      },
+      {
+        "code": "E/02",
+        "company": "KHAL",
+        "role": "Gerente de Engenharia de IA",
+        "period": "out 2026",
+        "location": "São Paulo",
+        "summary": "Primeira posição na KHAL, liderando a engenharia de IA antes de assumir a área.",
+        "bullets": []
+      },
+      {
+        "code": "E/03",
+        "company": "Cogna Educação",
+        "role": "Tech Lead — AI Pro Hub",
+        "period": "set 2025 — out 2026",
+        "location": "São Paulo",
+        "summary": "Liderança técnica do AI Pro Hub, frente de projetos de Inteligência Artificial da companhia.",
+        "bullets": []
+      },
+      {
+        "code": "E/04",
+        "company": "Cogna Educação",
+        "role": "Tech Lead — Integrações",
+        "period": "mar 2021 — nov 2025",
+        "location": "São Paulo",
+        "summary": "Liderança técnica do time de integrações e ferramentas para o marketing.",
+        "bullets": [
+          "Projetos com IA Generativa aplicados ao marketing",
+          "Definição de arquitetura e de padrões de código",
+          "Integrações entre parceiros",
+          "Implementação de CI/CD",
+          "Redução de custos na nuvem"
+        ]
+      },
+      {
+        "code": "E/05",
+        "company": "Cogna Educação",
+        "role": "Desenvolvedor Full Stack Sênior",
+        "period": "mar 2019 — mar 2021",
+        "location": "São Paulo",
+        "summary": "Desenvolvimento de integrações e ferramentas voltadas para o marketing.",
+        "bullets": [
+          "Integração e implantação do WhatsApp oficial — entre as primeiras do Brasil",
+          "Integrações com Facebook, Google e outros parceiros",
+          "Ferramentas de criação de campanhas e disparo de comunicações",
+          "Implementação e manutenção de serviços em nuvem"
+        ]
+      },
+      {
+        "code": "E/06",
+        "company": "JBS",
+        "role": "Analista de Sistemas",
+        "period": "mar 2017 — fev 2019",
+        "location": "São Paulo",
+        "summary": "Criação e manutenção de módulos do ERP em C#, Delphi e SQL Server.",
+        "bullets": []
+      }
+    ]
+  },
+  "stack": {
+    "label": "Stack",
+    "title": "A stack que eu uso para construir IA.",
+    "groups": [
+      {
+        "name": "Agentes & RAG",
+        "items": [
+          "LangChain",
+          "LangGraph",
+          "Agno",
+          "Vercel AI SDK",
+          "RAG",
+          "Vector DB"
+        ]
+      },
+      {
+        "name": "ML & Observabilidade",
+        "items": [
+          "scikit-learn",
+          "Machine Learning",
+          "Langfuse"
+        ]
+      },
+      {
+        "name": "Cloud & Serviços",
+        "items": [
+          "AWS",
+          "GCP"
+        ]
+      }
+    ],
+    "modelsTitle": "Modelos que uso",
+    "providers": [
+      {
+        "name": "OpenAI",
+        "items": [
+          "GPT-6 Astra",
+          "GPT-6.1 Sol",
+          "GPT-6 Luna",
+          "gpt-image"
+        ]
+      },
+      {
+        "name": "Anthropic",
+        "items": [
+          "Claude Opus 5.5",
+          "Claude Sonnet 5.5",
+          "Claude Haiku 5.5"
+        ]
+      },
+      {
+        "name": "Gemini",
+        "items": [
+          "Gemini 3.6 Flash",
+          "Gemini 3.1 Pro",
+          "Gemini 3.5 Flash-Lite"
+        ]
+      },
+      {
+        "name": "Open Models",
+        "items": [
+          "DeepSeek V4",
+          "Qwen 3.6",
+          "Kimi K3",
+          "Llama 4",
+          "Gemma 4"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "label": "Formação",
+    "title": "Estudo contínuo, lado a lado com o trabalho.",
+    "degrees": [
+      {
+        "code": "F/01",
+        "institution": "FIAP",
+        "degree": "MBA em Full Stack Development — Design, Engineering & Deployment",
+        "period": "2020 — 2021"
+      },
+      {
+        "code": "F/02",
+        "institution": "Universidade Anhembi Morumbi",
+        "degree": "Tecnólogo em Análise e Desenvolvimento de Sistemas",
+        "period": "2016 — 2020"
+      }
+    ],
+    "certsTitle": "Certificações",
+    "certs": [
+      "Introducing Multimodal Llama 3.2",
+      "GraphQL Parte 2: Substituindo uma API REST por GraphQL",
+      "Aprenda Rust do Zero Praticando com Exemplos de Computação",
+      "SQL 2016 — Módulo II"
+    ],
+    "languagesTitle": "Idiomas",
+    "languages": [
+      {
+        "name": "Português",
+        "level": "Nativo",
+        "pct": 100
+      },
+      {
+        "name": "Inglês",
+        "level": "Profissional",
+        "pct": 85
+      },
+      {
+        "name": "Espanhol",
+        "level": "Profissional",
+        "pct": 75
+      },
+      {
+        "name": "Francês",
+        "level": "Básico",
+        "pct": 30
+      }
+    ]
+  },
+  "contact": {
+    "label": "Próximo passo",
+    "title": "Precisa de alguém para liderar IA no seu time?",
+    "text": "Conte sobre a vaga ou o desafio de IA da sua empresa. Respondo pessoalmente, normalmente em até um dia útil.",
+    "emailCta": "Mandar e-mail",
+    "linkedinCta": "LinkedIn",
+    "form": {
+      "name": "Nome",
+      "email": "E-mail",
+      "company": "Empresa",
+      "optional": "opcional",
+      "type": "Tipo de oportunidade",
+      "types": [
+        "Vaga CLT",
+        "Contrato PJ",
+        "Consultoria",
+        "Mentoria ou palestra",
+        "Outro"
+      ],
+      "message": "Mensagem",
+      "placeholder": "Qual é a vaga e o desafio de IA?",
+      "send": "Enviar mensagem",
+      "required": "Preencha este campo.",
+      "invalidEmail": "Digite um e-mail válido.",
+      "successTitle": "Mensagem pronta!",
+      "successText": "Abrimos o seu app de e-mail com a mensagem preenchida. Se ele não abriu, copie o texto e envie para",
+      "copy": "Copiar mensagem",
+      "copied": "Copiado!",
+      "again": "Escrever outra",
+      "subject": "Oportunidade em IA para Rafael Ferrés",
+      "sentText": "Mensagem enviada para rafael@ferres.tech. Obrigado! Respondo pessoalmente, normalmente em até um dia útil."
+    },
+    "or": "ou escreva direto para"
+  },
+  "footer": {
+    "index": "Índice",
+    "elsewhere": "Na rede",
+    "rights": "Todos os direitos reservados.",
+    "coords": "23°33′S · 46°38′W — São Paulo",
+    "back": "Voltar ao topo"
+  },
+  "assembly": {
+    "label": "Montagem",
+    "title": "Role para montar o chip.",
+    "hint": "Role: cada peça é uma parte da minha carreira",
+    "done": "Chip pronto",
+    "parts": [
+      "Substrato",
+      "Contatos",
+      "Die de silício",
+      "Núcleos neurais",
+      "Dissipador",
+      "Anel de sinal",
+      "Pulso de dados"
+    ],
+    "intro": {
+      "title": "Monte o meu perfil em IA",
+      "text": "Cada peça deste chip é uma camada do que eu entrego em Inteligência Artificial. Role para encaixar uma a uma."
+    },
+    "cards": [
+      {
+        "title": "Base de engenharia",
+        "period": "Desde 2017",
+        "text": "Toda IA depende de software sólido. São 9+ anos de engenharia — de bancos de dados a APIs — sustentando o que os modelos entregam.",
+        "tags": [
+          "Python",
+          "SQL",
+          "APIs"
+        ]
+      },
+      {
+        "title": "Integração de IA",
+        "period": "Canais · Sistemas · APIs",
+        "text": "Conecto modelos a canais e sistemas reais, como o agente de vendas no WhatsApp, com a base de quem já integrou o WhatsApp oficial, a Meta e o Google.",
+        "tags": [
+          "WhatsApp",
+          "APIs",
+          "Agentes"
+        ]
+      },
+      {
+        "title": "Arquitetura de IA",
+        "period": "AWS · GCP",
+        "text": "Desenho sistemas agênticos com LangGraph e Agno, RAG com bancos vetoriais e serviços em Python e FastAPI na AWS e no GCP.",
+        "tags": [
+          "LangGraph",
+          "RAG",
+          "AWS · GCP"
+        ]
+      },
+      {
+        "title": "IA Generativa & Agentes",
+        "period": "Desde o início de 2023",
+        "text": "Do teste vocacional com GPT-3.5 e LangChain à plataforma de agentes com RAG: levo IA Generativa do protótipo à produção desde 2023.",
+        "tags": [
+          "LLMs",
+          "LangChain",
+          "Agentes de IA"
+        ]
+      },
+      {
+        "title": "Machine Learning aplicado",
+        "period": "Pricing dinâmico",
+        "text": "Combino agentes e Machine Learning clássico, como no sistema de precificação dinâmica com scikit-learn.",
+        "tags": [
+          "scikit-learn",
+          "ML",
+          "Pricing"
+        ]
+      },
+      {
+        "title": "Liderança em IA",
+        "period": "KHAL · 8+ projetos · 18 pessoas",
+        "text": "Lidero 18 pessoas por meio de um Gerente de Engenharia e 2 Tech Leads. Na Cogna, liderei 3 times de IA com Tech Leads.",
+        "tags": [
+          "Head of AI",
+          "Delivery de IA",
+          "Liderança de líderes"
+        ]
+      },
+      {
+        "title": "Modelos de ponta",
+        "period": "OpenAI · Anthropic · Gemini · Open Models",
+        "text": "Trabalho com os modelos mais recentes de OpenAI, Anthropic, Google e open models, escolhendo o certo para cada caso, e acompanho a qualidade em produção com Langfuse.",
+        "tags": [
+          "OpenAI",
+          "Anthropic",
+          "Open Models"
+        ]
+      }
+    ]
+  },
+  "hire": {
+    "label": "Por que eu",
+    "title": "O que a sua empresa ganha com um Head of AI como eu.",
+    "reasons": [
+      {
+        "title": "IA que chega à produção",
+        "text": "Agente de vendas, IA para mídia paga e pricing dinâmico rodando em produção na AWS e no GCP."
+      },
+      {
+        "title": "Mão na massa quando precisa",
+        "text": "Arquitetei e programei sozinho o teste vocacional e a plataforma de agentes com RAG em 2023."
+      },
+      {
+        "title": "Liderança de líderes",
+        "text": "Na KHAL, lidero 18 pessoas em 8+ projetos de IA por meio de um Gerente de Engenharia e 2 Tech Leads."
+      },
+      {
+        "title": "Pioneiro em IA Generativa",
+        "text": "IA Generativa em produto no início de 2023 e uma plataforma de agentes antes dos GPTs da OpenAI."
+      }
+    ],
+    "rolesTitle": "Posições em IA em que gero impacto",
+    "roles": [
+      "Head of AI / Diretor de IA",
+      "Gerente de Engenharia de IA",
+      "AI Tech Lead",
+      "Arquiteto de Soluções de IA",
+      "Engenheiro de IA / LLM",
+      "Engenheiro de Machine Learning"
+    ],
+    "factsTitle": "Resumo para recrutadores",
+    "facts": [
+      {
+        "label": "Status",
+        "value": "Aberto a conversas"
+      },
+      {
+        "label": "Hoje",
+        "value": "Delivery de IA da KHAL · 8+ projetos · 18 pessoas"
+      },
+      {
+        "label": "Em IA desde",
+        "value": "Início de 2023"
+      },
+      {
+        "label": "Stack",
+        "value": "LangGraph · RAG · AWS · GCP"
+      }
+    ]
+  },
+  "projects": {
+    "label": "Projetos pioneiros",
+    "title": "IA Generativa em produto antes de virar tendência.",
+    "badge": "Pioneiro",
+    "items": [
+      {
+        "code": "PR/01",
+        "period": "Início de 2023",
+        "org": "Cogna Educação",
+        "role": "Ideia com a diretoria · arquitetura e código 100% meus",
+        "title": "Teste vocacional com IA Generativa",
+        "text": "Teste vocacional que usa IA Generativa para orientar estudantes na escolha de carreira. Foi ao ar poucos meses depois da chegada do ChatGPT e gerou um volume relevante de leads para a captação.",
+        "tags": [
+          "GPT-3.5",
+          "LangChain",
+          "Python"
+        ]
+      },
+      {
+        "code": "PR/02",
+        "period": "Meados de 2023",
+        "org": "Cogna Educação",
+        "role": "Arquitetura e código 100% meus",
+        "title": "Plataforma de criação de agentes de IA",
+        "text": "Plataforma sem código para criar agentes de IA: o usuário conecta PDFs, áudios, textos e sites, e o sistema transforma tudo em uma base de RAG automaticamente. Um dos primeiros do mercado, meses antes dos GPTs da OpenAI.",
+        "tags": [
+          "GPT-3.5",
+          "LangChain",
+          "RAG",
+          "Pinecone"
+        ]
+      }
+    ],
+    "timelineTitle": "Linha do tempo em IA",
+    "timeline": [
+      {
+        "date": "Início 2023",
+        "text": "Teste vocacional com IA Generativa"
+      },
+      {
+        "date": "Meados 2023",
+        "text": "Sistema de criação de agentes"
+      },
+      {
+        "date": "Set 2025",
+        "text": "Tech Lead do AI Pro Hub"
+      },
+      {
+        "date": "Out 2026",
+        "text": "Gerente de Engenharia de IA"
+      },
+      {
+        "date": "Nov 2026",
+        "text": "Head of AI na KHAL · 8+ projetos"
+      }
+    ],
+    "soloLabel": "Construído por mim, de ponta a ponta",
+    "ledLabel": "Projetos que liderei na Cogna",
+    "ledIntro": "3 times de 5 pessoas, cada um com o seu Tech Lead. Detalhes sob NDA.",
+    "led": [
+      {
+        "code": "PR/03",
+        "cloud": "AWS",
+        "title": "Agente de vendas no WhatsApp",
+        "text": "Agente de IA que conduz conversas de venda no WhatsApp.",
+        "tags": [
+          "LangGraph",
+          "GPT Luna",
+          "Gemini"
+        ]
+      },
+      {
+        "code": "PR/04",
+        "cloud": "GCP",
+        "title": "Insights e geração de mídia paga",
+        "text": "Sistema de insights e geração de criativos para Meta, TikTok e Google Ads.",
+        "tags": [
+          "LangGraph",
+          "gpt-image",
+          "Gemini"
+        ]
+      },
+      {
+        "code": "PR/05",
+        "cloud": "AWS",
+        "title": "Pricing dinâmico",
+        "text": "Sistema agêntico com Machine Learning para gerar preços dinâmicos.",
+        "tags": [
+          "LangGraph",
+          "scikit-learn",
+          "Langfuse"
+        ]
+      }
+    ],
+    "now": {
+      "label": "Hoje na KHAL",
+      "title": "Todo o delivery de IA da empresa",
+      "text": "Como Head of AI, respondo por todo o delivery de IA: mais de 8 projetos em andamento, de vendas e atendimento com IA a projetos para clientes, com um time de 18 pessoas. Detalhes sob NDA.",
+      "stat": "8+",
+      "statLabel": "projetos de IA",
+      "struct": [
+        {
+          "lead": "Gerente de Engenharia",
+          "scope": "Vendas e Customer Experience com IA",
+          "meta": "3 frentes · 12 pessoas"
+        },
+        {
+          "lead": "Tech Lead",
+          "scope": "Projetos de IA para clientes",
+          "meta": "3 projetos · 3 pessoas"
+        },
+        {
+          "lead": "Tech Lead",
+          "scope": "Projetos de IA para clientes",
+          "meta": "3 projetos · 3 pessoas"
+        }
+      ],
+      "structTitle": "Como o time se organiza"
+    }
+  },
+  "cv": {
+    "download": "Baixar currículo (PDF)",
+    "file": "cv/curriculo-rafael-ferres-pt.pdf"
+  }
+}

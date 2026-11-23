@@ -1,0 +1,579 @@
+{
+  "meta": {
+    "title": "Rafael Ferrés — Head of AI · Generative AI & LLMs",
+    "description": "Rafael Ferrés, Head of Artificial Intelligence in São Paulo. I lead AI strategy and engineering and take Generative AI from prototype to production."
+  },
+  "nav": {
+    "skip": "Skip to content",
+    "home": "Home",
+    "about": "About",
+    "experience": "Career",
+    "highlights": "Highlights",
+    "education": "Education",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close",
+    "language": "Language",
+    "localTime": "São Paulo",
+    "hire": "Why me",
+    "projects": "Projects"
+  },
+  "hero": {
+    "tag": "Portfolio / RF",
+    "edition": "2026 Edition",
+    "location": "São Paulo, BR",
+    "first": "Rafael",
+    "last": "Ferrés",
+    "subtitle": "Head of AI · Generative AI & LLMs",
+    "bio": "I lead Artificial Intelligence strategy and engineering. I take Generative AI from prototype to production, connect models to real systems and build the teams that make it happen.",
+    "ctaCareer": "See my career",
+    "ctaContact": "Get in touch",
+    "specTitle": "Spec sheet",
+    "specCode": "RF-01",
+    "spec": [
+      {
+        "label": "Role",
+        "value": "Head of Artificial Intelligence"
+      },
+      {
+        "label": "Current",
+        "value": "KHAL"
+      },
+      {
+        "label": "Focus",
+        "value": "Generative AI · LLMs · AI Architecture"
+      },
+      {
+        "label": "Base",
+        "value": "São Paulo, Brazil"
+      }
+    ],
+    "stats": [
+      {
+        "value": "9+",
+        "label": "years of engineering"
+      },
+      {
+        "value": "2023",
+        "label": "shipping Generative AI since"
+      },
+      {
+        "value": "8+",
+        "label": "AI projects I lead today"
+      }
+    ],
+    "toolsLabel": "Tools",
+    "available": "Open to conversations"
+  },
+  "about": {
+    "label": "About",
+    "title": "Solid engineering, full focus on AI.",
+    "blocks": [
+      {
+        "kicker": "A/01 — Path to AI",
+        "text": "I came to AI through engineering. I started in 2017 with ERP, built integrations at Cogna — <b>among the first in Brazil to implement the official WhatsApp service</b> — and by <b>early 2023 I was already shipping Generative AI in a product</b>, followed by <b>one of the first AI agent builder systems on the market</b>."
+      },
+      {
+        "kicker": "A/02 — Now",
+        "text": "At <b>Cogna's AI Pro Hub</b> I led <b>3 AI teams, each with its own Tech Lead</b>, shipping sales agents, AI for paid media and dynamic pricing. Today, as <b>Head of Artificial Intelligence at KHAL</b>, <b>I lead all of the company's AI delivery — more than 8 projects</b>: I choose where AI creates value, architect the solutions and build the team that delivers them."
+      }
+    ],
+    "photoAlt": "Portrait of Rafael Ferrés"
+  },
+  "experience": {
+    "label": "Career",
+    "title": "Career path.",
+    "current": "Current",
+    "items": [
+      {
+        "code": "E/01",
+        "company": "KHAL",
+        "role": "Head of Artificial Intelligence",
+        "period": "Nov 2026 — present",
+        "location": "São Paulo",
+        "summary": "I lead all AI delivery at the company: more than 8 projects underway, from strategy to production.",
+        "bullets": []
+      },
+      {
+        "code": "E/02",
+        "company": "KHAL",
+        "role": "AI Engineering Manager",
+        "period": "Oct 2026",
+        "location": "São Paulo",
+        "summary": "First role at KHAL, leading AI engineering before taking over the area.",
+        "bullets": []
+      },
+      {
+        "code": "E/03",
+        "company": "Cogna Educação",
+        "role": "Tech Lead — AI Pro Hub",
+        "period": "Sep 2025 — Oct 2026",
+        "location": "São Paulo",
+        "summary": "Technical lead of the AI Pro Hub, the company's Artificial Intelligence initiative.",
+        "bullets": []
+      },
+      {
+        "code": "E/04",
+        "company": "Cogna Educação",
+        "role": "Tech Lead — Integrations",
+        "period": "Mar 2021 — Nov 2025",
+        "location": "São Paulo",
+        "summary": "Technical lead of the team building integrations and tools for marketing.",
+        "bullets": [
+          "Generative AI projects applied to marketing",
+          "Architecture and code standards",
+          "Partner integrations",
+          "CI/CD implementation",
+          "Cloud cost reduction"
+        ]
+      },
+      {
+        "code": "E/05",
+        "company": "Cogna Educação",
+        "role": "Senior Full Stack Developer",
+        "period": "Mar 2019 — Mar 2021",
+        "location": "São Paulo",
+        "summary": "Built integrations and tools for the marketing area.",
+        "bullets": [
+          "Official WhatsApp integration — among the first in Brazil",
+          "Facebook, Google and other partner integrations",
+          "Campaign creation and messaging tools",
+          "Cloud services implementation and maintenance"
+        ]
+      },
+      {
+        "code": "E/06",
+        "company": "JBS",
+        "role": "Systems Analyst",
+        "period": "Mar 2017 — Feb 2019",
+        "location": "São Paulo",
+        "summary": "Built and maintained ERP modules in C#, Delphi and SQL Server.",
+        "bullets": []
+      }
+    ]
+  },
+  "stack": {
+    "label": "Stack",
+    "title": "The stack I use to build AI.",
+    "groups": [
+      {
+        "name": "Agents & RAG",
+        "items": [
+          "LangChain",
+          "LangGraph",
+          "Agno",
+          "Vercel AI SDK",
+          "RAG",
+          "Vector DB"
+        ]
+      },
+      {
+        "name": "ML & Observability",
+        "items": [
+          "scikit-learn",
+          "Machine Learning",
+          "Langfuse"
+        ]
+      },
+      {
+        "name": "Cloud & Services",
+        "items": [
+          "AWS",
+          "GCP"
+        ]
+      }
+    ],
+    "modelsTitle": "Models I use",
+    "providers": [
+      {
+        "name": "OpenAI",
+        "items": [
+          "GPT-6 Astra",
+          "GPT-6.1 Sol",
+          "GPT-6 Luna",
+          "gpt-image"
+        ]
+      },
+      {
+        "name": "Anthropic",
+        "items": [
+          "Claude Opus 5.5",
+          "Claude Sonnet 5.5",
+          "Claude Haiku 5.5"
+        ]
+      },
+      {
+        "name": "Gemini",
+        "items": [
+          "Gemini 3.6 Flash",
+          "Gemini 3.1 Pro",
+          "Gemini 3.5 Flash-Lite"
+        ]
+      },
+      {
+        "name": "Open Models",
+        "items": [
+          "DeepSeek V4",
+          "Qwen 3.6",
+          "Kimi K3",
+          "Llama 4",
+          "Gemma 4"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "label": "Education",
+    "title": "Continuous study, alongside work.",
+    "degrees": [
+      {
+        "code": "F/01",
+        "institution": "FIAP",
+        "degree": "MBA in Full Stack Development — Design, Engineering & Deployment",
+        "period": "2020 — 2021"
+      },
+      {
+        "code": "F/02",
+        "institution": "Anhembi Morumbi University",
+        "degree": "Associate degree in Systems Analysis and Development",
+        "period": "2016 — 2020"
+      }
+    ],
+    "certsTitle": "Certifications",
+    "certs": [
+      "Introducing Multimodal Llama 3.2",
+      "GraphQL Part 2: Replacing a REST API with GraphQL",
+      "Learn Rust from Scratch with Computing Examples",
+      "SQL 2016 — Module II"
+    ],
+    "languagesTitle": "Languages",
+    "languages": [
+      {
+        "name": "Portuguese",
+        "level": "Native",
+        "pct": 100
+      },
+      {
+        "name": "English",
+        "level": "Professional",
+        "pct": 85
+      },
+      {
+        "name": "Spanish",
+        "level": "Professional",
+        "pct": 75
+      },
+      {
+        "name": "French",
+        "level": "Elementary",
+        "pct": 30
+      }
+    ]
+  },
+  "contact": {
+    "label": "Next step",
+    "title": "Need someone to lead AI on your team?",
+    "text": "Tell me about the role or your company's AI challenge. I reply personally, usually within one business day.",
+    "emailCta": "Send an email",
+    "linkedinCta": "LinkedIn",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "optional": "optional",
+      "type": "Type of opportunity",
+      "types": [
+        "Full-time role",
+        "Contract",
+        "Consulting",
+        "Mentoring or talk",
+        "Other"
+      ],
+      "message": "Message",
+      "placeholder": "What is the role and the AI challenge?",
+      "send": "Send message",
+      "required": "Please fill in this field.",
+      "invalidEmail": "Enter a valid email address.",
+      "successTitle": "Message ready!",
+      "successText": "We opened your email app with the message filled in. If it didn't open, copy the text and send it to",
+      "copy": "Copy message",
+      "copied": "Copied!",
+      "again": "Write another",
+      "subject": "AI opportunity for Rafael Ferrés",
+      "sentText": "Message sent to rafael@ferres.tech. Thank you! I reply personally, usually within one business day."
+    },
+    "or": "or write directly to"
+  },
+  "footer": {
+    "index": "Index",
+    "elsewhere": "Elsewhere",
+    "rights": "All rights reserved.",
+    "coords": "23°33′S · 46°38′W — São Paulo",
+    "back": "Back to top"
+  },
+  "assembly": {
+    "label": "Assembly",
+    "title": "Scroll to assemble the chip.",
+    "hint": "Scroll: each part is a piece of my career",
+    "done": "Chip ready",
+    "parts": [
+      "Substrate",
+      "Contacts",
+      "Silicon die",
+      "Neural cores",
+      "Heat spreader",
+      "Signal ring",
+      "Data pulse"
+    ],
+    "intro": {
+      "title": "Assemble my AI profile",
+      "text": "Each part of this chip is a layer of what I deliver in Artificial Intelligence. Scroll to fit them together one by one."
+    },
+    "cards": [
+      {
+        "title": "Engineering foundation",
+        "period": "Since 2017",
+        "text": "Every AI depends on solid software. 9+ years of engineering — from databases to APIs — backing what models deliver.",
+        "tags": [
+          "Python",
+          "SQL",
+          "APIs"
+        ]
+      },
+      {
+        "title": "AI integration",
+        "period": "Channels · Systems · APIs",
+        "text": "I connect models to real channels and systems, like the WhatsApp sales agent, building on my experience integrating official WhatsApp, Meta and Google.",
+        "tags": [
+          "WhatsApp",
+          "APIs",
+          "Agents"
+        ]
+      },
+      {
+        "title": "AI architecture",
+        "period": "AWS · GCP",
+        "text": "I design agentic systems with LangGraph and Agno, RAG on vector databases, and Python/FastAPI services on AWS and GCP.",
+        "tags": [
+          "LangGraph",
+          "RAG",
+          "AWS · GCP"
+        ]
+      },
+      {
+        "title": "Generative AI & Agents",
+        "period": "Since early 2023",
+        "text": "From the aptitude test with GPT-3.5 and LangChain to the agent platform with RAG: shipping Generative AI from prototype to production since 2023.",
+        "tags": [
+          "LLMs",
+          "LangChain",
+          "AI agents"
+        ]
+      },
+      {
+        "title": "Applied Machine Learning",
+        "period": "Dynamic pricing",
+        "text": "I combine agents with classic Machine Learning, as in the dynamic pricing system built with scikit-learn.",
+        "tags": [
+          "scikit-learn",
+          "ML",
+          "Pricing"
+        ]
+      },
+      {
+        "title": "AI leadership",
+        "period": "KHAL · 8+ projects · 18 people",
+        "text": "I lead 18 people through an Engineering Manager and 2 Tech Leads. At Cogna I led 3 AI teams with Tech Leads.",
+        "tags": [
+          "Head of AI",
+          "AI delivery",
+          "Leading leaders"
+        ]
+      },
+      {
+        "title": "Frontier models",
+        "period": "OpenAI · Anthropic · Gemini · Open Models",
+        "text": "I work with the latest models from OpenAI, Anthropic, Google and open models, picking the right one for each case, and track production quality with Langfuse.",
+        "tags": [
+          "OpenAI",
+          "Anthropic",
+          "Open Models"
+        ]
+      }
+    ]
+  },
+  "hire": {
+    "label": "Why me",
+    "title": "What your company gains with a Head of AI like me.",
+    "reasons": [
+      {
+        "title": "AI that reaches production",
+        "text": "Sales agent, AI for paid media and dynamic pricing running in production on AWS and GCP."
+      },
+      {
+        "title": "Hands-on when needed",
+        "text": "I single-handedly architected and coded the aptitude test and the RAG agent platform in 2023."
+      },
+      {
+        "title": "Leading leaders",
+        "text": "At KHAL I lead 18 people across 8+ AI projects through an Engineering Manager and 2 Tech Leads."
+      },
+      {
+        "title": "Generative AI pioneer",
+        "text": "Generative AI in a product in early 2023 and an agent platform before OpenAI's GPTs."
+      }
+    ],
+    "rolesTitle": "AI roles where I make an impact",
+    "roles": [
+      "Head of AI / AI Director",
+      "AI Engineering Manager",
+      "AI Tech Lead",
+      "AI Solutions Architect",
+      "AI / LLM Engineer",
+      "Machine Learning Engineer"
+    ],
+    "factsTitle": "Recruiter summary",
+    "facts": [
+      {
+        "label": "Status",
+        "value": "Open to conversations"
+      },
+      {
+        "label": "Today",
+        "value": "AI delivery at KHAL · 8+ projects · 18 people"
+      },
+      {
+        "label": "In AI since",
+        "value": "Early 2023"
+      },
+      {
+        "label": "Stack",
+        "value": "LangGraph · RAG · AWS · GCP"
+      }
+    ]
+  },
+  "projects": {
+    "label": "Pioneering projects",
+    "title": "Generative AI in product before it became a trend.",
+    "badge": "Pioneer",
+    "items": [
+      {
+        "code": "PR/01",
+        "period": "Early 2023",
+        "org": "Cogna Educação",
+        "role": "Idea with leadership · 100% my architecture and code",
+        "title": "Generative AI career aptitude test",
+        "text": "A career aptitude test that uses Generative AI to guide students in choosing a career. It went live a few months after ChatGPT arrived and generated a significant volume of leads for enrollment.",
+        "tags": [
+          "GPT-3.5",
+          "LangChain",
+          "Python"
+        ]
+      },
+      {
+        "code": "PR/02",
+        "period": "Mid 2023",
+        "org": "Cogna Educação",
+        "role": "100% my architecture and code",
+        "title": "No-code AI agent builder",
+        "text": "A no-code platform to build AI agents: users connect PDFs, audio, text and websites, and the system automatically turns everything into a RAG knowledge base. One of the first on the market, months before OpenAI's GPTs.",
+        "tags": [
+          "GPT-3.5",
+          "LangChain",
+          "RAG",
+          "Pinecone"
+        ]
+      }
+    ],
+    "timelineTitle": "AI timeline",
+    "timeline": [
+      {
+        "date": "Early 2023",
+        "text": "Generative AI aptitude test"
+      },
+      {
+        "date": "Mid 2023",
+        "text": "AI agent builder"
+      },
+      {
+        "date": "Sep 2025",
+        "text": "Tech Lead, AI Pro Hub"
+      },
+      {
+        "date": "Oct 2026",
+        "text": "AI Engineering Manager"
+      },
+      {
+        "date": "Nov 2026",
+        "text": "Head of AI at KHAL · 8+ projects"
+      }
+    ],
+    "soloLabel": "Built by me, end to end",
+    "ledLabel": "Projects I led at Cogna",
+    "ledIntro": "3 teams of 5 people, each with its own Tech Lead. Details under NDA.",
+    "led": [
+      {
+        "code": "PR/03",
+        "cloud": "AWS",
+        "title": "WhatsApp sales agent",
+        "text": "An AI agent that runs sales conversations on WhatsApp.",
+        "tags": [
+          "LangGraph",
+          "GPT Luna",
+          "Gemini"
+        ]
+      },
+      {
+        "code": "PR/04",
+        "cloud": "GCP",
+        "title": "Paid media insights & generation",
+        "text": "Insights and creative generation for Meta, TikTok and Google Ads.",
+        "tags": [
+          "LangGraph",
+          "gpt-image",
+          "Gemini"
+        ]
+      },
+      {
+        "code": "PR/05",
+        "cloud": "AWS",
+        "title": "Dynamic pricing",
+        "text": "An agentic system with Machine Learning that generates dynamic prices.",
+        "tags": [
+          "LangGraph",
+          "scikit-learn",
+          "Langfuse"
+        ]
+      }
+    ],
+    "now": {
+      "label": "Today at KHAL",
+      "title": "All of the company's AI delivery",
+      "text": "As Head of AI, I own all AI delivery: more than 8 projects underway, from AI for sales and customer service to client projects, with a team of 18 people. Details under NDA.",
+      "stat": "8+",
+      "statLabel": "AI projects",
+      "struct": [
+        {
+          "lead": "Engineering Manager",
+          "scope": "AI for Sales and Customer Experience",
+          "meta": "3 streams · 12 people"
+        },
+        {
+          "lead": "Tech Lead",
+          "scope": "AI projects for clients",
+          "meta": "3 projects · 3 people"
+        },
+        {
+          "lead": "Tech Lead",
+          "scope": "AI projects for clients",
+          "meta": "3 projects · 3 people"
+        }
+      ],
+      "structTitle": "How the team is organized"
+    }
+  },
+  "cv": {
+    "download": "Download résumé (PDF)",
+    "file": "cv/resume-rafael-ferres-en.pdf"
+  }
+}
