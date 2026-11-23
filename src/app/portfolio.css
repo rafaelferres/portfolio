@@ -3,7 +3,7 @@
 /* ───────── assembly hero ───────── */
 .assembly{position:relative;height:320vh}
 .assembly__sticky{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;padding-top:84px;padding-bottom:24px}
-.stage{position:relative;height:min(78vh,700px);border:1px solid var(--line);border-radius:var(--radius);background:radial-gradient(ellipse at 50% 55%,rgba(200,245,96,.07),transparent 62%),linear-gradient(180deg,var(--bg-2),var(--bg));overflow:hidden}
+.stage{position:relative;height:min(78vh,700px);border:1px solid var(--line);border-radius:var(--radius);background:radial-gradient(ellipse at 50% 55%,rgba(255,71,87,.07),transparent 62%),linear-gradient(180deg,var(--bg-2),var(--bg));overflow:hidden}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .stage__head{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);color:var(--muted);font-size:11px;z-index:2;background:rgba(18,18,17,.6);backdrop-filter:blur(6px)}
 .stage__pct{color:var(--accent);font-size:13px}
@@ -32,9 +32,9 @@
 .lang-btn{background:none;border:0;cursor:pointer;font:inherit}
 [hidden]{display:none!important}
 .proj{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.pj{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:clamp(22px,3vw,34px);border:1px solid var(--line-2);border-radius:var(--radius);background:linear-gradient(160deg,rgba(200,245,96,.07),var(--bg-2) 45%);transition:border-color .3s,transform .3s}
+.pj{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:clamp(22px,3vw,34px);border:1px solid var(--line-2);border-radius:var(--radius);background:linear-gradient(160deg,rgba(255,71,87,.07),var(--bg-2) 45%);transition:border-color .3s,transform .3s}
 .pj:hover{border-color:var(--accent);transform:translateY(-4px)}
-.pj__year{position:absolute;right:-8px;bottom:-34px;font-size:150px;font-weight:800;letter-spacing:-.06em;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(200,245,96,.16);pointer-events:none}
+.pj__year{position:absolute;right:-8px;bottom:-34px;font-size:150px;font-weight:800;letter-spacing:-.06em;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(255,71,87,.16);pointer-events:none}
 .pj__top{display:flex;justify-content:space-between;align-items:center}
 .pj__code{color:var(--accent)}
 .pj__period{color:var(--muted);margin-top:6px}
@@ -54,7 +54,7 @@
 @media (max-width:520px){.providers{grid-template-columns:1fr}}
 #stack .stack{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 40px}
 @media (max-width:900px){#stack .stack{grid-template-columns:1fr}}
-.now{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center;margin-bottom:36px;padding:clamp(22px,3vw,34px);border:1px solid var(--accent-2);border-radius:var(--radius);background:linear-gradient(120deg,rgba(94,230,200,.09),var(--bg-2) 55%)}
+.now{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center;margin-bottom:36px;padding:clamp(22px,3vw,34px);border:1px solid var(--accent-2);border-radius:var(--radius);background:linear-gradient(120deg,rgba(255,154,162,.09),var(--bg-2) 55%)}
 .now__stat{display:flex;flex-direction:column;gap:4px;padding-right:clamp(20px,4vw,48px);border-right:1px solid var(--line-2)}
 .now__value{font-size:clamp(64px,8vw,104px);font-weight:700;letter-spacing:-.05em;line-height:.9;color:var(--accent-2)}
 .now__statlabel{color:var(--muted)}
@@ -92,7 +92,7 @@
 .tl__item{position:relative;display:flex;flex-direction:column;gap:6px;padding-right:12px}
 .tl__dot{width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--line-2);position:relative;z-index:1;margin-bottom:8px}
 .tl__item.is-pioneer .tl__dot{border-color:var(--accent);background:var(--accent)}
-.tl__item.is-now .tl__dot{border-color:var(--accent-2);background:var(--accent-2);box-shadow:0 0 0 5px rgba(94,230,200,.15)}
+.tl__item.is-now .tl__dot{border-color:var(--accent-2);background:var(--accent-2);box-shadow:0 0 0 5px rgba(255,154,162,.15)}
 .tl__date{color:var(--muted);font-size:11px}
 .tl__item.is-pioneer .tl__date{color:var(--accent)}
 .tl__text{font-size:15px;line-height:1.35}
@@ -114,7 +114,7 @@
 .assembly .parts{flex-direction:row;gap:6px;left:14px;right:14px;bottom:14px}
 .assembly .parts li span{width:auto}
 .assembly .pbtn{display:grid;place-items:center;width:36px;height:30px;padding:0;border:1px solid var(--line-2);border-radius:8px;background:rgba(11,11,10,.7);color:var(--dim);font-size:11px;transition:all .25s}
-.assembly .parts li.is-on .pbtn{border-color:rgba(200,245,96,.5);color:var(--text)}
+.assembly .parts li.is-on .pbtn{border-color:rgba(255,71,87,.5);color:var(--text)}
 .assembly .parts li.is-cur .pbtn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .assembly .pbtn:hover{border-color:var(--accent)}
 .hero-right{display:flex;flex-direction:column;gap:12px}
@@ -136,7 +136,7 @@
 .reason__n{color:var(--accent)}
 .reason h3{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
 .reason p{color:var(--muted);font-size:15.5px}
-.facts{padding:24px;border:1px solid var(--accent);border-radius:var(--radius);background:linear-gradient(180deg,rgba(200,245,96,.06),var(--bg-2));position:sticky;top:96px}
+.facts{padding:24px;border:1px solid var(--accent);border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,71,87,.06),var(--bg-2));position:sticky;top:96px}
 .facts dl{margin:0 0 22px}
 .facts .spec__row{padding:10px 0;grid-template-columns:96px 1fr}
 .facts__roles-title{margin-top:4px}
@@ -159,7 +159,7 @@
 .field em{font-style:normal;color:var(--dim);font-weight:400}
 .field input,.field select,.field textarea{font:inherit;font-size:16px;color:var(--text);background:var(--bg);border:1px solid var(--line-2);border-radius:10px;padding:12px 14px;min-height:48px;transition:border-color .2s}
 .field textarea{resize:vertical;min-height:130px}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,245,96,.15)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,71,87,.15)}
 .field [aria-invalid=true]{border-color:#ff7a6b}
 .ferr{color:#ff9a8d;font-size:13px;min-height:0}
 .ferr:empty{display:none}

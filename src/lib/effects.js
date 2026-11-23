@@ -182,7 +182,7 @@ function ambient() {
         const x = p.x * W + Math.sin(p.t + p.x * 9) * 6;
         const y = (((p.y - sy * p.z) % 1) + 1) % 1 * H;
         g.globalAlpha = 0.12 + 0.35 * p.z * (0.6 + 0.4 * Math.sin(p.t * 1.7));
-        g.fillStyle = p.z > 0.85 ? "#c8f560" : "#f2f0ea";
+        g.fillStyle = p.z > 0.85 ? "#ff4757" : "#f2f0ea";
         g.fillRect(x, y, p.z * 1.6, p.z * 1.6);
       }
       gx += (tx - gx) * 0.06; gy += (ty - gy) * 0.06;
@@ -285,14 +285,14 @@ function neural(root) {
           const [x, y, e] = pos[i];
           for (const j of nb[i]) {
             const [x2, y2] = pos[j];
-            g.strokeStyle = `rgba(94,230,200,${0.06 + e * 0.22})`;
+            g.strokeStyle = `rgba(255,154,162,${0.06 + e * 0.22})`;
             g.beginPath(); g.moveTo(x, y); g.lineTo(x2, y2); g.stroke();
           }
         }
         for (let i = 0; i < n; i++) {
           const [x, y, e] = pos[i];
           const pulse = 0.5 + 0.5 * Math.sin(time * 2 + pts[i].ph);
-          g.fillStyle = pts[i].ring ? `rgba(94,230,200,${0.35 + e * 0.5})` : `rgba(200,245,96,${0.45 + e * 0.55})`;
+          g.fillStyle = pts[i].ring ? `rgba(255,154,162,${0.35 + e * 0.5})` : `rgba(255,71,87,${0.45 + e * 0.55})`;
           const s = (pts[i].ring ? 1.6 : 2.1) + e * 0.6 + pulse * 0.5;
           g.fillRect(x - s / 2, y - s / 2, s, s);
         }

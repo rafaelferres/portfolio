@@ -35,8 +35,8 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   };
   panel(10, 3, 0xffffff, 3.2, [0, 5.8, 0], [Math.PI / 2, 0, 0]); // top softbox
   panel(4, 6, 0xffffff, 1.6, [-9.5, 1, 2], [0, Math.PI / 2, 0]); // left strip
-  panel(3, 5, 0xc8f560, 2.2, [9.5, 1, -2], [0, -Math.PI / 2, 0]); // lime kicker
-  panel(5, 2, 0x5ee6c8, 1.8, [0, 1.5, -9.5], [0, 0, 0]); // teal back
+  panel(3, 5, 0xff4757, 2.2, [9.5, 1, -2], [0, -Math.PI / 2, 0]); // lime kicker
+  panel(5, 2, 0xff9aa2, 1.8, [0, 1.5, -9.5], [0, 0, 0]); // teal back
   const envTex = pmrem.fromScene(env, 0.035).texture;
   scene.environment = envTex;
 
@@ -45,10 +45,10 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   const key = new THREE.DirectionalLight(0xffffff, 1.1);
   key.position.set(4, 9, 6);
   scene.add(key);
-  const lime = new THREE.PointLight(0xc8f560, 1.6, 16);
+  const lime = new THREE.PointLight(0xff4757, 1.6, 16);
   lime.position.set(-4, 2.5, -2);
   scene.add(lime);
-  const teal = new THREE.PointLight(0x5ee6c8, 1.3, 16);
+  const teal = new THREE.PointLight(0xff9aa2, 1.3, 16);
   teal.position.set(4, 1.8, -3);
   scene.add(teal);
 
@@ -68,27 +68,27 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   // PCB: copper traces routed in 45° steps from the edges to the die; we keep the paths for the data pulses
   const traces = [];
   const pcbDraw = (g, s, emissive) => {
-    g.fillStyle = emissive ? "#000" : "#0f140e";
+    g.fillStyle = emissive ? "#000" : "#140f10";
     g.fillRect(0, 0, s, s);
     if (!emissive) {
       for (let i = 0; i < 2600; i++) {
         g.fillStyle = `rgba(255,255,255,${rnd() * 0.025})`;
         g.fillRect(rnd() * s, rnd() * s, 2, 2);
       }
-      g.strokeStyle = "rgba(200,245,96,.16)";
+      g.strokeStyle = "rgba(255,71,87,.16)";
       g.lineWidth = 6;
       g.strokeRect(24, 24, s - 48, s - 48);
     }
     g.lineCap = "round";
     g.lineJoin = "round";
     traces.forEach((pts) => {
-      g.strokeStyle = emissive ? "rgba(200,245,96,.85)" : "rgba(200,245,96,.55)";
+      g.strokeStyle = emissive ? "rgba(255,71,87,.85)" : "rgba(255,71,87,.55)";
       g.lineWidth = emissive ? 3 : 4;
       g.beginPath();
       pts.forEach(([x, y], i) => (i ? g.lineTo(x * s, y * s) : g.moveTo(x * s, y * s)));
       g.stroke();
       const [ex, ey] = pts[pts.length - 1];
-      g.fillStyle = emissive ? "#c8f560" : "#d8ff7a";
+      g.fillStyle = emissive ? "#ff4757" : "#ff6b78";
       g.beginPath();
       g.arc(ex * s, ey * s, emissive ? 5 : 7, 0, 7);
       g.fill();
@@ -125,24 +125,24 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   const pcbGlow = tex((g, s) => pcbDraw(g, s, true));
 
   const dieMap = tex((g, s) => {
-    g.fillStyle = "#081311";
+    g.fillStyle = "#14090b";
     g.fillRect(0, 0, s, s);
     // functional blocks
     const blocks = [[0.06, 0.06, 0.4, 0.26], [0.52, 0.06, 0.42, 0.18], [0.52, 0.28, 0.2, 0.2], [0.76, 0.28, 0.18, 0.42], [0.06, 0.36, 0.42, 0.34], [0.06, 0.74, 0.88, 0.2], [0.52, 0.52, 0.2, 0.18]];
     blocks.forEach(([x, y, w, h], bi) => {
-      g.fillStyle = `rgba(94,230,200,${0.05 + (bi % 3) * 0.03})`;
+      g.fillStyle = `rgba(255,154,162,${0.05 + (bi % 3) * 0.03})`;
       g.fillRect(x * s, y * s, w * s, h * s);
-      g.strokeStyle = "rgba(94,230,200,.35)";
+      g.strokeStyle = "rgba(255,154,162,.35)";
       g.lineWidth = 2;
       g.strokeRect(x * s, y * s, w * s, h * s);
       const step = 10 + (bi % 3) * 6;
       for (let yy = y * s + 6; yy < (y + h) * s - 4; yy += step)
         for (let xx = x * s + 6; xx < (x + w) * s - 4; xx += step) {
           const a = rnd();
-          if (a > 0.35) { g.fillStyle = `rgba(94,230,200,${0.12 + a * 0.4})`; g.fillRect(xx, yy, step - 4, step - 4); }
+          if (a > 0.35) { g.fillStyle = `rgba(255,154,162,${0.12 + a * 0.4})`; g.fillRect(xx, yy, step - 4, step - 4); }
         }
     });
-    g.strokeStyle = "rgba(200,245,96,.55)";
+    g.strokeStyle = "rgba(255,71,87,.55)";
     g.lineWidth = 6;
     g.strokeRect(6, 6, s - 12, s - 12);
   });
@@ -165,7 +165,7 @@ export function buildChip(THREE, canvas, stage, getProgress) {
     g.translate(s * 0.2, s * 0.12);
     g.scale((s * 0.6) / 160, (s * 0.6) / 160);
     g.translate(-5, 0);
-    g.strokeStyle = "#c8f560";
+    g.strokeStyle = "#ff4757";
     g.lineWidth = 12;
     g.lineCap = "round";
     g.lineJoin = "round";
@@ -204,7 +204,7 @@ export function buildChip(THREE, canvas, stage, getProgress) {
 
   /* ── materials ── */
   const phys = (o) => new THREE.MeshPhysicalMaterial(o);
-  const edge = phys({ color: 0x1b211a, roughness: 0.45, metalness: 0.3, clearcoat: 0.6, clearcoatRoughness: 0.3 });
+  const edge = phys({ color: 0x211a1b, roughness: 0.45, metalness: 0.3, clearcoat: 0.6, clearcoatRoughness: 0.3 });
   const goldEdge = phys({ color: 0xd8b24a, roughness: 0.25, metalness: 1 });
 
   const parts = [];
@@ -221,7 +221,7 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   const sub = new THREE.Group();
   const board = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.16, 4.2), [
     edge, edge,
-    phys({ map: pcbMap, emissive: 0xc8f560, emissiveMap: pcbGlow, emissiveIntensity: 0.55, roughness: 0.42, metalness: 0.25, clearcoat: 0.8, clearcoatRoughness: 0.25 }),
+    phys({ map: pcbMap, emissive: 0xff4757, emissiveMap: pcbGlow, emissiveIntensity: 0.55, roughness: 0.42, metalness: 0.25, clearcoat: 0.8, clearcoatRoughness: 0.25 }),
     edge, edge, edge,
   ]);
   sub.add(board);
@@ -275,7 +275,7 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   const dieGroup = new THREE.Group();
   const die = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.1, 2.4), [
     edge, edge,
-    phys({ map: dieMap, emissive: 0x5ee6c8, emissiveMap: dieMap, emissiveIntensity: 0.9, roughness: 0.18, metalness: 0.5, clearcoat: 1, clearcoatRoughness: 0.08 }),
+    phys({ map: dieMap, emissive: 0xff9aa2, emissiveMap: dieMap, emissiveIntensity: 0.9, roughness: 0.18, metalness: 0.5, clearcoat: 1, clearcoatRoughness: 0.08 }),
     edge, edge, edge,
   ]);
   dieGroup.add(die);
@@ -287,12 +287,12 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   const halos = [];
   for (let i = 0; i < 4; i++)
     for (let j = 0; j < 4; j++) {
-      const mat = phys({ color: 0x10180a, emissive: 0x9fd23a, emissiveIntensity: 0.5, roughness: 0.35, metalness: 0.2, clearcoat: 1 });
+      const mat = phys({ color: 0x1a0a0c, emissive: 0xff4757, emissiveIntensity: 0.5, roughness: 0.35, metalness: 0.2, clearcoat: 1 });
       coreMats.push(mat);
       const c = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.14, 0.34), mat);
       c.position.set(-0.75 + i * 0.5, 0, -0.75 + j * 0.5);
       cores.add(c);
-      const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xc8f560, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false }));
+      const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xff4757, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false }));
       halo.scale.set(0.7, 0.7, 0.7);
       halo.position.set(c.position.x, 0.12, c.position.z);
       cores.add(halo);
@@ -309,7 +309,7 @@ export function buildChip(THREE, canvas, stage, getProgress) {
     lid.add(m);
   };
   bar(3.0, 0.22, 0, 1.39); bar(3.0, 0.22, 0, -1.39); bar(0.22, 2.56, 1.39, 0); bar(0.22, 2.56, -1.39, 0);
-  const glassMat = phys({ color: 0x9fb8b2, metalness: 0, roughness: 0.08, transparent: true, opacity: 0.22, clearcoat: 1, clearcoatRoughness: 0.05, depthWrite: false });
+  const glassMat = phys({ color: 0xb8a3a6, metalness: 0, roughness: 0.08, transparent: true, opacity: 0.22, clearcoat: 1, clearcoatRoughness: 0.05, depthWrite: false });
   const glass = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.04, 2.6), glassMat);
   glass.position.y = 0.05;
   lid.add(glass);
@@ -323,13 +323,13 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   /* P/06 signal rings */
   const rings = new THREE.Group();
   const ringMat = (c, o) => new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: o, blending: THREE.AdditiveBlending, depthWrite: false });
-  const r1 = new THREE.Mesh(new THREE.TorusGeometry(3.35, 0.018, 8, 220), ringMat(0x5ee6c8, 0.95));
-  const r1g = new THREE.Mesh(new THREE.TorusGeometry(3.35, 0.08, 8, 220), ringMat(0x5ee6c8, 0.12));
-  const r2 = new THREE.Mesh(new THREE.TorusGeometry(3.85, 0.01, 8, 220), ringMat(0xc8f560, 0.6));
+  const r1 = new THREE.Mesh(new THREE.TorusGeometry(3.35, 0.018, 8, 220), ringMat(0xff9aa2, 0.95));
+  const r1g = new THREE.Mesh(new THREE.TorusGeometry(3.35, 0.08, 8, 220), ringMat(0xff9aa2, 0.12));
+  const r2 = new THREE.Mesh(new THREE.TorusGeometry(3.85, 0.01, 8, 220), ringMat(0xff4757, 0.6));
   const tick = new THREE.Group();
   for (let i = 0; i < 72; i++) {
     const a = (i / 72) * Math.PI * 2;
-    const m = new THREE.Mesh(new THREE.BoxGeometry(i % 6 === 0 ? 0.22 : 0.1, 0.01, 0.015), ringMat(0xc8f560, i % 6 === 0 ? 0.8 : 0.35));
+    const m = new THREE.Mesh(new THREE.BoxGeometry(i % 6 === 0 ? 0.22 : 0.1, 0.01, 0.015), ringMat(0xff4757, i % 6 === 0 ? 0.8 : 0.35));
     m.position.set(Math.cos(a) * 4.1, 0, Math.sin(a) * 4.1);
     m.rotation.y = -a;
     tick.add(m);
@@ -348,12 +348,12 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   }
   const pg = new THREE.BufferGeometry();
   pg.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-  const pm = new THREE.PointsMaterial({ color: 0xc8f560, size: 0.05, map: glowTex, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+  const pm = new THREE.PointsMaterial({ color: 0xff4757, size: 0.05, map: glowTex, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
   const dust = new THREE.Points(pg, pm);
   const pulses = new THREE.Group();
   const pulseList = [];
   for (let i = 0; i < 22; i++) {
-    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: i % 3 ? 0xc8f560 : 0x5ee6c8, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: i % 3 ? 0xff4757 : 0xff9aa2, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
     sp.scale.set(0.32, 0.32, 0.32);
     pulses.add(sp);
     pulseList.push({ sp, tr: traces[(i * 7) % traces.length], t: Math.random(), v: 0.18 + Math.random() * 0.25 });
