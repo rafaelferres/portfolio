@@ -56,14 +56,15 @@ export default function Nav({ dict, locale }: { dict: NavDict; locale: Locale })
     document.body.style.overflow = open ? "hidden" : "";
   }, [open]);
 
+  const h = (id: string) => `/${locale}#${id}`;
   const links = [
-    { href: "#top", label: dict.home },
-    { href: "#hire", label: dict.hire },
-    { href: "#projects", label: dict.projects },
-    { href: "#about", label: dict.about },
-    { href: "#experience", label: dict.experience },
-    { href: "#education", label: dict.education },
-    { href: "#contact", label: dict.contact },
+    { href: `/${locale}`, label: dict.home },
+    { href: h("hire"), label: dict.hire },
+    { href: h("projects"), label: dict.projects },
+    { href: h("about"), label: dict.about },
+    { href: h("experience"), label: dict.experience },
+    { href: `/${locale}/blog`, label: dict.blog },
+    { href: h("contact"), label: dict.contact },
   ];
 
   const swapLocale = (target: Locale) => {
@@ -82,7 +83,7 @@ export default function Nav({ dict, locale }: { dict: NavDict; locale: Locale })
         {dict.skip}
       </a>
       <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
-        <a href="#top" className="nav__brand" aria-label="Rafael Ferrés">
+        <a href={`/${locale}`} className="nav__brand" aria-label="Rafael Ferrés">
           <Logo />
           <span className="nav__name">Rafael Ferrés</span>
         </a>

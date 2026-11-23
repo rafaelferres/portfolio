@@ -1,0 +1,73 @@
+---
+title: "GPT-6.2 y Gemini 4 Neon: deja de comparar precio por token y mide el costo por tarea"
+description: "En dos días, OpenAI y Google lanzaron modelos que cambian las cuentas de quien lleva IA a producción. Qué cambia en la elección de modelos, el enrutamiento y el presupuesto."
+date: "2026-11-23T17:30:00-03:00"
+tags: ["LLMs", "OpenAI", "Gemini", "Costo de IA", "Arquitectura"]
+sources:
+  - title: "OpenAI — Introducing GPT-6.2 Astra and Sol"
+    url: "https://openai.com/index/introducing-gpt-6-2-astra-sol"
+  - title: "Google — Introducing Gemini 4 Neon"
+    url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/"
+  - title: "Google Antigravity — Gemini 4 Neon in Google Antigravity"
+    url: "https://antigravity.google/blog/gemini-4-neon-in-google-antigravity/"
+  - title: "MarkTechPost — OpenAI GPT-6.2 Astra and Sol release"
+    url: "https://www.marktechpost.com/2026/11/17/openai-gpt-6-2-astra-sol-release/"
+  - title: "DataCamp — Gemini 4 Neon"
+    url: "https://www.datacamp.com/blog/gemini-4-neon"
+  - title: "Android Headlines — Gemini 4 Neon release, pricing and features"
+    url: "https://androidheadlines.com/2026/11/google-gemini-4-neon-release-pricing-features.html"
+---
+
+El 17 de noviembre, OpenAI lanzó **GPT-6.2 Astra** y **GPT-6.2 Sol**. Al día siguiente, Google presentó **Gemini 4 Neon**. Leídos juntos, ambos anuncios cuentan la misma historia: la competencia entre laboratorios ya no es solo sobre qué modelo es más inteligente, sino sobre **cuánto cuesta resolver una tarea de punta a punta**.
+
+Para quien lidera IA en producción, eso cambia la forma de elegir modelos.
+
+## Qué se lanzó
+
+**OpenAI, 17/11.** Astra es el modelo de frontera para trabajos largos y difíciles; Sol es el modelo del día a día. Ambos llegaron a ChatGPT, Codex y la API (`gpt-6.2-astra` y `gpt-6.2-sol`).
+
+- El precio de Astra en la API bajó cerca de un 20% frente a GPT-6 Astra: US$ 8 por millón de tokens de entrada y US$ 40 por millón de salida.
+- Sol mantuvo el precio de GPT-6.1 Sol: US$ 2 de entrada y US$ 10 de salida.
+- Según OpenAI, Astra entrega mejores resultados usando cerca de un 22% menos tokens de salida que su antecesor.
+- En FrontierCode 2.0, el benchmark de código de Cognition, OpenAI afirma que Sol queda a medio punto de Astra costando cerca de una quinta parte.
+
+**Google, 18/11.** Neon es el cuarto modelo de la familia Gemini 4 en pocas semanas y se ubica en el medio: entre **Hydrogen**, rápido y barato para el día a día, y **Carbon**, pensado para los problemas más pesados.
+
+- Cuesta US$ 3 por millón de tokens de entrada y US$ 15 de salida, con ventana de contexto de 1 millón de tokens.
+- Google afirma que se acerca a la calidad de Carbon terminando las tareas mucho más rápido.
+- El precio promocional de Carbon (US$ 2 / US$ 10) vale hasta el 30 de noviembre. Desde el 1 de diciembre pasa a US$ 4 / US$ 20, y Neon queda más barato que Carbon.
+- En Antigravity, el entorno de agentes de Google, el orquestador ahora permite usar Neon para planificar y Hydrogen para ejecutar en la misma sesión.
+
+Una advertencia: muchos de estos números vienen de los propios fabricantes. Las comparaciones independientes todavía están llegando, así que conviene esperar antes de tomar cualquier benchmark como definitivo.
+
+## El precio por token engaña
+
+La tabla de precios muestra lo que cuesta cada token. La factura muestra otra cosa:
+
+> costo real = tokens de entrada + tokens de salida (incluido el razonamiento) + intentos fallidos + el tiempo de quien espera la respuesta
+
+Un modelo más caro por token puede salir más barato por tarea si acierta a la primera, con menos texto y menos idas y vueltas. Es justamente el argumento de ambos lanzamientos: menos tokens de salida, menos pasos, menos retrabajo.
+
+Por eso la métrica que importa para un equipo es el **costo por tarea completada con calidad aceptable**, medido en su propio caso de uso.
+
+## El modelo intermedio se vuelve el estándar
+
+Ambos lanzamientos refuerzan una arquitectura que ya se venía dibujando:
+
+1. **Un modelo intermedio como estándar.** Sol, Neon y sus equivalentes resuelven la mayor parte del trabajo real con una fracción del costo del tope de gama.
+2. **El modelo de frontera como excepción.** Astra, Carbon y sus equivalentes entran cuando la tarea es larga, ambigua o crítica, o cuando el intermedio falla una verificación.
+3. **Un modelo rápido para ejecutar.** Tareas repetitivas, extracción y clasificación van al más barato, como Hydrogen.
+
+El par planificador + ejecutor que Google incorporó en Antigravity es la versión empaquetada de este diseño: un modelo más capaz decide qué hacer y uno más barato lo hace. La misma idea se puede construir con LangGraph o Agno, en cualquier proveedor.
+
+## Lo que haría esta semana
+
+- **Correr tus propias evaluaciones antes de cambiar.** El benchmark del fabricante no reemplaza un conjunto de pruebas con tus tareas, tus documentos y tus criterios de calidad.
+- **Medir costo por tarea, no por token.** Registra tokens, reintentos y latencia por ejecución. Herramientas de observabilidad como Langfuse ayudan a comparar modelos en el mismo flujo.
+- **Revisar el presupuesto de diciembre.** Quien usa Gemini 4 Carbon verá su precio duplicarse el 1 de diciembre. Vale la pena probar si Neon alcanza antes del cambio.
+- **Separar planificación y ejecución.** Si tu agente usa el mismo modelo para todo, hay un ahorro fácil esperando.
+- **Mantener barato el cambio de modelo.** Con lanzamientos cada pocas semanas, la ventaja es de quien puede cambiar de modelo modificando una configuración, sin reescribir el sistema.
+
+## En resumen
+
+La pregunta ya no es "cuál es el mejor modelo". Es **qué combinación de modelos resuelve mis tareas con la calidad necesaria al menor costo**. La respuesta cambia cada mes, y por eso medir importa más que elegir.

@@ -5,6 +5,8 @@ import { site } from "@/lib/site";
 import Nav from "@/components/Nav";
 import Logo from "@/components/Logo";
 import Effects from "@/components/Effects";
+import SiteFooter from "@/components/SiteFooter";
+import { formatDate, getPosts } from "@/lib/blog";
 import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
 import Assembly from "@/components/Assembly";
@@ -35,9 +37,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = await getDictionary(locale);
-  const year = new Date().getFullYear();
-  const cvHref = `/${t.cv.file}`;
+    const cvHref = `/${t.cv.file}`;
   const pr = t.projects;
+  const latest = getPosts(locale).slice(0, 3);
   const companies = [
     { name: "KHAL", note: "Head of AI" },
     { name: "Cogna Educação", note: "AI Pro Hub" },
@@ -400,6 +402,28 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         </section>
 
+        {/* ───────── § 07 WRITING ───────── */}
+        {latest.length > 0 && (
+          <section id="writing" className="section container">
+            <SectionHeader index={7} label={t.blog.label} title={t.blog.title} />
+            <ol className="post-list">
+              {latest.map((p) => (
+                <li key={p.slug}>
+                  <a href={`/${locale}/blog/${p.slug}`} className="post-row">
+                    <span className="mono post-row__date">{formatDate(p.date, locale)}</span>
+                    <span className="post-row__main">
+                      <span className="post-row__title">{p.title}</span>
+                      <span className="post-row__desc">{p.description}</span>
+                    </span>
+                    <span className="mono post-row__meta">{p.readingMinutes} {t.blog.read} →</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+            <a href={`/${locale}/blog`} className="btn btn--ghost blog-all">{t.blog.all} →</a>
+          </section>
+        )}
+
         {/* ───────── CONTACT ───────── */}
         <section id="contact" className="contact">
           <div className="container contact__grid">
@@ -422,40 +446,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </section>
       </main>
 
-      <footer className="footer">
-        <div className="container footer__grid">
-          <div className="footer__brand">
-            <Logo />
-            <p>Rafael Ferrés</p>
-            <p className="mono footer__muted">{t.hero.subtitle}</p>
-          </div>
-          <nav aria-label={t.footer.index}>
-            <h3 className="mono footer__title">{t.footer.index}</h3>
-            <ul>
-              <li><a href="#hire">{t.nav.hire}</a></li>
-              <li><a href="#projects">{t.nav.projects}</a></li>
-              <li><a href="#about">{t.nav.about}</a></li>
-              <li><a href="#experience">{t.nav.experience}</a></li>
-              <li><a href="#education">{t.nav.education}</a></li>
-              <li><a href="#contact">{t.nav.contact}</a></li>
-            </ul>
-          </nav>
-          <div>
-            <h3 className="mono footer__title">{t.footer.elsewhere}</h3>
-            <ul>
-              <li><a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              <li><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
-              <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-              <li><a href={cvHref} target="_blank" rel="noopener">{t.cv.download}</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="container footer__bottom mono">
-          <span>© {year} Rafael Ferrés. {t.footer.rights}</span>
-          <span>{t.footer.coords}</span>
-          <a href="#top">↑ {t.footer.back}</a>
-        </div>
-      </footer>
+      <SiteFooter t={t} locale={locale} />
     </>
   );
 }

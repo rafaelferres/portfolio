@@ -16,7 +16,8 @@
     "language": "Idioma",
     "localTime": "São Paulo",
     "hire": "Por que eu",
-    "projects": "Projetos"
+    "projects": "Projetos",
+    "blog": "Blog"
   },
   "hero": {
     "tag": "Portfólio / RF",
@@ -190,8 +191,8 @@
       {
         "name": "OpenAI",
         "items": [
-          "GPT-6 Astra",
-          "GPT-6.1 Sol",
+          "GPT-6.2 Astra",
+          "GPT-6.2 Sol",
           "GPT-6 Luna",
           "gpt-image"
         ]
@@ -199,6 +200,7 @@
       {
         "name": "Anthropic",
         "items": [
+          "Claude Fable 5.2",
           "Claude Opus 5.5",
           "Claude Sonnet 5.5",
           "Claude Haiku 5.5"
@@ -207,9 +209,9 @@
       {
         "name": "Gemini",
         "items": [
-          "Gemini 3.6 Flash",
-          "Gemini 3.1 Pro",
-          "Gemini 3.5 Flash-Lite"
+          "Gemini 4 Carbon",
+          "Gemini 4 Neon",
+          "Gemini 4 Hydrogen"
         ]
       },
       {
@@ -581,5 +583,21 @@
   "bands": {
     "worked": "Onde trabalhei",
     "tools": "Ferramentas"
+  },
+  "blog": {
+    "label": "Escrita",
+    "title": "Notas sobre IA aplicada.",
+    "intro": "Análises curtas sobre modelos, agentes e o que muda na prática para quem coloca IA em produção.",
+    "all": "Ver todos os posts",
+    "back": "Voltar ao blog",
+    "read": "min de leitura",
+    "sources": "Fontes",
+    "aiNote": "Texto escrito com apoio de IA a partir das fontes abaixo e publicado automaticamente.",
+    "more": "Mais posts",
+    "empty": "Os primeiros posts estão a caminho.",
+    "published": "Publicado em",
+    "cta": "Quer conversar sobre IA no seu time?",
+    "ctaButton": "Fale comigo",
+    "rss": "RSS"
   }
 }

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { htmlLang, locales } from "@/i18n/config";
 import { site } from "@/lib/site";
+import { getPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const languages = Object.fromEntries(locales.map((l) => [htmlLang[l], `${site.url}/${l}`]));
@@ -15,5 +16,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const files = ["cv/curriculo-rafael-ferres-pt.pdf", "cv/resume-rafael-ferres-en.pdf", "cv/cv-rafael-ferres-es.pdf", "llms.txt"].map(
     (f) => ({ url: `${site.url}/${f}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.5 })
   );
-  return [...pages, ...files];
+  const blogIndex: MetadataRoute.Sitemap = locales.map((l) => ({
+    url: `${site.url}/${l}/blog`,
+    lastModified: now,
+    changeFrequency: "daily",
+    priority: 0.8,
+    alternates: { languages: Object.fromEntries(locales.map((x) => [htmlLang[x], `${site.url}/${x}/blog`])) },
+  }));
+  const posts: MetadataRoute.Sitemap = getPosts("pt").flatMap((p) =>
+    locales.map((l) => ({
+      url: `${site.url}/${l}/blog/${p.slug}`,
+      lastModified: new Date(p.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: { languages: Object.fromEntries(locales.map((x) => [htmlLang[x], `${site.url}/${x}/blog/${p.slug}`])) },
+    }))
+  );
+  return [...pages, ...blogIndex, ...posts, ...files];
 }

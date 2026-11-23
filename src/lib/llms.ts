@@ -1,6 +1,7 @@
 import en from "@/i18n/dictionaries/en.json";
 import pt from "@/i18n/dictionaries/pt.json";
 import { site } from "@/lib/site";
+import { getPosts } from "@/lib/blog";
 
 const strip = (s: string) => s.replace(/<[^>]+>/g, "");
 
@@ -27,6 +28,13 @@ export function llmsTxt(full = false): string {
   lines.push(`- [Résumé PDF (English)](${site.url}/${en.cv.file})`);
   lines.push(`- [Currículo PDF (Português)](${site.url}/${pt.cv.file})`);
   lines.push(`- [Full profile for LLMs](${site.url}/llms-full.txt)`);
+  lines.push(`- [Blog (English)](${site.url}/en/blog): notes on applied AI`);
+  const posts = getPosts("en").slice(0, full ? 100 : 15);
+  if (posts.length) {
+    lines.push("");
+    lines.push("## Recent posts");
+    for (const p of posts) lines.push(`- [${p.title}](${site.url}/en/blog/${p.slug}): ${p.description}`);
+  }
   if (!full) return lines.join("\n") + "\n";
 
   lines.push("");

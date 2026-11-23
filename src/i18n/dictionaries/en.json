@@ -16,7 +16,8 @@
     "language": "Language",
     "localTime": "São Paulo",
     "hire": "Why me",
-    "projects": "Projects"
+    "projects": "Projects",
+    "blog": "Blog"
   },
   "hero": {
     "tag": "Portfolio / RF",
@@ -190,8 +191,8 @@
       {
         "name": "OpenAI",
         "items": [
-          "GPT-6 Astra",
-          "GPT-6.1 Sol",
+          "GPT-6.2 Astra",
+          "GPT-6.2 Sol",
           "GPT-6 Luna",
           "gpt-image"
         ]
@@ -199,6 +200,7 @@
       {
         "name": "Anthropic",
         "items": [
+          "Claude Fable 5.2",
           "Claude Opus 5.5",
           "Claude Sonnet 5.5",
           "Claude Haiku 5.5"
@@ -207,9 +209,9 @@
       {
         "name": "Gemini",
         "items": [
-          "Gemini 3.6 Flash",
-          "Gemini 3.1 Pro",
-          "Gemini 3.5 Flash-Lite"
+          "Gemini 4 Carbon",
+          "Gemini 4 Neon",
+          "Gemini 4 Hydrogen"
         ]
       },
       {
@@ -581,5 +583,21 @@
   "bands": {
     "worked": "Where I worked",
     "tools": "Toolbox"
+  },
+  "blog": {
+    "label": "Writing",
+    "title": "Notes on applied AI.",
+    "intro": "Short analyses on models, agents and what actually changes for teams shipping AI to production.",
+    "all": "See all posts",
+    "back": "Back to the blog",
+    "read": "min read",
+    "sources": "Sources",
+    "aiNote": "Written with AI assistance from the sources below and published automatically.",
+    "more": "More posts",
+    "empty": "The first posts are on their way.",
+    "published": "Published on",
+    "cta": "Want to talk about AI on your team?",
+    "ctaButton": "Get in touch",
+    "rss": "RSS"
   }
 }
