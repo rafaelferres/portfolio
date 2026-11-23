@@ -1,0 +1,68 @@
+/* ───────── motion layer (see src/lib/effects.js) ───────── */
+.ambient{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+.glow{position:fixed;left:0;top:0;width:600px;height:600px;border-radius:50%;z-index:-1;pointer-events:none;background:radial-gradient(circle,rgba(200,245,96,.075),rgba(94,230,200,.03) 40%,transparent 70%);will-change:transform}
+
+/* words rising (only hidden once JS is running) */
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
+.w>span{display:inline-block}
+.fx [data-split] .w>span{transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--wi,0) * 55ms)}
+.fx [data-split].in .w>span{transform:none}
+.w--accent>span{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;color:var(--accent);letter-spacing:-.01em;padding-right:.06em}
+.hero__name [data-split] .w{padding-bottom:.04em}
+
+/* timeline line drawing with the scroll */
+.timeline{position:relative;padding-left:28px;border-left:1px solid var(--line)}
+.timeline::after{content:"";position:absolute;left:-1px;top:0;width:2px;height:calc(var(--draw,1) * 100%);background:linear-gradient(var(--accent),var(--accent-2));box-shadow:0 0 12px rgba(200,245,96,.5)}
+.fx .timeline::after{height:calc(var(--draw,0) * 100%)}
+@media (max-width:760px){.timeline{padding-left:18px}}
+
+/* project timeline: line sweeps, dots pop in sequence */
+.fx .tl .tl__list::before{transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.16,1,.3,1)}
+.fx .tl.in .tl__list::before{transform:none}
+.fx .tl .tl__dot{transform:scale(0);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.fx .tl.in .tl__dot{transform:none}
+.tl__item:nth-child(2) .tl__dot{transition-delay:.25s}.tl__item:nth-child(3) .tl__dot{transition-delay:.5s}.tl__item:nth-child(4) .tl__dot{transition-delay:.75s}.tl__item:nth-child(5) .tl__dot{transition-delay:1s}
+@media (max-width:860px){.fx .tl .tl__list::before{transform:scaleY(0);transform-origin:top}}
+
+/* 3D tilt + light that follows the cursor */
+.tilt{position:relative;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s;will-change:transform}
+.tilt.tilt:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-4px)}
+.tilt::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(200,245,96,.09),transparent 45%);opacity:0;transition:opacity .3s}
+.tilt:hover::after{opacity:1}
+.btn--primary{transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s}
+
+/* double band: companies + tools */
+.bands{border-block:1px solid var(--line);overflow:hidden}
+.band{display:flex;align-items:stretch;min-height:64px}
+.band__label{flex:0 0 170px;display:flex;align-items:center;padding:0 20px;font-size:11px;border-right:1px solid rgba(11,11,10,.18);position:relative;z-index:1}
+.band__track{flex:1;overflow:hidden;display:flex;align-items:center;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.band__row{display:flex;align-items:center;gap:44px;width:max-content;padding-right:44px;animation:bandMove 42s linear infinite}
+.band__row--rev{animation-direction:reverse;animation-duration:55s}
+.band--lime{background:var(--accent);color:var(--accent-ink)}
+.band--lime .band__label{color:rgba(11,11,10,.7)}
+.band--dark{background:var(--bg-2);color:var(--muted);border-top:1px solid var(--line)}
+.band--dark .band__label{border-right-color:var(--line);color:var(--dim)}
+.co{font-size:28px;font-weight:800;letter-spacing:-.045em;white-space:nowrap;line-height:1}
+.co small{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-left:8px;opacity:.65}
+.co-sep{width:8px;height:8px;border:1.5px solid currentColor;transform:rotate(45deg);opacity:.6;flex:none}
+.tool{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.tool::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-2)}
+.bands:hover .band__row{animation-play-state:paused}
+@keyframes bandMove{to{transform:translateX(-50%)}}
+@media (max-width:640px){.band__label{flex-basis:auto;padding:0 12px}.co{font-size:22px}}
+
+/* signature: neural network forming the RF logo */
+.neural{position:relative;height:clamp(380px,46vw,560px);margin:56px 0 0;border:1px solid var(--line);border-radius:var(--radius);background:radial-gradient(ellipse at 50% 50%,rgba(94,230,200,.07),transparent 60%),var(--bg-2);overflow:hidden;transition:border-color .6s}
+.neural canvas{position:absolute;inset:0;width:100%;height:100%}
+.neural figcaption{position:absolute;left:22px;right:22px;bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap}
+.neural__count{display:flex;align-items:baseline;gap:10px;color:var(--muted)}
+.neural__count b{font-family:var(--font-sans);font-size:34px;letter-spacing:-.03em;color:var(--accent);font-weight:700}
+.neural__cap{color:var(--muted);font-size:14.5px;max-width:440px;text-align:right}
+.neural.is-formed{border-color:rgba(200,245,96,.45)}
+@media (max-width:640px){.neural__cap{text-align:left}}
+
+@media (prefers-reduced-motion: reduce){
+  .ambient,.glow{display:none}
+  .band__row{animation:none}
+  .tilt,.tilt.tilt:hover{transform:none}
+}

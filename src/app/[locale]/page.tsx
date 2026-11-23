@@ -4,6 +4,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { site } from "@/lib/site";
 import Nav from "@/components/Nav";
 import Logo from "@/components/Logo";
+import Effects from "@/components/Effects";
 import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
 import Assembly from "@/components/Assembly";
@@ -21,11 +22,11 @@ function SectionHeader({ index, label, title }: { index: number; label: string; 
   return (
     <Reveal className="section-header">
       <div className="section-header__meta mono">
-        <span className="section-header__index">§ {pad(index)}</span>
+        <span className="section-header__index" data-scramble>§ {pad(index)}</span>
         <span className="section-header__rule" aria-hidden="true" />
         <span>{label}</span>
       </div>
-      <h2 className="section-header__title">{title}</h2>
+      <h2 className="section-header__title" data-split data-accent>{title}</h2>
     </Reveal>
   );
 }
@@ -37,6 +38,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const year = new Date().getFullYear();
   const cvHref = `/${t.cv.file}`;
   const pr = t.projects;
+  const companies = [
+    { name: "KHAL", note: "Head of AI" },
+    { name: "Cogna Educação", note: "AI Pro Hub" },
+    { name: "JBS", note: "" },
+  ];
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -86,6 +92,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <Nav dict={t.nav} locale={locale} />
       <ScrollProgress />
+      <Effects />
 
       <main id="main">
         {/* ───────── HERO + 3D ASSEMBLY ───────── */}
@@ -97,8 +104,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <span>{t.hero.location}</span>
               </div>
               <h1 id="hero-title" className="hero__name">
-                <span>{t.hero.first}</span>
-                <span className="hero__name--outline">{t.hero.last}</span>
+                <span data-split>{t.hero.first}</span>
+                <span className="hero__name--outline" data-split>{t.hero.last}</span>
               </h1>
               <p className="hero__subtitle">{t.hero.subtitle}</p>
               <p className="hero__bio">{t.hero.bio}</p>
@@ -110,7 +117,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <div className="hero-stats">
                 {t.hero.stats.map((s) => (
                   <div key={s.label} className="stat">
-                    <span className="stat__value">{s.value}</span>
+                    <span className="stat__value" data-count>{s.value}</span>
                     <span className="stat__label mono">{s.label}</span>
                   </div>
                 ))}
@@ -120,14 +127,31 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         </section>
 
-        <div className="marquee" aria-hidden="true">
-          <div className="marquee__track mono">
-            {[...site.tools, ...site.tools].map((tool, i) => (
-              <span key={`${tool}-${i}`} className="marquee__item">
-                <span className="marquee__star">✦</span>
-                {tool}
-              </span>
-            ))}
+        <div className="bands">
+          <div className="band band--lime">
+            <span className="band__label mono">{t.bands.worked}</span>
+            <div className="band__track" aria-hidden="true">
+              <div className="band__row">
+                {[0, 1, 2, 3].flatMap((k) =>
+                  companies.map((c) => (
+                    <span key={`${k}-${c.name}`} style={{ display: "contents" }}>
+                      <span className="co">{c.name}{c.note && <small>{c.note}</small>}</span>
+                      <span className="co-sep" />
+                    </span>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="band band--dark">
+            <span className="band__label mono">{t.bands.tools}</span>
+            <div className="band__track" aria-hidden="true">
+              <div className="band__row band__row--rev">
+                {[...site.tools, ...site.tools].map((tool, i) => (
+                  <span key={`${tool}-${i}`} className="tool">{tool}</span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -138,7 +162,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="reasons">
               {t.hire.reasons.map((r, i) => (
                 <Reveal key={r.title} className="reason" delay={i * 70}>
-                  <span className="mono reason__n">W/{pad(i + 1)}</span>
+                  <span className="mono reason__n" data-scramble>W/{pad(i + 1)}</span>
                   <h3>{r.title}</h3>
                   <p>{r.text}</p>
                 </Reveal>
@@ -180,12 +204,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <SectionHeader index={2} label={pr.label} title={pr.title} />
           <Reveal className="now">
             <div className="now__stat">
-              <span className="now__value">{pr.now.stat}</span>
+              <span className="now__value" data-count>{pr.now.stat}</span>
               <span className="mono now__statlabel">{pr.now.statLabel}</span>
             </div>
             <div className="now__body">
               <span className="chip chip--live mono">{pr.now.label}</span>
-              <h3 className="now__title">{pr.now.title}</h3>
+              <h3 className="now__title" data-split>{pr.now.title}</h3>
               <p className="now__text">{pr.now.text}</p>
             </div>
             <div className="org">
@@ -212,7 +236,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <Reveal as="article" key={it.code} className="pj" delay={i * 80}>
                 <span className="pj__year" aria-hidden="true">2023</span>
                 <div className="pj__top mono">
-                  <span className="pj__code">{it.code}</span>
+                  <span className="pj__code" data-scramble>{it.code}</span>
                   <span className="chip chip--accent">{pr.badge}</span>
                 </div>
                 <p className="mono pj__period">{it.period}{it.org ? ` · ${it.org}` : ""}</p>
@@ -235,7 +259,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               {pr.led.map((x) => (
                 <article key={x.code} className="lc">
                   <div className="pj__top mono">
-                    <span className="pj__code">{x.code}</span>
+                    <span className="pj__code" data-scramble>{x.code}</span>
                     <span className="chip">{x.cloud}</span>
                   </div>
                   <h4 className="lc__title">{x.title}</h4>
@@ -280,6 +304,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               ))}
             </div>
           </div>
+          <Reveal as="figure" className="neural">
+            <canvas aria-hidden="true" />
+            <figcaption>
+              <span className="mono neural__count"><b data-net-count="">000</b> {t.about.netUnit}</span>
+              <span className="neural__cap">{t.about.netCaption}</span>
+            </figcaption>
+          </Reveal>
         </section>
 
         {/* ───────── § 04 EXPERIENCE ───────── */}
@@ -289,7 +320,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             {t.experience.items.map((job, i) => (
               <Reveal as="li" key={job.code} className="job" delay={Math.min(i, 3) * 60}>
                 <div className="job__aside mono">
-                  <span className="job__code">{job.code}</span>
+                  <span className="job__code" data-scramble>{job.code}</span>
                   <span>{job.period}</span>
                   <span className="job__loc">{job.location}</span>
                 </div>
@@ -318,7 +349,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <div className="providers">
             {t.stack.providers.map((pv, i) => (
               <Reveal key={pv.name} className="prov" delay={i * 60}>
-                <span className="mono prov__code">M/{pad(i + 1)}</span>
+                <span className="mono prov__code" data-scramble>M/{pad(i + 1)}</span>
                 <h4 className="prov__name">{pv.name}</h4>
                 <ul className="prov__list">
                   {pv.items.map((x) => <li key={x}>{x}</li>)}
@@ -374,7 +405,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <div className="container contact__grid">
             <Reveal>
               <span className="mono contact__label">→ {t.contact.label}</span>
-              <h2 className="contact__title">{t.contact.title}</h2>
+              <h2 className="contact__title" data-split data-accent>{t.contact.title}</h2>
               <p className="contact__text">{t.contact.text}</p>
               <p className="contact__or">{t.contact.or}</p>
               <a href={`mailto:${site.email}`} className="contact__email">{site.email}</a>

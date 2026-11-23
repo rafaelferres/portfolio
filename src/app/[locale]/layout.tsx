@@ -7,6 +7,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { site } from "@/lib/site";
 import "../globals.css";
 import "../portfolio.css";
+import "../motion.css";
 import Loader from "@/components/Loader";
 
 export function generateStaticParams() {

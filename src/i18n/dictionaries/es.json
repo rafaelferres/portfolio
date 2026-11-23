@@ -78,7 +78,9 @@
         "text": "En el <b>AI Pro Hub de Cogna</b> lideré <b>3 equipos de IA, cada uno con su Tech Lead</b>, entregando agentes de ventas, IA para medios pagados y pricing dinámico. Hoy, como <b>Head of Artificial Intelligence en KHAL</b>, <b>lidero todo el delivery de IA de la empresa — más de 8 proyectos</b>: elijo dónde la IA genera valor, diseño las soluciones y formo el equipo que las entrega."
       }
     ],
-    "photoAlt": "Retrato de Rafael Ferrés"
+    "photoAlt": "Retrato de Rafael Ferrés",
+    "netUnit": "neuronas conectadas",
+    "netCaption": "Cada punto es una neurona. Desplázate y la red se organiza en mi logo: del caos a la estructura, como un buen proyecto de IA."
   },
   "experience": {
     "label": "Carrera",
@@ -575,5 +577,9 @@
   "cv": {
     "download": "Descargar CV (PDF)",
     "file": "cv/cv-rafael-ferres-es.pdf"
+  },
+  "bands": {
+    "worked": "Dónde trabajé",
+    "tools": "Herramientas"
   }
 }
