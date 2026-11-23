@@ -121,3 +121,20 @@
 .post__cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:24px;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--bg-2)}
 .post__cta p{font-size:20px;font-weight:600;letter-spacing:-.02em}
 .post__more{margin-top:64px}
+
+/* ───────── own lab: Krun One ───────── */
+.lab{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);margin-bottom:40px;padding:clamp(24px,3.5vw,40px);border:1px solid var(--accent);border-radius:var(--radius);background:radial-gradient(ellipse at 0% 0%,rgba(255,71,87,.12),transparent 55%),var(--bg-2);position:relative;overflow:hidden}
+.lab__head{display:flex;flex-direction:column;gap:12px;min-width:0}
+.lab__title{font-size:clamp(28px,3.4vw,44px);line-height:1.05;letter-spacing:-.035em;font-weight:700;margin:2px 0}
+.lab__text{color:var(--muted);font-size:16.5px;max-width:620px}
+.lab__multi{padding:14px 16px;border-left:2px solid var(--accent-2);background:rgba(255,255,255,.02);border-radius:0 10px 10px 0}
+.lab__multi-t{color:var(--accent-2)}
+.lab__multi p{color:var(--muted);font-size:15px;margin-top:4px}
+.lab__links{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.lab__side{display:flex;flex-direction:column;gap:16px;justify-content:center}
+.lab__stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:0;background:var(--line-2);border:1px solid var(--line-2);border-radius:12px;overflow:hidden}
+.lab__stat{background:var(--bg);padding:18px 16px;display:flex;flex-direction:column-reverse;gap:6px}
+.lab__stat dd{margin:0;font-size:clamp(30px,3vw,40px);font-weight:700;letter-spacing:-.04em;color:var(--accent);line-height:1}
+.lab__stat dt{color:var(--muted);font-size:10.5px;line-height:1.4}
+.lab__note{color:var(--dim);font-size:12.5px;line-height:1.55}
+@media (max-width:900px){.lab{grid-template-columns:1fr}}

@@ -232,6 +232,43 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
           </Reveal>
 
+
+          <Reveal className="lab">
+            <div className="lab__head">
+              <div className="pj__top mono">
+                <span className="pj__code" data-scramble>{pr.lab.code}</span>
+                <span className="chip chip--accent">{pr.lab.badge}</span>
+              </div>
+              <p className="mono pj__period">{pr.lab.label} · Ferres Labs</p>
+              <h3 className="lab__title" data-split>{pr.lab.title}</h3>
+              <p className="pj__role">{pr.lab.role}</p>
+              <p className="lab__text">{pr.lab.text}</p>
+              <div className="lab__multi">
+                <span className="mono lab__multi-t">+ {pr.lab.multiTitle}</span>
+                <p>{pr.lab.multiText}</p>
+              </div>
+              <ul className="pcard__tags">
+                {pr.lab.tags.map((x) => <li key={x} className="chip mono">{x}</li>)}
+              </ul>
+              <div className="lab__links">
+                {pr.lab.links.map((lk, i) => (
+                  <a key={lk.url} href={lk.url} target="_blank" rel="noopener noreferrer" className={`btn ${i === 0 ? "btn--primary" : "btn--ghost"}`}>{lk.label} ↗</a>
+                ))}
+              </div>
+            </div>
+            <div className="lab__side">
+              <dl className="lab__stats">
+                {pr.lab.stats.map((st) => (
+                  <div key={st.label} className="lab__stat">
+                    <dt className="mono">{st.label}</dt>
+                    <dd data-count>{st.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="lab__note">{pr.lab.note}</p>
+            </div>
+          </Reveal>
+
           <h3 className="mono proj__label">{pr.soloLabel}</h3>
           <div className="proj">
             {pr.items.map((it, i) => (

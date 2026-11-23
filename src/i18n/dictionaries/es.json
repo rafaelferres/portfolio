@@ -171,6 +171,16 @@
         ]
       },
       {
+        "name": "Entrenamiento & Evaluación",
+        "items": [
+          "Encoders (ModernBERT)",
+          "LoRA",
+          "Calibración",
+          "Evaluación de modelos",
+          "Hugging Face"
+        ]
+      },
+      {
         "name": "ML & Observabilidad",
         "items": [
           "scikit-learn",
@@ -416,7 +426,7 @@
       },
       {
         "title": "Manos a la obra cuando hace falta",
-        "text": "Diseñé y programé solo el test vocacional y la plataforma de agentes con RAG en 2023."
+        "text": "Diseñé y programé solo el test vocacional y la plataforma de agentes en 2023, y entrené solo Krun One, un modelo open source."
       },
       {
         "title": "Liderazgo de líderes",
@@ -445,6 +455,10 @@
       {
         "label": "Hoy",
         "value": "Delivery de IA de KHAL · 8+ proyectos · 18 personas"
+      },
+      {
+        "label": "Investigación",
+        "value": "Krun One · modelo propio open source"
       },
       {
         "label": "En IA desde",
@@ -574,6 +588,52 @@
         }
       ],
       "structTitle": "Cómo se organiza el equipo"
+    },
+    "lab": {
+      "badge": "Open source",
+      "label": "Laboratorio propio",
+      "code": "LAB/01",
+      "title": "Krun One — un modelo de decisión para agentes",
+      "role": "Proyecto en solitario · datos, entrenamiento, evaluación y publicación",
+      "text": "Modelo encoder de 879 millones de parámetros que recibe un contexto y una pregunta tipada y devuelve una decisión calibrada en una sola pasada, sin generar texto: intención, enrutamiento de herramientas, verdadero o falso, puntuación y opción múltiple. También sabe abstenerse cuando no está seguro. Funciona en portugués, inglés, español y francés.",
+      "multiTitle": "Krun One Multimodal",
+      "multiText": "Añade imágenes, documentos (incluso escaneados) y audio al modelo de texto congelado, entrenando solo unos 27 millones de parámetros de fusión (adapters y LoRA).",
+      "stats": [
+        {
+          "value": "879M",
+          "label": "parámetros"
+        },
+        {
+          "value": "~15 ms",
+          "label": "por decisión en una RTX 4090"
+        },
+        {
+          "value": "97,6%",
+          "label": "acierto en opción en KrunBench"
+        },
+        {
+          "value": "4",
+          "label": "idiomas, incluido PT-BR"
+        }
+      ],
+      "note": "Cifras de KrunBench v1, conjunto de validación propio. En un benchmark externo (ítems públicos de JevBench) el resultado es 53,2%; las limitaciones están documentadas en la ficha del modelo. Pesos Apache-2.0; proyecto de investigación.",
+      "tags": [
+        "mmBERT",
+        "SigLIP2",
+        "Whisper",
+        "LoRA",
+        "Calibración"
+      ],
+      "links": [
+        {
+          "label": "Krun One en Hugging Face",
+          "url": "https://huggingface.co/ferreslabs/krun-one-v1"
+        },
+        {
+          "label": "Versión multimodal",
+          "url": "https://huggingface.co/ferreslabs/krun-one-v1-multimodal"
+        }
+      ]
     }
   },
   "cv": {

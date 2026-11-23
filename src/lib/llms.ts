@@ -15,6 +15,10 @@ export function llmsTxt(full = false): string {
   lines.push("");
   lines.push("Rafael Ferrés is Head of Artificial Intelligence at KHAL, where he leads all AI delivery (8+ projects, a team of 18 through an Engineering Manager and 2 Tech Leads). He has shipped Generative AI in production since early 2023 and built one of the first no-code AI agent platforms with RAG in mid-2023, before OpenAI's GPTs.");
   lines.push("");
+  lines.push("## Open-source research: Krun One");
+  lines.push(`${t.projects.lab.title}. ${t.projects.lab.text} ${t.projects.lab.multiTitle}: ${t.projects.lab.multiText} ${t.projects.lab.note}`);
+  for (const lk of t.projects.lab.links) lines.push(`- [${lk.label}](${lk.url})`);
+  lines.push("");
   lines.push("## Key facts");
   for (const f of t.hire.facts) lines.push(`- ${f.label}: ${f.value}`);
   lines.push(`- Contact: ${site.email}`);
