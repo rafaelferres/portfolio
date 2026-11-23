@@ -1,0 +1,58 @@
+---
+title: "Zero Data Retention no es garantía: lo que la investigación de Dragos enseña sobre los proveedores de inferencia"
+description: "Dragos sembró señuelos en unos 2 millones de prompts y detectó filtraciones en al menos tres proveedores. OpenRouter retiró el sello ZDR de 125 endpoints. Qué cambia en tu cadena de IA."
+date: "2026-11-23T18:45:00-03:00"
+tags: ["Seguridad de IA", "Inferencia", "Gobernanza", "Privacidad", "LLMs"]
+sources:
+  - title: "Dragos — Three breaches, endless leaks: Your AI supply chain needs canaries"
+    url: "https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens"
+  - title: "The Next Web — OpenRouter drops three AI providers after Dragos catches prompt theft"
+    url: "https://thenextweb.com/news/openrouter-drops-providers-dragos-ai-prompt-theft-canaries"
+  - title: "Notebookcheck — OpenRouter cuts three AI providers: Who needs to rotate API keys now"
+    url: "https://www.notebookcheck.net/OpenRouter-cuts-three-AI-providers-Who-needs-to-rotate-API-keys-now.1457670.0.html"
+---
+
+Muchas empresas deciden a dónde enviar sus prompts mirando un sello: **Zero Data Retention** (ZDR), la promesa de que el proveedor no guarda lo que envías. Una investigación publicada por Dragos el 19 de noviembre mostró que esa promesa puede no valer nada cuando la infraestructura del proveedor ya fue comprometida. El 22 de noviembre, OpenRouter, uno de los mayores enrutadores de modelos del mercado, reaccionó retirando proveedores de su plataforma.
+
+Para quien lleva IA a producción, la lección es directa: el prompt es un dato sensible y viaja por una cadena de proveedores que probablemente no ves completa.
+
+## Qué pasó
+
+**La investigación.** Según el texto firmado por HD Moore, director de investigación de Dragos, la empresa envió unos **2 millones de prompts** a servicios de IA populares entre julio y noviembre de 2026. Cada prompt llevaba señuelos únicos, los llamados *canary tokens*: URLs y credenciales de AWS que ningún sistema legítimo usaría. Si alguien accedía a uno de ellos, quedaba demostrado que alguien había leído el prompt original.
+
+**Los resultados**, según Dragos:
+
+- Hubo señales de exposición de datos en **al menos tres proveedores de IA**. Ninguno lo sabía hasta que los investigadores les avisaron.
+- El caso más antiguo se remonta a mediados de julio.
+- El mayor incidente involucró **un par de cientos de claves de AWS**, cada una enviada una sola vez a un solo proveedor, todas en unas pocas ventanas a finales de octubre. Con esas claves falsas, los atacantes hicieron decenas de miles de llamadas a la API de AWS.
+- Revendedores que operan en marketplaces de inferencia podían ver y guardar prompts de clientes usando funciones comunes de registro.
+- Parte de las solicitudes a las que se accedió se había enviado con la marca de ZDR.
+
+Dragos no reveló los nombres de los tres proveedores comprometidos.
+
+**La reacción.** El 22 de noviembre, OpenRouter anunció que retiró **tres proveedores de inferencia** de la plataforma y quitó la elegibilidad ZDR a **125 endpoints**, parte de ellos por precaución, según The Next Web y Notebookcheck. La empresa afirma que la investigación no mostró una intrusión en la propia OpenRouter. Notebookcheck informa además que Together AI publicó un aviso según el cual muestras de prompts que almacenaba se filtraron después de que un **agente de programación con IA publicara una credencial** en un repositorio público, y que la empresa pasó a usar retención cero por defecto para las cuentas nuevas.
+
+## Por qué importa
+
+**Un sello solo vale hasta donde llega el control de quien lo emite.** Cuando llamas a un modelo a través de un enrutador, la solicitud puede pasar por uno o más intermediarios antes de llegar a la GPU que genera la respuesta. La política de privacidad que activaste vale para el primer eslabón. Los siguientes dependen de contratos, configuraciones y de la seguridad de empresas con las que nunca hablaste.
+
+**El riesgo no es teórico.** Los prompts de producción llevan contratos, datos de clientes, código interno y, con frecuencia, secretos pegados por error. Con agentes, el problema crece: el agente arma el prompt solo a partir de archivos, tickets y variables de entorno, y nadie revisa lo que se envía.
+
+**Los agentes también crean filtraciones.** El caso informado por Together AI recuerda que el mismo tipo de herramienta que ayuda al equipo a avanzar más rápido puede publicar una credencial en minutos. No es un argumento contra los agentes de código, sino a favor del escaneo de secretos y de los permisos mínimos en todo lugar donde escriben.
+
+**La responsabilidad sigue siendo tuya.** Para el cliente final y para el regulador, poco importa si la filtración ocurrió en el tercer eslabón de la cadena. Quien eligió al proveedor responde por él.
+
+## Qué hacer en la práctica
+
+1. **Mapea la cadena.** Para cada modelo en producción, registra quién ejecuta de verdad la inferencia: laboratorio, nube, revendedor, enrutador. Si no lo sabes, averígualo antes del próximo trimestre.
+2. **Trata el ZDR como requisito contractual, no como casilla.** Pide por escrito cómo se garantiza la retención cero, si cubre a los subprocesadores y cómo se te avisará de incidentes.
+3. **Separa cargas por sensibilidad.** Los datos críticos van solo a proveedores de primer nivel con contrato directo o a modelos alojados por ti. Enrutadores y marketplaces quedan para cargas de bajo riesgo.
+4. **Fija los proveedores en el enrutador.** Si usas un enrutador, elige explícitamente los proveedores permitidos y verifica que la configuración de privacidad realmente cambie el camino de la solicitud.
+5. **Siembra tus propios señuelos.** Pon credenciales falsas y monitoreadas en prompts de prueba y trata cualquier uso como un incidente. Es barato y da una señal que ningún informe de proveedor da.
+6. **Filtra secretos antes del envío.** Agrega una capa que detecte claves, tokens y datos personales en los prompts, sobre todo en los que arman los agentes. No atrapará todo, pero reduce mucho la exposición.
+7. **Revisa el acceso de los agentes de código.** Escaneo de secretos en cada commit, credenciales de corta duración y ninguna clave de producción en el entorno donde corre el agente.
+8. **Ten un plan de rotación.** Si un proveedor que usas aparece en un aviso de incidente, necesitas saber en horas qué claves y datos pasaron por él.
+
+## En resumen
+
+La investigación de Dragos mostró que prompts enviados con promesa de retención cero fueron leídos por terceros en al menos tres proveedores, y OpenRouter respondió retirando proveedores y quitando el sello ZDR a 125 endpoints. El mensaje para quien lidera IA es tratar la inferencia como cualquier otra cadena de proveedores críticos: saber quién está en ella, exigir garantías verificables y probar por cuenta propia en lugar de confiar en la etiqueta.

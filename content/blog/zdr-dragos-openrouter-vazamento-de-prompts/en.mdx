@@ -1,0 +1,58 @@
+---
+title: "Zero Data Retention is not a guarantee: what Dragos's research teaches about inference providers"
+description: "Dragos planted bait in about 2 million prompts and caught leaks at no fewer than three providers. OpenRouter stripped the ZDR label from 125 endpoints. What it means for your AI supply chain."
+date: "2026-11-23T18:45:00-03:00"
+tags: ["AI Security", "Inference", "Governance", "Privacy", "LLMs"]
+sources:
+  - title: "Dragos — Three breaches, endless leaks: Your AI supply chain needs canaries"
+    url: "https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens"
+  - title: "The Next Web — OpenRouter drops three AI providers after Dragos catches prompt theft"
+    url: "https://thenextweb.com/news/openrouter-drops-providers-dragos-ai-prompt-theft-canaries"
+  - title: "Notebookcheck — OpenRouter cuts three AI providers: Who needs to rotate API keys now"
+    url: "https://www.notebookcheck.net/OpenRouter-cuts-three-AI-providers-Who-needs-to-rotate-API-keys-now.1457670.0.html"
+---
+
+Many companies decide where to send their prompts by looking at a label: **Zero Data Retention** (ZDR), the promise that the provider does not keep what you send. Research published by Dragos on November 19 showed that this promise may mean nothing once the provider's infrastructure has already been breached. On November 22, OpenRouter, one of the largest model routers on the market, responded by removing providers from its platform.
+
+For anyone running AI in production, the lesson is simple: a prompt is sensitive data, and it travels through a supplier chain you probably cannot see in full.
+
+## What happened
+
+**The research.** According to the post signed by HD Moore, Chief Research Officer at Dragos, the company sent about **2 million prompts** to popular AI services between July and November 2026. Each prompt carried unique bait, known as *canary tokens*: URLs and AWS credentials that no legitimate system would ever use. If anyone touched one of them, it proved someone had read the original prompt.
+
+**The findings**, according to Dragos:
+
+- There were signs of data exposure at **no fewer than three AI providers**. None of them knew about it until the researchers told them.
+- The earliest case goes back to mid-July.
+- The largest incident involved **a couple hundred AWS keys**, each sent exactly once to a single provider, all within a few short windows in late October. Using those fake keys, the attackers made tens of thousands of AWS API calls.
+- Resellers operating on inference marketplaces were able to view and keep customer prompts using ordinary logging features.
+- Some of the accessed requests had been sent with the ZDR flag.
+
+Dragos did not disclose the names of the three breached providers.
+
+**The response.** On November 22, OpenRouter announced it had removed **three inference providers** from its platform and pulled ZDR eligibility from **125 endpoints**, some of them as a precaution, according to The Next Web and Notebookcheck. The company says the investigation showed no breach of OpenRouter itself. Notebookcheck also reports that Together AI published a notice saying prompt samples it had stored leaked after an **AI coding agent published a credential** to a public repository, and that the company now makes zero retention the default for new accounts.
+
+## Why it matters
+
+**A label is only as good as the issuer's reach.** When you call a model through a router, the request may pass through one or more intermediaries before it reaches the GPU that generates the answer. The privacy setting you turned on applies to the first link. The rest depend on contracts, configurations and the security of companies you have never spoken to.
+
+**The risk is not theoretical.** Production prompts carry contracts, customer data, internal code and, often, secrets pasted by mistake. With agents, the problem grows: the agent builds the prompt on its own from files, tickets and environment variables, and nobody reviews what gets sent.
+
+**Agents create leaks too.** The case reported by Together AI is a reminder that the same kind of tool that helps a team move faster can publish a credential in minutes. That is not an argument against coding agents; it is an argument for secret scanning and least privilege everywhere they write.
+
+**The responsibility is still yours.** For the end customer and the regulator, it hardly matters that the leak happened at the third link in the chain. Whoever chose the supplier answers for it.
+
+## What to do in practice
+
+1. **Map the chain.** For every model in production, record who actually runs inference: lab, cloud, reseller, router. If you don't know, find out before next quarter.
+2. **Treat ZDR as a contractual requirement, not a checkbox.** Ask in writing how zero retention is guaranteed, whether it covers subprocessors, and how you will be notified of incidents.
+3. **Split workloads by sensitivity.** Critical data goes only to first-tier providers under a direct contract, or to models you host yourself. Routers and marketplaces are for low-risk workloads.
+4. **Pin providers in the router.** If you use a router, explicitly choose the allowed providers and check that the privacy setting really changes the request's path.
+5. **Plant your own bait.** Put fake, monitored credentials in test prompts and treat any use as an incident. It is cheap and gives you a signal no vendor report will.
+6. **Filter secrets before sending.** Add a layer that detects keys, tokens and personal data in prompts, especially those built by agents. It won't catch everything, but it cuts exposure a lot.
+7. **Review coding agents' access.** Secret scanning on every commit, short-lived credentials and no production keys in the environment where the agent runs.
+8. **Have a rotation plan.** If a provider you use shows up in an incident notice, you need to know within hours which keys and data went through it.
+
+## In short
+
+Dragos's research showed that prompts sent under a zero-retention promise were read by third parties at no fewer than three providers, and OpenRouter responded by removing providers and stripping the ZDR label from 125 endpoints. The message for AI leaders is to treat inference like any other critical supplier chain: know who is in it, demand verifiable guarantees, and test it yourself instead of trusting the label.
