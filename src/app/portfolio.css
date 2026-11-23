@@ -64,7 +64,7 @@
 .org{grid-column:1/-1;padding-top:22px;border-top:1px solid var(--line-2);display:flex;flex-direction:column;gap:14px}
 .org__title{color:var(--muted)}
 .org__head{display:flex;align-items:center;gap:12px;font-size:15px}
-.org__me{width:32px;height:32px;font-size:12px;border-radius:8px}
+.org__me{width:32px;height:32px}
 .org__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px;position:relative;padding-top:14px}
 .org__grid::before{content:"";position:absolute;top:0;left:16px;right:16px;height:1px;background:var(--line-2)}
 .org__node{position:relative;display:flex;flex-direction:column;gap:6px;padding:16px;border:1px solid var(--line-2);border-radius:12px;background:var(--bg)}

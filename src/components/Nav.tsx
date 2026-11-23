@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Logo from "./Logo";
 import { localeLabels, locales, type Locale } from "@/i18n/config";
 
 type NavDict = {
@@ -82,7 +83,7 @@ export default function Nav({ dict, locale }: { dict: NavDict; locale: Locale })
       </a>
       <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
         <a href="#top" className="nav__brand" aria-label="Rafael Ferrés">
-          <span className="nav__logo" aria-hidden="true">RF</span>
+          <Logo />
           <span className="nav__name">Rafael Ferrés</span>
         </a>
 

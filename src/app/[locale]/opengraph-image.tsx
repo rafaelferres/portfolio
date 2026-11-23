@@ -28,7 +28,7 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
       <div style={{ width: "100%", height: "100%", display: "flex", background: "#0b0b0a", color: "#f2f0ea", padding: 64, gap: 48, alignItems: "center", fontFamily: "Geist" }}>
         <div style={{ display: "flex", flexDirection: "column", flex: 1, gap: 18, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{ width: 56, height: 56, borderRadius: 14, background: "#c8f560", color: "#0b0b0a", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, fontWeight: 700 }}>RF</div>
+            <svg width="56" height="56" viewBox="0 0 160 160"><rect width="160" height="160" rx="36" fill="#c8f560" /><g transform="translate(-5 0)" fill="none" stroke="#0b0b0a" strokeWidth="13" strokeLinecap="round" strokeLinejoin="round"><path d="M40 115 V45 H70 C82 45 89 53 89 63 C89 73 82 81 70 81 H40" /><path d="M68 81 L90 115" /><path d="M106 115 V45 H130" /><path d="M106 79 H125" /></g></svg>
             <div style={{ fontSize: 22, color: "#5ee6c8", border: "2px solid #5ee6c8", borderRadius: 999, padding: "6px 16px" }}>{t.hero.available}</div>
           </div>
           <div style={{ fontSize: 92, fontWeight: 700, letterSpacing: -4, lineHeight: 1 }}>Rafael Ferrés</div>

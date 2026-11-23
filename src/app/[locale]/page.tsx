@@ -3,6 +3,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { site } from "@/lib/site";
 import Nav from "@/components/Nav";
+import Logo from "@/components/Logo";
 import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
 import Assembly from "@/components/Assembly";
@@ -190,7 +191,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="org">
               <span className="mono org__title">{pr.now.structTitle}</span>
               <div className="org__head">
-                <span className="nav__logo org__me" aria-hidden="true">RF</span>
+                <Logo className="nav__logo org__me" />
                 <span><b>Rafael Ferrés</b> · Head of AI</span>
               </div>
               <div className="org__grid">
@@ -393,7 +394,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <footer className="footer">
         <div className="container footer__grid">
           <div className="footer__brand">
-            <span className="nav__logo" aria-hidden="true">RF</span>
+            <Logo />
             <p>Rafael Ferrés</p>
             <p className="mono footer__muted">{t.hero.subtitle}</p>
           </div>
