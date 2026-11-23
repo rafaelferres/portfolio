@@ -72,18 +72,34 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   padding-inline: clamp(20px, 4vw, 48px);
 }
 
+/* Skip link: invisible until a keyboard user tabs to it, then a small pill under the nav */
 .skip-link {
-  position: absolute;
-  left: 16px;
-  top: -60px;
-  z-index: 100;
-  background: var(--accent);
-  color: var(--accent-ink);
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
+  position: fixed;
+  top: 84px;
+  left: 50%;
+  z-index: 70;
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: rgba(11, 11, 10, 0.92);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: translate(-50%, -8px);
+  opacity: 0;
+  pointer-events: none;
+  clip-path: inset(50%);
+  transition: opacity .2s, transform .2s;
 }
-.skip-link:focus { top: 16px; }
+.skip-link:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  clip-path: none;
+  transform: translate(-50%, 0);
+  outline: none;
+}
 
 /* ───────── chips & buttons ───────── */
 .chip {
@@ -243,6 +259,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .drawer__link .mono { color: var(--accent); }
 
+.nav__link, .nav__name, .nav__clock { white-space: nowrap; }
+@media (max-width: 1320px) { .nav__name { display: none; } .nav__link { padding: 8px 9px; } }
 @media (max-width: 1080px) {
   .nav__links { display: none; }
   .nav__menu { display: inline-flex; align-items: center; }
