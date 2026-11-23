@@ -316,8 +316,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   letter-spacing: -0.055em;
 }
 .hero__name--outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--text);
+  /* stroke painted under a background-coloured fill: keeps a clean 1.5px outline
+     and hides the overlapping contours some glyphs (F, R) have inside */
+  color: var(--bg);
+  -webkit-text-stroke: 3px var(--text);
+  paint-order: stroke fill;
 }
 .hero__subtitle {
   margin-top: 28px;
