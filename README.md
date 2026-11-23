@@ -22,6 +22,14 @@ Para os e-mails chegarem direto na sua caixa, configure na Vercel:
 
 Sem essas variáveis o formulário abre o app de e-mail do visitante com a mensagem pronta.
 
+## SEO e descoberta
+- `favicon.ico`, `icon.svg`, `apple-icon.png`, `manifest.webmanifest`
+- Metadados por idioma (title, description, canonical, hreflang, Open Graph, Twitter)
+- Imagem de compartilhamento gerada por idioma: `/pt/opengraph-image`
+- Dados estruturados (JSON-LD: Person, ProfilePage, WebSite)
+- `/sitemap.xml`, `/robots.txt`, `/llms.txt`, `/llms-full.txt`, `/humans.txt`
+- Domínio: defina `NEXT_PUBLIC_SITE_URL` na Vercel se não for `https://ferres.tech`
+
 ## Onde editar
 - Textos: `src/i18n/dictionaries/{pt,en,es}.json`
 - Links e ferramentas: `src/lib/site.ts`

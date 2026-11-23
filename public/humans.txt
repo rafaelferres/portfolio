@@ -1,0 +1,12 @@
+/* TEAM */
+Name: Rafael Ferrés
+Role: Head of AI
+Contact: rafael@ferres.tech
+LinkedIn: https://www.linkedin.com/in/rafael-ferres
+GitHub: https://github.com/rafaelferres
+Location: São Paulo, Brazil
+
+/* SITE */
+Standards: HTML5, CSS3, TypeScript
+Components: Next.js, React, three.js
+Languages: Portuguese, English, Spanish

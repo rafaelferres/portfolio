@@ -36,9 +36,53 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const year = new Date().getFullYear();
   const cvHref = `/${t.cv.file}`;
   const pr = t.projects;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${site.url}/#person`,
+        name: "Rafael Ferrés",
+        givenName: "Rafael",
+        familyName: "Ferrés",
+        jobTitle: "Head of Artificial Intelligence",
+        description: t.meta.description,
+        image: `${site.url}/rafael.jpg`,
+        email: `mailto:${site.email}`,
+        url: `${site.url}/${locale}`,
+        sameAs: [site.linkedin, site.github],
+        worksFor: { "@type": "Organization", name: "KHAL" },
+        alumniOf: t.education.degrees.map((d) => ({ "@type": "EducationalOrganization", name: d.institution })),
+        address: { "@type": "PostalAddress", addressLocality: "São Paulo", addressCountry: "BR" },
+        knowsLanguage: ["pt-BR", "en", "es"],
+        knowsAbout: [
+          "Generative AI", "Large Language Models", "AI agents", "Retrieval-Augmented Generation", "Machine Learning",
+          "LangGraph", "LangChain", "Agno", "Vercel AI SDK", "OpenAI", "Anthropic Claude", "Google Gemini", "AWS", "GCP",
+        ],
+        hasOccupation: { "@type": "Occupation", name: "Head of AI", occupationLocation: { "@type": "City", name: "São Paulo" } },
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": `${site.url}/${locale}#page`,
+        url: `${site.url}/${locale}`,
+        name: t.meta.title,
+        inLanguage: locale === "pt" ? "pt-BR" : locale,
+        mainEntity: { "@id": `${site.url}/#person` },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${site.url}/#website`,
+        url: site.url,
+        name: "Rafael Ferrés",
+        inLanguage: ["pt-BR", "en", "es"],
+        publisher: { "@id": `${site.url}/#person` },
+      },
+    ],
+  };
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <Nav dict={t.nav} locale={locale} />
       <ScrollProgress />
 
