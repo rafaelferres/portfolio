@@ -426,8 +426,8 @@
     "reasons": [
       {
         "title": "AI that reaches production",
-        "text": "Sales agent, AI for paid media and dynamic pricing running in production on AWS and GCP.",
-        "kpi": "3",
+        "text": "15+ AI systems in production, from sales agents to paid media and dynamic pricing, on AWS and GCP.",
+        "kpi": "15+",
         "short": "AI systems in production"
       },
       {
