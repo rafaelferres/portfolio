@@ -1,0 +1,62 @@
+---
+title: "Shirudo: quando um agente escreve a proteção antes do patch chegar"
+description: "OpenAI e Cisco abriram o código do Shirudo, runtime para Linux em que agentes geram proteções via eBPF contra exploits. O que muda na operação de segurança e como testar com controle."
+date: "2026-11-24T11:33:00-03:00"
+tags: ["Agentes", "Segurança de IA", "Open Source", "Infraestrutura", "OpenAI"]
+sources:
+  - title: "OpenAI — OpenAI and Cisco introduce Shirudo"
+    url: "https://openai.com/index/introducing-shirudo/"
+  - title: "Isovalent (Cisco) — Cisco and OpenAI introduce Shirudo"
+    url: "https://isovalent.com/blog/post/cisco-openai-shirudo/"
+  - title: "The Hacker News — OpenAI and Cisco Unveil AI-Assisted Linux Security Tool to Block Exploits Before Patching"
+    url: "https://thehackernews.com/2026/11/openai-and-cisco-unveil-ai-assisted.html"
+---
+
+Entre a divulgação de uma vulnerabilidade e o patch rodando em produção existe uma janela em que o sistema fica exposto. Em 23 de novembro, OpenAI e Cisco apresentaram uma proposta para encurtar essa janela: o **Shirudo**, um runtime open source para Linux em que agentes de IA escrevem proteções temporárias e as aplicam no sistema em execução, sem reiniciar o serviço.
+
+Até aqui, a conversa sobre agentes em segurança girava em torno de *encontrar* falhas. O Shirudo mira outra etapa: *conter* a falha enquanto a correção definitiva não chega.
+
+## O que aconteceu
+
+Segundo o anúncio da OpenAI, o Shirudo ("escudo", em japonês) usa eBPF, a tecnologia do kernel Linux que permite rodar pequenos programas verificados dentro do sistema, para observar a atividade e aplicar "shields": bloqueios ou checagens pontuais no caminho de código vulnerável. A OpenAI descreve o lançamento como um primeiro passo rumo a uma infraestrutura que se defende sozinha.
+
+O projeto foi construído pela Cisco, por meio da Isovalent, junto com a OpenAI. O post da Isovalent explica que ele nasce do Tetragon, a plataforma de segurança baseada em eBPF que a empresa abriu em 2022, reescrito para ser operado por agentes. O código está no GitHub e, segundo a OpenAI, sai sob licença BSD 2-Clause.
+
+O fluxo descrito pelas duas empresas tem quatro passos:
+
+1. **Descoberta**: o agente parte de uma vulnerabilidade divulgada ou encontrada por ele.
+2. **Geração**: ele reproduz o exploit, escreve a proteção e itera até validá-la.
+3. **Distribuição**: a proteção vira um pacote assinado, publicado em um registry OCI; cada máquina verifica a assinatura antes de carregar, com apoio de TPM.
+4. **Monitoramento**: o sistema acompanha a saúde da aplicação e conta as tentativas de exploração bloqueadas.
+
+A prova de conceito foi um teste controlado. Um shield gerado pelo Codex adicionou uma checagem de entrada no decodificador Base64 do Java e bloqueou uma tentativa de explorar a falha Java4Shell contra um Elasticsearch em execução, sem reinício. A Isovalent mostra trechos de log do teste e detalha que, nesse caso, o escudo não foi um programa eBPF, mas bytecode Java injetado na aplicação, para cobrir classes de falha que o eBPF sozinho não alcança.
+
+Vale o cuidado: é um único teste conduzido pelos próprios criadores, sem números de desempenho nem validação independente até agora.
+
+## Por que importa
+
+Para quem lidera IA em produção, o Shirudo é interessante menos pela tecnologia e mais pelo desenho de controle. Ele dá ao agente permissão para mexer no ponto mais sensível da infraestrutura, o kernel e os processos em execução, e compensa isso com várias travas:
+
+- **O verificador do eBPF** limita o que o código gerado pode fazer.
+- **Assinatura e verificação** impedem que um shield não autorizado seja carregado.
+- **Aprovação humana**: a OpenAI afirma que os shields passam por um operador antes de ir para produção e que o time de segurança decide o que é implantado.
+- **Modo de observação**: é possível monitorar o efeito de um shield antes de ativá-lo como bloqueio.
+- **Registro com TPM** de cada proteção carregada ou removida.
+- **Ciclo de vida curto**: em declaração reproduzida pelo The Hacker News, a Cisco diz que o shield só passa a bloquear quando a evidência indica que é seguro e é aposentado quando o patch real chega.
+
+Esse é um bom modelo mental para qualquer agente com poder de ação: o agente propõe e valida, a infraestrutura limita, um humano aprova, e tudo fica auditável e reversível. A pergunta deixa de ser "confio no agente?" e passa a ser "quais garantias o sistema dá mesmo se o agente errar?".
+
+Há também um efeito sobre o tempo. Se agentes passam a encontrar vulnerabilidades mais rápido, a pressão sobre o ciclo de correção aumenta. Mitigação temporária gerada por agente é uma resposta a esse descompasso, mas cria um novo inventário a gerenciar: código que ninguém escreveu à mão, rodando em produção, com prazo para sair.
+
+## O que fazer na prática
+
+- **Não coloque em produção agora.** Use o laboratório guiado e o quickstart em VM indicados pelas empresas para entender o fluxo em ambiente isolado.
+- **Mapeie sua janela de exposição.** Meça quanto tempo leva hoje entre a divulgação de uma falha crítica e o patch aplicado. Sem esse número, não dá para saber se mitigação temporária vale o risco.
+- **Defina a política antes da ferramenta.** Quem aprova um shield? Em quais sistemas ele pode bloquear direto e em quais só observa? Qual o prazo máximo de vida?
+- **Trate shields como mudança de produção.** Eles devem passar por gestão de mudança, ter dono, aparecer no inventário e ser removidos quando o patch definitivo entrar.
+- **Exija evidência, não demo.** Um teste controlado com uma falha é ponto de partida. Antes de ampliar o uso, peça taxa de falsos positivos, impacto em latência e casos em que o agente gerou uma proteção errada.
+- **Reaproveite o padrão nos seus agentes.** Mesmo que você nunca use o Shirudo, o desenho de assinatura, modo de observação, aprovação e registro auditável serve para agentes que mexem em dados, deploys ou finanças.
+
+## Em resumo
+
+O Shirudo leva agentes de IA da descoberta de falhas para a defesa ativa em sistemas em execução. A ideia é promissora, mas a evidência por enquanto é um teste controlado feito pelos próprios autores. A lição mais útil já está disponível: dar poder de ação a um agente exige que a infraestrutura limite, registre e permita desfazer o que ele faz, com um humano decidindo o que entra em produção.

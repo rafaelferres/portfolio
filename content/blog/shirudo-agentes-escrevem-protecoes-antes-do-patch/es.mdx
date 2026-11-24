@@ -1,0 +1,62 @@
+---
+title: "Shirudo: cuando un agente escribe la protección antes de que llegue el parche"
+description: "OpenAI y Cisco liberaron Shirudo, un runtime para Linux en el que agentes generan protecciones con eBPF contra exploits. Qué cambia en la operación de seguridad y cómo probarlo con control."
+date: "2026-11-24T11:33:00-03:00"
+tags: ["Agentes", "Seguridad de IA", "Código abierto", "Infraestructura", "OpenAI"]
+sources:
+  - title: "OpenAI — OpenAI and Cisco introduce Shirudo"
+    url: "https://openai.com/index/introducing-shirudo/"
+  - title: "Isovalent (Cisco) — Cisco and OpenAI introduce Shirudo"
+    url: "https://isovalent.com/blog/post/cisco-openai-shirudo/"
+  - title: "The Hacker News — OpenAI and Cisco Unveil AI-Assisted Linux Security Tool to Block Exploits Before Patching"
+    url: "https://thehackernews.com/2026/11/openai-and-cisco-unveil-ai-assisted.html"
+---
+
+Entre la divulgación de una vulnerabilidad y el parche funcionando en producción hay una ventana en la que el sistema queda expuesto. El 23 de noviembre, OpenAI y Cisco presentaron una propuesta para acortar esa ventana: **Shirudo**, un runtime de código abierto para Linux en el que agentes de IA escriben protecciones temporales y las aplican en el sistema en ejecución, sin reiniciar el servicio.
+
+Hasta ahora, la conversación sobre agentes en seguridad giraba en torno a *encontrar* fallas. Shirudo apunta a otra etapa: *contener* la falla mientras llega la corrección definitiva.
+
+## Qué pasó
+
+Según el anuncio de OpenAI, Shirudo ("escudo" en japonés) usa eBPF, la tecnología del kernel de Linux que permite ejecutar pequeños programas verificados dentro del sistema, para observar la actividad y aplicar "shields": bloqueos o verificaciones puntuales en el camino del código vulnerable. OpenAI describe el lanzamiento como un primer paso hacia una infraestructura que se defiende sola.
+
+El proyecto fue construido por Cisco, a través de Isovalent, junto con OpenAI. El post de Isovalent explica que nace de Tetragon, la plataforma de seguridad basada en eBPF que la empresa liberó en 2022, reescrito para ser operado por agentes. El código está en GitHub y, según OpenAI, se publica bajo licencia BSD 2-Clause.
+
+El flujo que describen ambas empresas tiene cuatro pasos:
+
+1. **Descubrimiento**: el agente parte de una vulnerabilidad divulgada o encontrada por él.
+2. **Generación**: reproduce el exploit, escribe la protección e itera hasta validarla.
+3. **Distribución**: la protección se convierte en un paquete firmado, publicado en un registry OCI; cada máquina verifica la firma antes de cargarla, con apoyo de un TPM.
+4. **Monitoreo**: el sistema sigue la salud de la aplicación y cuenta los intentos de explotación bloqueados.
+
+La prueba de concepto fue un test controlado. Un shield generado por Codex añadió una verificación de entrada en el decodificador Base64 de Java y bloqueó un intento de explotar la falla Java4Shell contra un Elasticsearch en ejecución, sin reinicio. Isovalent muestra fragmentos de log del test y detalla que, en este caso, el escudo no fue un programa eBPF, sino bytecode Java inyectado en la aplicación, para cubrir clases de fallas que eBPF por sí solo no alcanza.
+
+Conviene ser cauto: es un único test realizado por los propios creadores, sin cifras de rendimiento ni validación independiente por ahora.
+
+## Por qué importa
+
+Para quien lidera IA en producción, Shirudo interesa menos por la tecnología y más por su diseño de control. Le da al agente permiso para tocar el punto más sensible de la infraestructura, el kernel y los procesos en ejecución, y lo compensa con varias salvaguardas:
+
+- **El verificador de eBPF** limita lo que puede hacer el código generado.
+- **Firma y verificación** impiden que se cargue un shield no autorizado.
+- **Aprobación humana**: OpenAI afirma que los shields pasan por un operador antes de llegar a producción y que el equipo de seguridad decide qué se despliega.
+- **Modo de observación**: se puede monitorear el efecto de un shield antes de activarlo como bloqueo.
+- **Registro respaldado por TPM** de cada protección cargada o eliminada.
+- **Ciclo de vida corto**: en una declaración citada por The Hacker News, Cisco dice que el shield solo empieza a bloquear cuando la evidencia indica que es seguro y se retira cuando llega el parche real.
+
+Es un buen modelo mental para cualquier agente con capacidad de acción: el agente propone y valida, la infraestructura limita, un humano aprueba, y todo queda auditable y reversible. La pregunta deja de ser "¿confío en el agente?" y pasa a ser "¿qué garantías da el sistema aunque el agente se equivoque?".
+
+También hay un efecto sobre los tiempos. Si los agentes encuentran vulnerabilidades más rápido, aumenta la presión sobre el ciclo de corrección. La mitigación temporal generada por agentes es una respuesta a ese desfase, pero crea un nuevo inventario que gestionar: código que nadie escribió a mano, corriendo en producción, con fecha de salida.
+
+## Qué hacer en la práctica
+
+- **No lo lleves a producción todavía.** Usa el laboratorio guiado y el quickstart en VM que indican las empresas para entender el flujo en un entorno aislado.
+- **Mide tu ventana de exposición.** Calcula cuánto tarda hoy entre la divulgación de una falla crítica y el parche aplicado. Sin ese número, no se puede saber si la mitigación temporal compensa el riesgo.
+- **Define la política antes que la herramienta.** ¿Quién aprueba un shield? ¿En qué sistemas puede bloquear directamente y en cuáles solo observa? ¿Cuál es su vida máxima?
+- **Trata los shields como cambios de producción.** Deben pasar por gestión de cambios, tener responsable, figurar en el inventario y eliminarse cuando entre el parche definitivo.
+- **Exige evidencia, no demos.** Un test controlado con una sola falla es un punto de partida. Antes de ampliar el uso, pide tasa de falsos positivos, impacto en latencia y casos en los que el agente generó una protección errónea.
+- **Reutiliza el patrón en tus agentes.** Aunque nunca uses Shirudo, el diseño de firma, modo de observación, aprobación y registro auditable sirve para agentes que tocan datos, despliegues o finanzas.
+
+## En resumen
+
+Shirudo lleva a los agentes de IA del descubrimiento de fallas a la defensa activa de sistemas en ejecución. La idea es prometedora, pero por ahora la evidencia es un test controlado realizado por los propios autores. La lección más útil ya está disponible: darle poder de acción a un agente exige una infraestructura que limite, registre y permita deshacer lo que hace, con un humano decidiendo qué entra en producción.

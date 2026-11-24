@@ -1,0 +1,62 @@
+---
+title: "Shirudo: when an agent writes the protection before the patch arrives"
+description: "OpenAI and Cisco open-sourced Shirudo, a Linux runtime where agents generate eBPF protections against exploits. What it changes for security operations and how to test it under control."
+date: "2026-11-24T11:33:00-03:00"
+tags: ["Agents", "AI Security", "Open Source", "Infrastructure", "OpenAI"]
+sources:
+  - title: "OpenAI — OpenAI and Cisco introduce Shirudo"
+    url: "https://openai.com/index/introducing-shirudo/"
+  - title: "Isovalent (Cisco) — Cisco and OpenAI introduce Shirudo"
+    url: "https://isovalent.com/blog/post/cisco-openai-shirudo/"
+  - title: "The Hacker News — OpenAI and Cisco Unveil AI-Assisted Linux Security Tool to Block Exploits Before Patching"
+    url: "https://thehackernews.com/2026/11/openai-and-cisco-unveil-ai-assisted.html"
+---
+
+Between the disclosure of a vulnerability and the patch running in production there is a window in which the system is exposed. On November 23, OpenAI and Cisco presented a proposal to shrink that window: **Shirudo**, an open-source Linux runtime in which AI agents write temporary protections and apply them to the running system, without restarting the service.
+
+Until now, the conversation about agents in security has centered on *finding* flaws. Shirudo targets a different step: *containing* the flaw while the real fix is on its way.
+
+## What happened
+
+According to OpenAI's announcement, Shirudo ("shield" in Japanese) uses eBPF, the Linux kernel technology that runs small, verified programs inside the system, to observe activity and apply "shields": targeted blocks or checks on the vulnerable code path. OpenAI describes the launch as a first step toward infrastructure that defends itself.
+
+The project was built by Cisco, through Isovalent, together with OpenAI. Isovalent's post explains that it grew out of Tetragon, the eBPF-based security platform the company open-sourced in 2022, rewritten to be operated by agents. The code is on GitHub and, according to OpenAI, is released under the BSD 2-Clause license.
+
+The flow both companies describe has four steps:
+
+1. **Discovery**: the agent starts from a disclosed vulnerability or one it found itself.
+2. **Generation**: it reproduces the exploit, writes the protection and iterates until it is validated.
+3. **Distribution**: the protection becomes a signed package published to an OCI registry; each machine verifies the signature before loading it, backed by a TPM.
+4. **Monitoring**: the system tracks application health and counts the exploitation attempts that were blocked.
+
+The proof of concept was a controlled test. A Codex-generated shield added an input check to Java's Base64 decoder and blocked an attempt to exploit the Java4Shell flaw against a running Elasticsearch instance, with no restart. Isovalent shows log excerpts from the test and explains that, in this case, the shield was not an eBPF program but Java bytecode injected into the application, to cover classes of flaws that eBPF alone cannot reach.
+
+A word of caution: this is a single test run by the creators themselves, with no performance numbers and no independent validation so far.
+
+## Why it matters
+
+For anyone leading AI in production, Shirudo is interesting less for the technology and more for its control design. It lets an agent touch the most sensitive part of the infrastructure, the kernel and running processes, and offsets that with several safeguards:
+
+- **The eBPF verifier** limits what the generated code can do.
+- **Signing and verification** keep unauthorized shields from being loaded.
+- **Human approval**: OpenAI says shields go through an operator before reaching production and that the security team decides what gets deployed.
+- **Observation mode**: you can monitor a shield's effect before turning it into a block.
+- **A TPM-backed record** of every protection loaded or removed.
+- **A short lifecycle**: in a statement quoted by The Hacker News, Cisco says a shield only starts blocking when the evidence shows it is safe and is retired when the real patch lands.
+
+This is a good mental model for any agent that can take action: the agent proposes and validates, the infrastructure constrains, a human approves, and everything stays auditable and reversible. The question shifts from "do I trust the agent?" to "what guarantees does the system give even if the agent gets it wrong?".
+
+There is also a timing effect. If agents start finding vulnerabilities faster, the pressure on the patch cycle grows. Agent-generated temporary mitigation is one answer to that mismatch, but it creates a new inventory to manage: code nobody wrote by hand, running in production, with an expiration date.
+
+## What to do in practice
+
+- **Don't put it in production yet.** Use the guided lab and the VM quickstart the companies point to, so you understand the flow in an isolated environment.
+- **Map your exposure window.** Measure how long it takes today between the disclosure of a critical flaw and the patch being applied. Without that number, you can't tell whether temporary mitigation is worth the risk.
+- **Set the policy before the tool.** Who approves a shield? On which systems can it block directly, and on which can it only observe? What is its maximum lifetime?
+- **Treat shields as production changes.** They should go through change management, have an owner, show up in the inventory and be removed once the definitive patch is in.
+- **Demand evidence, not demos.** A controlled test against one flaw is a starting point. Before expanding use, ask for false-positive rates, latency impact and cases where the agent generated a wrong protection.
+- **Reuse the pattern in your own agents.** Even if you never use Shirudo, the design of signing, observation mode, approval and an auditable record works for agents that touch data, deployments or finance.
+
+## In short
+
+Shirudo moves AI agents from finding flaws to actively defending running systems. The idea is promising, but the evidence for now is one controlled test run by the authors themselves. The most useful lesson is already available: giving an agent the power to act requires infrastructure that constrains, records and can undo what it does, with a human deciding what goes into production.
