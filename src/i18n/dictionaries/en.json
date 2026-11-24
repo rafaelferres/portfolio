@@ -308,7 +308,7 @@
         "Other"
       ],
       "message": "Message",
-      "placeholder": "What is the role and the AI challenge?",
+      "placeholder": "What's the AI challenge or project?",
       "send": "Send message",
       "required": "Please fill in this field.",
       "invalidEmail": "Enter a valid email address.",

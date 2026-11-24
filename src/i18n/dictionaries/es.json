@@ -308,7 +308,7 @@
         "Otro"
       ],
       "message": "Mensaje",
-      "placeholder": "¿Cuál es el puesto y el desafío de IA?",
+      "placeholder": "¿Cuál es el desafío o proyecto de IA?",
       "send": "Enviar mensaje",
       "required": "Completa este campo.",
       "invalidEmail": "Escribe un e-mail válido.",

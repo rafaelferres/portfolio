@@ -31,14 +31,14 @@ export default function ContactForm({ dict, sentText }: { dict: FormDict; sentTe
       (e.currentTarget.elements.namedItem(first) as HTMLElement | null)?.focus();
       return;
     }
-    const text = `${dict.name}: ${v("name")}\n${dict.email}: ${v("email")}\n${dict.company}: ${v("company") || "—"}\n${dict.type}: ${v("type")}\n\n${v("message")}`;
+    const text = `${dict.name}: ${v("name")}\n${dict.email}: ${v("email")}\n${dict.company}: ${v("company") || "—"}\n\n${v("message")}`;
     setBody(text);
     setStatus("sending");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: v("name"), email: v("email"), company: v("company"), type: v("type"), message: v("message"), website: v("website") }),
+        body: JSON.stringify({ name: v("name"), email: v("email"), company: v("company"), message: v("message"), website: v("website") }),
       });
       if (res.ok) { setStatus("sent"); return; }
     } catch {}
@@ -96,21 +96,11 @@ export default function ContactForm({ dict, sentText }: { dict: FormDict; sentTe
           {errors.email && <span className="ferr">{errors.email}</span>}
         </div>
       </div>
-      <div className="frow">
-        <div className="field">
-          <label htmlFor="f-company">
-            {dict.company} <em>{dict.optional}</em>
-          </label>
-          <input id="f-company" name="company" autoComplete="organization" />
-        </div>
-        <div className="field">
-          <label htmlFor="f-type">{dict.type}</label>
-          <select id="f-type" name="type">
-            {dict.types.map((t) => (
-              <option key={t}>{t}</option>
-            ))}
-          </select>
-        </div>
+      <div className="field">
+        <label htmlFor="f-company">
+          {dict.company} <em>{dict.optional}</em>
+        </label>
+        <input id="f-company" name="company" autoComplete="organization" />
       </div>
       <div className="field">
         <label htmlFor="f-message">{dict.message}</label>

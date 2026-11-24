@@ -20,7 +20,6 @@ export async function POST(req: Request) {
   const name = String(data.name ?? "").slice(0, 200).trim();
   const email = String(data.email ?? "").slice(0, 200).trim();
   const company = String(data.company ?? "").slice(0, 200).trim();
-  const type = String(data.type ?? "").slice(0, 100).trim();
   const message = String(data.message ?? "").slice(0, 5000).trim();
   if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ ok: false }, { status: 400 });
@@ -36,8 +35,8 @@ export async function POST(req: Request) {
       from: process.env.CONTACT_FROM ?? "Site Rafael Ferrés <onboarding@resend.dev>",
       to: [process.env.CONTACT_TO ?? "rafael@ferres.tech"],
       reply_to: email,
-      subject: `Oportunidade: ${name}${company ? ` (${company})` : ""} — ${type}`,
-      text: `Nome: ${name}\nE-mail: ${email}\nEmpresa: ${company || "—"}\nTipo: ${type}\n\n${message}`,
+      subject: `Contato pelo site: ${name}${company ? ` (${company})` : ""}`,
+      text: `Nome: ${name}\nE-mail: ${email}\nEmpresa: ${company || "—"}\n\n${message}`,
     }),
   });
   if (!res.ok) return NextResponse.json({ ok: false }, { status: 502 });
