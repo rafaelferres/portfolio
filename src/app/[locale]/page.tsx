@@ -110,10 +110,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <span className="hero__name--outline" data-split>{t.hero.last}</span>
               </h1>
               <p className="hero__subtitle">{t.hero.subtitle}</p>
-              <p className="hero__bio">{t.hero.bio}</p>
               <div className="hero__ctas">
                 <a href="#contact" className="btn btn--primary">{t.hero.ctaContact} ↗</a>
-                <a href="#experience" className="btn btn--ghost">{t.hero.ctaCareer}</a>
                 <a href={cvHref} target="_blank" rel="noopener" className="btn btn--ghost"><Download />{t.cv.download}</a>
               </div>
               <div className="hero-stats">
@@ -165,8 +163,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               {t.hire.reasons.map((r, i) => (
                 <Reveal key={r.title} className="reason" delay={i * 70}>
                   <span className="mono reason__n" data-scramble>W/{pad(i + 1)}</span>
-                  <h3>{r.title}</h3>
-                  <p>{r.text}</p>
+                  <span className="reason__kpi" data-count>{r.kpi}</span>
+                  <h3>{r.short}</h3>
                 </Reveal>
               ))}
             </div>
@@ -212,7 +210,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="now__body">
               <span className="chip chip--live mono">{pr.now.label}</span>
               <h3 className="now__title" data-split>{pr.now.title}</h3>
-              <p className="now__text">{pr.now.text}</p>
             </div>
             <div className="org">
               <span className="mono org__title">{pr.now.structTitle}</span>
@@ -241,12 +238,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               </div>
               <p className="mono pj__period">{pr.lab.label} · Ferres Labs</p>
               <h3 className="lab__title" data-split>{pr.lab.title}</h3>
-              <p className="pj__role">{pr.lab.role}</p>
-              <p className="lab__text">{pr.lab.text}</p>
-              <div className="lab__multi">
-                <span className="mono lab__multi-t">+ {pr.lab.multiTitle}</span>
-                <p>{pr.lab.multiText}</p>
-              </div>
+              <p className="lab__text">{pr.lab.short}</p>
               <ul className="pcard__tags">
                 {pr.lab.tags.map((x) => <li key={x} className="chip mono">{x}</li>)}
               </ul>
@@ -280,8 +272,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 </div>
                 <p className="mono pj__period">{it.period}{it.org ? ` · ${it.org}` : ""}</p>
                 <h3 className="pj__title">{it.title}</h3>
-                <p className="pj__role">{it.role}</p>
-                <p className="pj__text">{it.text}</p>
+                <p className="pj__text">{it.short}</p>
                 <ul className="pcard__tags">
                   {it.tags.map((x) => <li key={x} className="chip mono">{x}</li>)}
                 </ul>
@@ -291,8 +282,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
           <Reveal className="led">
             <div className="led__head">
-              <h3 className="mono proj__label">{pr.ledLabel}</h3>
-              <p className="led__intro">{pr.ledIntro}</p>
+              <h3 className="mono proj__label">{pr.ledLabel} · {pr.ledIntro}</h3>
             </div>
             <div className="led__grid">
               {pr.led.map((x) => (
@@ -302,7 +292,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     <span className="chip">{x.cloud}</span>
                   </div>
                   <h4 className="lc__title">{x.title}</h4>
-                  <p className="lc__text">{x.text}</p>
                   <ul className="pcard__tags">
                     {x.tags.map((tg) => <li key={tg} className="chip mono">{tg}</li>)}
                   </ul>
@@ -335,11 +324,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <figcaption className="mono"><span>RF-01</span><span>São Paulo · BR</span></figcaption>
             </Reveal>
             <div className="about">
-              {t.about.blocks.map((b, i) => (
-                <Reveal key={b.kicker} className="about__block" delay={i * 100}>
-                  <span className="mono about__kicker">{b.kicker}</span>
-                  <p dangerouslySetInnerHTML={{ __html: b.text }} />
-                </Reveal>
+              {t.about.short.map((line, i) => (
+                <Reveal key={line} className="about__line" delay={i * 100}>{line}</Reveal>
               ))}
             </div>
           </div>
@@ -370,11 +356,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   </div>
                   <p className="job__company">{job.company}</p>
                   <p className="job__summary">{job.summary}</p>
-                  {job.bullets.length > 0 && (
-                    <ul className="job__bullets">
-                      {job.bullets.map((b) => <li key={b}>{b}</li>)}
-                    </ul>
-                  )}
                 </div>
               </Reveal>
             ))}
@@ -450,7 +431,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     <span className="mono post-row__date">{formatDate(p.date, locale)}</span>
                     <span className="post-row__main">
                       <span className="post-row__title">{p.title}</span>
-                      <span className="post-row__desc">{p.description}</span>
                     </span>
                     <span className="mono post-row__meta">{p.readingMinutes} {t.blog.read} →</span>
                   </a>
@@ -468,7 +448,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <span className="mono contact__label">→ {t.contact.label}</span>
               <h2 className="contact__title" data-split data-accent>{t.contact.title}</h2>
               <p className="contact__text">{t.contact.text}</p>
-              <p className="contact__or">{t.contact.or}</p>
               <a href={`mailto:${site.email}`} className="contact__email">{site.email}</a>
               <div className="contact__actions">
                 <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn--ghost">LinkedIn ↗</a>

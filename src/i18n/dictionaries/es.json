@@ -68,7 +68,7 @@
   },
   "about": {
     "label": "Sobre mí",
-    "title": "Ingeniería sólida, foco total en IA.",
+    "title": "Ingeniería sólida, foco en IA.",
     "blocks": [
       {
         "kicker": "A/01 — Camino a la IA",
@@ -81,11 +81,15 @@
     ],
     "photoAlt": "Retrato de Rafael Ferrés",
     "netUnit": "neuronas conectadas",
-    "netCaption": "Cada punto es una neurona. Desplázate y la red se organiza en mi logo: del caos a la estructura, como un buen proyecto de IA."
+    "netCaption": "Desplázate: la red se convierte en mi logo.",
+    "short": [
+      "Ingeniero desde 2017. IA generativa en producto desde 2023.",
+      "Hoy lidero el delivery de IA: 8+ proyectos y 18 personas."
+    ]
   },
   "experience": {
     "label": "Carrera",
-    "title": "Trayectoria profesional.",
+    "title": "Trayectoria.",
     "current": "Actual",
     "items": [
       {
@@ -94,7 +98,7 @@
         "role": "Head of Artificial Intelligence",
         "period": "nov 2026 — actual",
         "location": "São Paulo",
-        "summary": "Lidero todo el delivery de IA de la empresa: más de 8 proyectos en marcha, de la estrategia a producción.",
+        "summary": "8+ proyectos de IA, de la estrategia a producción.",
         "bullets": []
       },
       {
@@ -103,7 +107,7 @@
         "role": "Gerente de Ingeniería de IA",
         "period": "oct 2026",
         "location": "São Paulo",
-        "summary": "Primer cargo en KHAL, liderando la ingeniería de IA antes de asumir el área.",
+        "summary": "Liderazgo de la ingeniería de IA.",
         "bullets": []
       },
       {
@@ -112,7 +116,7 @@
         "role": "Tech Lead — AI Pro Hub",
         "period": "sep 2025 — oct 2026",
         "location": "São Paulo",
-        "summary": "Liderazgo técnico del AI Pro Hub, iniciativa de Inteligencia Artificial de la compañía.",
+        "summary": "Liderazgo técnico de los proyectos de IA.",
         "bullets": []
       },
       {
@@ -121,7 +125,7 @@
         "role": "Tech Lead — Integraciones",
         "period": "mar 2021 — nov 2025",
         "location": "São Paulo",
-        "summary": "Liderazgo técnico del equipo de integraciones y herramientas para marketing.",
+        "summary": "Integraciones e IA generativa para marketing.",
         "bullets": [
           "Proyectos con IA Generativa aplicados al marketing",
           "Definición de arquitectura y estándares de código",
@@ -136,7 +140,7 @@
         "role": "Desarrollador Full Stack Senior",
         "period": "mar 2019 — mar 2021",
         "location": "São Paulo",
-        "summary": "Desarrollo de integraciones y herramientas para el área de marketing.",
+        "summary": "Integraciones de marketing y WhatsApp oficial.",
         "bullets": [
           "Integración del WhatsApp oficial — entre las primeras de Brasil",
           "Integraciones con Facebook, Google y otros socios",
@@ -150,14 +154,14 @@
         "role": "Analista de Sistemas",
         "period": "mar 2017 — feb 2019",
         "location": "São Paulo",
-        "summary": "Creación y mantenimiento de módulos del ERP en C#, Delphi y SQL Server.",
+        "summary": "Módulos de ERP en C#, Delphi y SQL Server.",
         "bullets": []
       }
     ]
   },
   "stack": {
     "label": "Stack",
-    "title": "La stack que uso para construir IA.",
+    "title": "Mi stack de IA.",
     "groups": [
       {
         "name": "Agentes & RAG",
@@ -238,7 +242,7 @@
   },
   "education": {
     "label": "Formación",
-    "title": "Estudio continuo, junto al trabajo.",
+    "title": "Formación.",
     "degrees": [
       {
         "code": "F/01",
@@ -287,7 +291,7 @@
   "contact": {
     "label": "Próximo paso",
     "title": "¿Necesitas a alguien que lidere la IA en tu equipo?",
-    "text": "Cuéntame sobre la vacante o el desafío de IA de tu empresa. Respondo personalmente, normalmente en un día hábil.",
+    "text": "Cuéntame sobre la vacante. Respondo en un día hábil.",
     "emailCta": "Enviar e-mail",
     "linkedinCta": "LinkedIn",
     "form": {
@@ -341,13 +345,13 @@
     ],
     "intro": {
       "title": "Arma mi perfil en IA",
-      "text": "Cada pieza de este chip es una capa de lo que entrego en Inteligencia Artificial. Desplázate para encajarlas una a una."
+      "text": "Cada pieza es una capa de lo que entrego. Desplázate para montar."
     },
     "cards": [
       {
         "title": "Base de ingeniería",
         "period": "Desde 2017",
-        "text": "Toda IA depende de software sólido. Más de 9 años de ingeniería — de bases de datos a APIs — sosteniendo lo que entregan los modelos.",
+        "text": "9+ años de ingeniería detrás de la IA.",
         "tags": [
           "Python",
           "SQL",
@@ -357,7 +361,7 @@
       {
         "title": "Integración de IA",
         "period": "Canales · Sistemas · APIs",
-        "text": "Conecto modelos a canales y sistemas reales, como el agente de ventas en WhatsApp, con la base de quien ya integró el WhatsApp oficial, Meta y Google.",
+        "text": "Modelos conectados a canales reales, como WhatsApp.",
         "tags": [
           "WhatsApp",
           "APIs",
@@ -367,7 +371,7 @@
       {
         "title": "Arquitectura de IA",
         "period": "AWS · GCP",
-        "text": "Diseño sistemas agénticos con LangGraph y Agno, RAG con bases vectoriales y servicios en Python y FastAPI en AWS y GCP.",
+        "text": "Agentes con LangGraph y RAG en AWS y GCP.",
         "tags": [
           "LangGraph",
           "RAG",
@@ -377,7 +381,7 @@
       {
         "title": "IA Generativa & Agentes",
         "period": "Desde inicios de 2023",
-        "text": "Del test vocacional con GPT-3.5 y LangChain a la plataforma de agentes con RAG: llevo IA Generativa del prototipo a producción desde 2023.",
+        "text": "IA generativa en producción desde 2023.",
         "tags": [
           "LLMs",
           "LangChain",
@@ -387,7 +391,7 @@
       {
         "title": "Machine Learning aplicado",
         "period": "Pricing dinámico",
-        "text": "Combino agentes y Machine Learning clásico, como en el sistema de precios dinámicos con scikit-learn.",
+        "text": "Agentes + ML clásico, como en el pricing dinámico.",
         "tags": [
           "scikit-learn",
           "ML",
@@ -396,8 +400,8 @@
       },
       {
         "title": "Liderazgo en IA",
-        "period": "KHAL · 8+ proyectos · 18 personas",
-        "text": "Lidero 18 personas a través de un Gerente de Ingeniería y 2 Tech Leads. En Cogna lideré 3 equipos de IA con Tech Leads.",
+        "period": "8+ proyectos · 18 personas",
+        "text": "18 personas y 8+ proyectos de IA.",
         "tags": [
           "Head of AI",
           "Delivery de IA",
@@ -407,7 +411,7 @@
       {
         "title": "Modelos de punta",
         "period": "OpenAI · Anthropic · Gemini · Open Models",
-        "text": "Trabajo con los modelos más recientes de OpenAI, Anthropic, Google y open models, eligiendo el adecuado para cada caso, y sigo la calidad en producción con Langfuse.",
+        "text": "OpenAI, Anthropic, Gemini y open models, con calidad medida.",
         "tags": [
           "OpenAI",
           "Anthropic",
@@ -418,23 +422,31 @@
   },
   "hire": {
     "label": "Por qué yo",
-    "title": "Lo que tu empresa gana con un Head of AI como yo.",
+    "title": "Por qué contratarme.",
     "reasons": [
       {
         "title": "IA que llega a producción",
-        "text": "Agente de ventas, IA para medios pagados y pricing dinámico funcionando en producción en AWS y GCP."
+        "text": "Agente de ventas, IA para medios pagados y pricing dinámico funcionando en producción en AWS y GCP.",
+        "kpi": "3",
+        "short": "Sistemas de IA en producción"
       },
       {
         "title": "Manos a la obra cuando hace falta",
-        "text": "Diseñé y programé solo el test vocacional y la plataforma de agentes en 2023, y entrené solo Krun One, un modelo open source."
+        "text": "Diseñé y programé el test vocacional y la plataforma de agentes en 2023, y entrené Krun One, un modelo open source.",
+        "kpi": "879M",
+        "short": "Parámetros en mi propio modelo"
       },
       {
         "title": "Liderazgo de líderes",
-        "text": "En KHAL lidero 18 personas en 8+ proyectos de IA a través de un Gerente de Ingeniería y 2 Tech Leads."
+        "text": "En KHAL lidero 18 personas en 8+ proyectos de IA a través de un Gerente de Ingeniería y 2 Tech Leads.",
+        "kpi": "18",
+        "short": "Personas que lidero hoy"
       },
       {
         "title": "Pionero en IA Generativa",
-        "text": "IA Generativa en producto a inicios de 2023 y una plataforma de agentes antes de los GPTs de OpenAI."
+        "text": "IA Generativa en producto a inicios de 2023 y una plataforma de agentes antes de los GPTs de OpenAI.",
+        "kpi": "2023",
+        "short": "IA generativa en producto desde"
       }
     ],
     "rolesTitle": "Posiciones en IA donde genero impacto",
@@ -442,9 +454,7 @@
       "Head of AI / Director de IA",
       "Gerente de Ingeniería de IA",
       "AI Tech Lead",
-      "Arquitecto de Soluciones de IA",
-      "Ingeniero de IA / LLM",
-      "Ingeniero de Machine Learning"
+      "Arquitecto de IA"
     ],
     "factsTitle": "Resumen para reclutadores",
     "facts": [
@@ -454,15 +464,11 @@
       },
       {
         "label": "Hoy",
-        "value": "Delivery de IA de KHAL · 8+ proyectos · 18 personas"
-      },
-      {
-        "label": "Investigación",
-        "value": "Krun One · modelo propio open source"
+        "value": "Head of AI · 8+ proyectos · 18 personas"
       },
       {
         "label": "En IA desde",
-        "value": "Inicio de 2023"
+        "value": "2023"
       },
       {
         "label": "Stack",
@@ -472,27 +478,28 @@
   },
   "projects": {
     "label": "Proyectos pioneros",
-    "title": "IA Generativa en producto antes de ser tendencia.",
+    "title": "IA en producción antes de ser tendencia.",
     "badge": "Pionero",
     "items": [
       {
         "code": "PR/01",
         "period": "Inicio de 2023",
         "org": "Cogna Educação",
-        "role": "Idea con la dirección · arquitectura y código 100% míos",
+        "role": "Idea con la dirección · arquitectura y desarrollo",
         "title": "Test vocacional con IA Generativa",
         "text": "Test vocacional que usa IA Generativa para orientar a estudiantes en la elección de carrera. Salió al aire pocos meses después de la llegada de ChatGPT y generó un volumen relevante de leads para la captación.",
         "tags": [
           "GPT-3.5",
           "LangChain",
           "Python"
-        ]
+        ],
+        "short": "Orientación vocacional con IA, meses después de ChatGPT. Generó muchos leads."
       },
       {
         "code": "PR/02",
         "period": "Mediados de 2023",
         "org": "Cogna Educação",
-        "role": "Arquitectura y código 100% míos",
+        "role": "Arquitectura y desarrollo",
         "title": "Plataforma de creación de agentes de IA",
         "text": "Plataforma sin código para crear agentes de IA: el usuario conecta PDFs, audios, textos y sitios, y el sistema lo convierte todo en una base de RAG automáticamente. Una de las primeras del mercado, meses antes de los GPTs de OpenAI.",
         "tags": [
@@ -500,7 +507,8 @@
           "LangChain",
           "RAG",
           "Pinecone"
-        ]
+        ],
+        "short": "Agentes sin código con RAG sobre PDF, audio, texto y sitios web."
       }
     ],
     "timelineTitle": "Línea de tiempo en IA",
@@ -526,9 +534,9 @@
         "text": "Head of AI en KHAL · 8+ proyectos"
       }
     ],
-    "soloLabel": "Construido por mí, de punta a punta",
-    "ledLabel": "Proyectos que lideré en Cogna",
-    "ledIntro": "3 equipos de 5 personas, cada uno con su Tech Lead. Detalles bajo NDA.",
+    "soloLabel": "Pioneros · 2023",
+    "ledLabel": "Proyectos que lideré",
+    "ledIntro": "3 equipos · 5 personas cada uno · NDA",
     "led": [
       {
         "code": "PR/03",
@@ -565,7 +573,7 @@
       }
     ],
     "now": {
-      "label": "Hoy en KHAL",
+      "label": "Hoy",
       "title": "Todo el delivery de IA de la empresa",
       "text": "Como Head of AI, respondo por todo el delivery de IA: más de 8 proyectos en marcha, desde ventas y atención con IA hasta proyectos para clientes, con un equipo de 18 personas. Detalles bajo NDA.",
       "stat": "8+",
@@ -594,7 +602,7 @@
       "label": "Laboratorio propio",
       "code": "LAB/01",
       "title": "Krun One — un modelo de decisión para agentes",
-      "role": "Proyecto en solitario · datos, entrenamiento, evaluación y publicación",
+      "role": "Datos, entrenamiento, evaluación y publicación",
       "text": "Modelo encoder de 879 millones de parámetros que recibe un contexto y una pregunta tipada y devuelve una decisión calibrada en una sola pasada, sin generar texto: intención, enrutamiento de herramientas, verdadero o falso, puntuación y opción múltiple. También sabe abstenerse cuando no está seguro. Funciona en portugués, inglés, español y francés.",
       "multiTitle": "Krun One Multimodal",
       "multiText": "Añade imágenes, documentos (incluso escaneados) y audio al modelo de texto congelado, entrenando solo unos 27 millones de parámetros de fusión (adapters y LoRA).",
@@ -616,7 +624,7 @@
           "label": "idiomas, incluido PT-BR"
         }
       ],
-      "note": "Cifras de KrunBench v1, conjunto de validación propio. En un benchmark externo (ítems públicos de JevBench) el resultado es 53,2%; las limitaciones están documentadas en la ficha del modelo. Pesos Apache-2.0; proyecto de investigación.",
+      "note": "KrunBench es validación propia (externo: 53,2%) · proyecto de investigación",
       "tags": [
         "mmBERT",
         "SigLIP2",
@@ -633,7 +641,8 @@
           "label": "Versión multimodal",
           "url": "https://huggingface.co/ferreslabs/krun-one-v1-multimodal"
         }
-      ]
+      ],
+      "short": "Modelo encoder que decide la próxima acción de un agente en ~15 ms, sin generar texto."
     }
   },
   "cv": {

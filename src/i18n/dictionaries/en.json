@@ -68,7 +68,7 @@
   },
   "about": {
     "label": "About",
-    "title": "Solid engineering, full focus on AI.",
+    "title": "Solid engineering, focused on AI.",
     "blocks": [
       {
         "kicker": "A/01 — Path to AI",
@@ -81,11 +81,15 @@
     ],
     "photoAlt": "Portrait of Rafael Ferrés",
     "netUnit": "neurons connected",
-    "netCaption": "Each dot is a neuron. Scroll and the network organizes itself into my logo: from chaos to structure, like a good AI project."
+    "netCaption": "Scroll: the network becomes my logo.",
+    "short": [
+      "Engineer since 2017. Generative AI in products since 2023.",
+      "Today I lead AI delivery: 8+ projects and 18 people."
+    ]
   },
   "experience": {
     "label": "Career",
-    "title": "Career path.",
+    "title": "Career.",
     "current": "Current",
     "items": [
       {
@@ -94,7 +98,7 @@
         "role": "Head of Artificial Intelligence",
         "period": "Nov 2026 — present",
         "location": "São Paulo",
-        "summary": "I lead all AI delivery at the company: more than 8 projects underway, from strategy to production.",
+        "summary": "8+ AI projects, from strategy to production.",
         "bullets": []
       },
       {
@@ -103,7 +107,7 @@
         "role": "AI Engineering Manager",
         "period": "Oct 2026",
         "location": "São Paulo",
-        "summary": "First role at KHAL, leading AI engineering before taking over the area.",
+        "summary": "Led AI engineering.",
         "bullets": []
       },
       {
@@ -112,7 +116,7 @@
         "role": "Tech Lead — AI Pro Hub",
         "period": "Sep 2025 — Oct 2026",
         "location": "São Paulo",
-        "summary": "Technical lead of the AI Pro Hub, the company's Artificial Intelligence initiative.",
+        "summary": "Technical lead for AI projects.",
         "bullets": []
       },
       {
@@ -121,7 +125,7 @@
         "role": "Tech Lead — Integrations",
         "period": "Mar 2021 — Nov 2025",
         "location": "São Paulo",
-        "summary": "Technical lead of the team building integrations and tools for marketing.",
+        "summary": "Integrations and generative AI for marketing.",
         "bullets": [
           "Generative AI projects applied to marketing",
           "Architecture and code standards",
@@ -136,7 +140,7 @@
         "role": "Senior Full Stack Developer",
         "period": "Mar 2019 — Mar 2021",
         "location": "São Paulo",
-        "summary": "Built integrations and tools for the marketing area.",
+        "summary": "Marketing integrations and official WhatsApp.",
         "bullets": [
           "Official WhatsApp integration — among the first in Brazil",
           "Facebook, Google and other partner integrations",
@@ -150,14 +154,14 @@
         "role": "Systems Analyst",
         "period": "Mar 2017 — Feb 2019",
         "location": "São Paulo",
-        "summary": "Built and maintained ERP modules in C#, Delphi and SQL Server.",
+        "summary": "ERP modules in C#, Delphi and SQL Server.",
         "bullets": []
       }
     ]
   },
   "stack": {
     "label": "Stack",
-    "title": "The stack I use to build AI.",
+    "title": "My AI stack.",
     "groups": [
       {
         "name": "Agents & RAG",
@@ -238,7 +242,7 @@
   },
   "education": {
     "label": "Education",
-    "title": "Continuous study, alongside work.",
+    "title": "Education.",
     "degrees": [
       {
         "code": "F/01",
@@ -287,7 +291,7 @@
   "contact": {
     "label": "Next step",
     "title": "Need someone to lead AI on your team?",
-    "text": "Tell me about the role or your company's AI challenge. I reply personally, usually within one business day.",
+    "text": "Tell me about the role. I reply within one business day.",
     "emailCta": "Send an email",
     "linkedinCta": "LinkedIn",
     "form": {
@@ -341,13 +345,13 @@
     ],
     "intro": {
       "title": "Assemble my AI profile",
-      "text": "Each part of this chip is a layer of what I deliver in Artificial Intelligence. Scroll to fit them together one by one."
+      "text": "Each part is a layer of what I deliver. Scroll to assemble."
     },
     "cards": [
       {
         "title": "Engineering foundation",
         "period": "Since 2017",
-        "text": "Every AI depends on solid software. 9+ years of engineering — from databases to APIs — backing what models deliver.",
+        "text": "9+ years of engineering behind the AI.",
         "tags": [
           "Python",
           "SQL",
@@ -357,7 +361,7 @@
       {
         "title": "AI integration",
         "period": "Channels · Systems · APIs",
-        "text": "I connect models to real channels and systems, like the WhatsApp sales agent, building on my experience integrating official WhatsApp, Meta and Google.",
+        "text": "Models wired into real channels, like WhatsApp.",
         "tags": [
           "WhatsApp",
           "APIs",
@@ -367,7 +371,7 @@
       {
         "title": "AI architecture",
         "period": "AWS · GCP",
-        "text": "I design agentic systems with LangGraph and Agno, RAG on vector databases, and Python/FastAPI services on AWS and GCP.",
+        "text": "Agents with LangGraph and RAG on AWS and GCP.",
         "tags": [
           "LangGraph",
           "RAG",
@@ -377,7 +381,7 @@
       {
         "title": "Generative AI & Agents",
         "period": "Since early 2023",
-        "text": "From the aptitude test with GPT-3.5 and LangChain to the agent platform with RAG: shipping Generative AI from prototype to production since 2023.",
+        "text": "Generative AI in production since 2023.",
         "tags": [
           "LLMs",
           "LangChain",
@@ -387,7 +391,7 @@
       {
         "title": "Applied Machine Learning",
         "period": "Dynamic pricing",
-        "text": "I combine agents with classic Machine Learning, as in the dynamic pricing system built with scikit-learn.",
+        "text": "Agents + classic ML, as in dynamic pricing.",
         "tags": [
           "scikit-learn",
           "ML",
@@ -396,8 +400,8 @@
       },
       {
         "title": "AI leadership",
-        "period": "KHAL · 8+ projects · 18 people",
-        "text": "I lead 18 people through an Engineering Manager and 2 Tech Leads. At Cogna I led 3 AI teams with Tech Leads.",
+        "period": "8+ projects · 18 people",
+        "text": "18 people and 8+ AI projects.",
         "tags": [
           "Head of AI",
           "AI delivery",
@@ -407,7 +411,7 @@
       {
         "title": "Frontier models",
         "period": "OpenAI · Anthropic · Gemini · Open Models",
-        "text": "I work with the latest models from OpenAI, Anthropic, Google and open models, picking the right one for each case, and track production quality with Langfuse.",
+        "text": "OpenAI, Anthropic, Gemini and open models, with measured quality.",
         "tags": [
           "OpenAI",
           "Anthropic",
@@ -418,23 +422,31 @@
   },
   "hire": {
     "label": "Why me",
-    "title": "What your company gains with a Head of AI like me.",
+    "title": "Why hire me.",
     "reasons": [
       {
         "title": "AI that reaches production",
-        "text": "Sales agent, AI for paid media and dynamic pricing running in production on AWS and GCP."
+        "text": "Sales agent, AI for paid media and dynamic pricing running in production on AWS and GCP.",
+        "kpi": "3",
+        "short": "AI systems in production"
       },
       {
         "title": "Hands-on when needed",
-        "text": "I single-handedly architected and coded the aptitude test and the agent platform in 2023, and trained Krun One, an open-source model, on my own."
+        "text": "I architected and built the career test and the agent platform in 2023, and trained Krun One, an open-source model.",
+        "kpi": "879M",
+        "short": "Parameters in my own model"
       },
       {
         "title": "Leading leaders",
-        "text": "At KHAL I lead 18 people across 8+ AI projects through an Engineering Manager and 2 Tech Leads."
+        "text": "At KHAL I lead 18 people across 8+ AI projects through an Engineering Manager and 2 Tech Leads.",
+        "kpi": "18",
+        "short": "People I lead today"
       },
       {
         "title": "Generative AI pioneer",
-        "text": "Generative AI in a product in early 2023 and an agent platform before OpenAI's GPTs."
+        "text": "Generative AI in a product in early 2023 and an agent platform before OpenAI's GPTs.",
+        "kpi": "2023",
+        "short": "Shipping generative AI since"
       }
     ],
     "rolesTitle": "AI roles where I make an impact",
@@ -442,9 +454,7 @@
       "Head of AI / AI Director",
       "AI Engineering Manager",
       "AI Tech Lead",
-      "AI Solutions Architect",
-      "AI / LLM Engineer",
-      "Machine Learning Engineer"
+      "AI Architect"
     ],
     "factsTitle": "Recruiter summary",
     "facts": [
@@ -454,15 +464,11 @@
       },
       {
         "label": "Today",
-        "value": "AI delivery at KHAL · 8+ projects · 18 people"
-      },
-      {
-        "label": "Research",
-        "value": "Krun One · own open-source model"
+        "value": "Head of AI · 8+ projects · 18 people"
       },
       {
         "label": "In AI since",
-        "value": "Early 2023"
+        "value": "2023"
       },
       {
         "label": "Stack",
@@ -472,27 +478,28 @@
   },
   "projects": {
     "label": "Pioneering projects",
-    "title": "Generative AI in product before it became a trend.",
+    "title": "AI in production before it was a trend.",
     "badge": "Pioneer",
     "items": [
       {
         "code": "PR/01",
         "period": "Early 2023",
         "org": "Cogna Educação",
-        "role": "Idea with leadership · 100% my architecture and code",
+        "role": "Idea with leadership · architecture and development",
         "title": "Generative AI career aptitude test",
         "text": "A career aptitude test that uses Generative AI to guide students in choosing a career. It went live a few months after ChatGPT arrived and generated a significant volume of leads for enrollment.",
         "tags": [
           "GPT-3.5",
           "LangChain",
           "Python"
-        ]
+        ],
+        "short": "Career guidance with AI, months after ChatGPT. Drove a large volume of leads."
       },
       {
         "code": "PR/02",
         "period": "Mid 2023",
         "org": "Cogna Educação",
-        "role": "100% my architecture and code",
+        "role": "Architecture and development",
         "title": "No-code AI agent builder",
         "text": "A no-code platform to build AI agents: users connect PDFs, audio, text and websites, and the system automatically turns everything into a RAG knowledge base. One of the first on the market, months before OpenAI's GPTs.",
         "tags": [
@@ -500,7 +507,8 @@
           "LangChain",
           "RAG",
           "Pinecone"
-        ]
+        ],
+        "short": "No-code agents with RAG over PDFs, audio, text and websites."
       }
     ],
     "timelineTitle": "AI timeline",
@@ -526,9 +534,9 @@
         "text": "Head of AI at KHAL · 8+ projects"
       }
     ],
-    "soloLabel": "Built by me, end to end",
-    "ledLabel": "Projects I led at Cogna",
-    "ledIntro": "3 teams of 5 people, each with its own Tech Lead. Details under NDA.",
+    "soloLabel": "Pioneers · 2023",
+    "ledLabel": "Projects I led",
+    "ledIntro": "3 teams · 5 people each · NDA",
     "led": [
       {
         "code": "PR/03",
@@ -565,7 +573,7 @@
       }
     ],
     "now": {
-      "label": "Today at KHAL",
+      "label": "Today",
       "title": "All of the company's AI delivery",
       "text": "As Head of AI, I own all AI delivery: more than 8 projects underway, from AI for sales and customer service to client projects, with a team of 18 people. Details under NDA.",
       "stat": "8+",
@@ -594,7 +602,7 @@
       "label": "Own lab",
       "code": "LAB/01",
       "title": "Krun One — a decision model for agents",
-      "role": "Solo project · data, training, evaluation and release",
+      "role": "Data, training, evaluation and release",
       "text": "An 879-million-parameter encoder model that takes a context and a typed question and returns a calibrated decision in a single forward pass, with no text generation: intent, tool routing, true or false, scores and multiple choice. It can also abstain when it is unsure. It works in Portuguese, English, Spanish and French.",
       "multiTitle": "Krun One Multimodal",
       "multiText": "Adds images, documents (including scans) and audio to the frozen text model, training only about 27 million fusion parameters (adapters and LoRA).",
@@ -616,7 +624,7 @@
           "label": "languages, including PT-BR"
         }
       ],
-      "note": "Figures from KrunBench v1, my own validation set. On an external benchmark (JevBench public items) the result is 53.2%; limitations are documented in the model card. Apache-2.0 weights; research project.",
+      "note": "KrunBench is my own validation set (external: 53.2%) · research project",
       "tags": [
         "mmBERT",
         "SigLIP2",
@@ -633,7 +641,8 @@
           "label": "Multimodal version",
           "url": "https://huggingface.co/ferreslabs/krun-one-v1-multimodal"
         }
-      ]
+      ],
+      "short": "Encoder model that picks an agent's next action in ~15 ms, without generating text."
     }
   },
   "cv": {
