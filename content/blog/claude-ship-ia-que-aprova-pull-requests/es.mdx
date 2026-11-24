@@ -1,0 +1,63 @@
+---
+title: "Claude Ship: cuando la IA empieza a aprobar pull requests, ¿quién responde por el merge?"
+description: "Anthropic lanzó en beta Claude Ship, que revisa, corrige y aprueba PRs según una política escrita por el equipo. Qué cambia en la gobernanza del código y cómo adoptarlo sin perder el control."
+date: "2026-11-24T08:40:00-03:00"
+tags: ["Agentes", "Ingeniería de Software", "Gobernanza", "Code Review", "Anthropic"]
+sources:
+  - title: "Claude — Claude Ship (página del producto)"
+    url: "https://claude.com/product/claude-ship"
+  - title: "Claude Code Docs — Get a pull request ready with /ship and /steward"
+    url: "https://code.claude.com/docs/en/ship-command"
+  - title: "ClaudeDevs en X — Introducing Claude Ship (beta)"
+    url: "https://x.com/ClaudeDevs/status/2124959436640858475"
+  - title: "TechCrunch — Anthropic launches Claude Ship, letting AI agents review, fix, and approve code changes"
+    url: "https://techcrunch.com/2026/11/23/anthropic-launches-claude-ship-letting-ai-agents-review-fix-and-approve-code-changes/"
+  - title: "Help Net Security — Claude Ship gives AI a seat on both sides of code review"
+    url: "https://www.helpnetsecurity.com/2026/11/24/anthropic-claude-ship-beta/"
+---
+
+Hasta ahora, la IA escribía el código y una persona decidía si entraba. El 23 de noviembre, Anthropic anunció en beta **Claude Ship**, un conjunto de agentes que revisa pull requests, corrige lo que esté roto y **aprueba los que la política del equipo permita**. Ese último paso es el que importa: la IA pasa a ocupar los dos lados de la revisión de código, el de quien escribe y el de quien aprueba.
+
+Para quien lidera IA en producción, la pregunta deja de ser "¿la IA escribe bien?" y pasa a ser "¿quién decidió que este tipo de cambio no necesita a una persona?".
+
+## Qué pasó
+
+Según la página del producto y la cobertura de TechCrunch y Help Net Security, Claude Ship tiene tres partes:
+
+- **Code Review** (ya disponible de forma general): revisa el PR frente al resto del código, con niveles rápido, estándar o profundo por repositorio, y publica los hallazgos en el propio PR.
+- **PR Steward** (beta): trabaja sobre fallos de CI, conflictos de merge y comentarios de revisión, manteniendo el PR actualizado. Anthropic dice que fue diseñado para dejar la aprobación y el merge en manos del equipo.
+- **Claude Approvals** (beta): aplica una **política de aprobación que el equipo escribe como un archivo dentro del repositorio**. Los cambios rutinarios pueden ser aprobados por la IA; los más arriesgados esperan a las personas definidas en la política. La política puede usar clasificadores descritos en lenguaje natural, no solo rutas de archivo.
+
+En Claude Code, el comando `/ship` hace commit, push, abre el PR, ejecuta la revisión y sigue su avance. Lo que se puede mergear sigue dependiendo de los permisos del desarrollador y de las reglas de branch del repositorio.
+
+**Disponibilidad y costo.** La beta es para los planes Team y Enterprise y solo para repositorios en GitHub. No está disponible para organizaciones con Zero Data Retention, configuración HIPAA o claves de cifrado gestionadas por el cliente. El cobro es por uso: Approvals no tiene tarifa fija, pero los clasificadores consumen tokens, y una política que se apoya en la revisión de Claude dispara un Code Review cobrado incluso en modo de observación.
+
+**La recomendación del propio fabricante** es empezar en modo de observación, en el que Approvals publica su decisión pero no aprueba nada, y solo después exigir su aprobación mediante la protección de branch en GitHub.
+
+## Por qué importa
+
+**La política de aprobación se vuelve código crítico.** Hoy, en muchos equipos, la regla de "quién tiene que aprobar qué" vive en el `CODEOWNERS`, en costumbres y en la cabeza de los más sénior. Con Approvals, pasa a ser un archivo que decide, por sí solo, si un cambio llega a producción sin ojos humanos. Quien puede editar ese archivo tiene mucho poder. Necesita dueño, revisión obligatoria e historial, como cualquier configuración de seguridad.
+
+**La segregación de funciones se vuelve más sutil.** Si un agente escribe el código y otro agente del mismo proveedor lo aprueba, la revisión independiente que esperan las auditorías y los marcos de control puede dejar de existir en la práctica. No es motivo para rechazar la herramienta, pero sí para definir por escrito qué tipos de cambio pueden aprobarse solo con IA y qué evidencia queda registrada.
+
+**El modo de observación es una evaluación (casi) gratis.** Ejecutar Approvals en paralelo con los revisores humanos genera justo el dato que falta en la mayoría de las adopciones de IA: con qué frecuencia la decisión de la máquina coincide con la de una persona, y dónde se equivoca. Es un *shadow test* integrado en el producto. Conviene usarlo antes de cualquier decisión.
+
+**El cumplimiento normativo puede decidir por ti.** Excluir a las organizaciones con ZDR, HIPAA o claves propias significa que justo los entornos más regulados quedan fuera de esta beta. Si tu empresa está en ese grupo, la cuestión no es técnica, es de contrato y de política de datos.
+
+**El costo deja de ser predecible.** Revisión por tokens en cada PR, más clasificadores, más trabajo del Steward, escala con el volumen del equipo. Sin un límite de gasto configurado, la factura sigue a la productividad.
+
+## Qué hacer en la práctica
+
+Si estuviera evaluando Claude Ship (o cualquier herramienta parecida) ahora, lo haría así:
+
+1. **Empieza por un repositorio de bajo riesgo**, como documentación, herramientas internas o pruebas, con un límite mensual de gasto definido desde el primer día.
+2. **Ejecuta en modo de observación durante algunas semanas** y mide la coincidencia entre la decisión de la IA y la de los revisores humanos. Registra las divergencias: serán los ejemplos para afinar la política.
+3. **Trata el archivo de política como código sensible**: dueño definido, aprobación humana obligatoria para cualquier cambio en él y protección de branch que impida que un agente lo modifique y lo apruebe en el mismo flujo.
+4. **Escribe la lista de lo que nunca se aprueba solo con IA**: autenticación, permisos, pagos, migraciones de datos, infraestructura y la propia política de aprobación.
+5. **Revisa las reglas de branch antes de activar cualquier agente.** La herramienta hereda los permisos de quien la usa. Si hoy alguien puede mergear sin aprobación, un agente que actúe con las credenciales de esa persona también puede.
+6. **Sigue métricas de resultado, no de volumen**: tasa de reversión, incidentes ligados a cambios, tiempo hasta el merge y costo por PR. Más PRs mergeados, por sí solo, no dice nada sobre la calidad.
+7. **Involucra a seguridad y cumplimiento desde el inicio** para decidir si la aprobación por IA cumple los controles que la empresa debe demostrar en una auditoría.
+
+## En resumen
+
+Claude Ship lleva la IA de escribir el código a aprobarlo, con una política que el propio equipo escribe. La ganancia de velocidad puede ser real, pero el riesgo también cambia de lugar: sale de la línea de código y pasa al archivo que decide qué se salta la revisión humana. Quien lo adopte con modo de observación, límites de gasto, reglas de branch firmes y una lista clara de lo que siempre necesita a una persona obtendrá el beneficio sin renunciar al control.

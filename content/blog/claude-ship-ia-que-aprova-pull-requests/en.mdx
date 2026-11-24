@@ -1,0 +1,63 @@
+---
+title: "Claude Ship: when AI starts approving pull requests, who owns the merge?"
+description: "Anthropic launched Claude Ship in beta: it reviews, fixes and approves PRs according to a policy your team writes. What changes in code governance and how to adopt it without losing control."
+date: "2026-11-24T08:40:00-03:00"
+tags: ["Agents", "Software Engineering", "Governance", "Code Review", "Anthropic"]
+sources:
+  - title: "Claude — Claude Ship (product page)"
+    url: "https://claude.com/product/claude-ship"
+  - title: "Claude Code Docs — Get a pull request ready with /ship and /steward"
+    url: "https://code.claude.com/docs/en/ship-command"
+  - title: "ClaudeDevs on X — Introducing Claude Ship (beta)"
+    url: "https://x.com/ClaudeDevs/status/2124959436640858475"
+  - title: "TechCrunch — Anthropic launches Claude Ship, letting AI agents review, fix, and approve code changes"
+    url: "https://techcrunch.com/2026/11/23/anthropic-launches-claude-ship-letting-ai-agents-review-fix-and-approve-code-changes/"
+  - title: "Help Net Security — Claude Ship gives AI a seat on both sides of code review"
+    url: "https://www.helpnetsecurity.com/2026/11/24/anthropic-claude-ship-beta/"
+---
+
+Until now, AI wrote the code and a person decided whether it went in. On November 23, Anthropic announced **Claude Ship** in beta: a set of agents that reviews pull requests, fixes what is broken and **approves the ones your team's policy allows**. That last step is the one that matters. AI now sits on both sides of code review: the side that writes and the side that approves.
+
+For anyone running AI in production, the question is no longer "does the AI write good code?" but "who decided that this kind of change doesn't need a person?".
+
+## What happened
+
+According to the product page and coverage by TechCrunch and Help Net Security, Claude Ship has three parts:
+
+- **Code Review** (generally available): reviews the PR against the rest of the codebase, with quick, standard or deep levels per repository, and posts its findings on the PR.
+- **PR Steward** (beta): works on CI failures, merge conflicts and review comments, keeping the PR up to date. Anthropic says it is designed to leave approving and merging to the team.
+- **Claude Approvals** (beta): applies an **approval policy the team writes as a file in the repository**. Routine changes can be approved by the AI; riskier ones wait for people named in the policy. The policy can use classifiers described in natural language, not just file paths.
+
+In Claude Code, the `/ship` command commits, pushes, opens the PR, runs the review and follows its progress. What can be merged still depends on the developer's permissions and the repository's branch rules.
+
+**Availability and cost.** The beta is for Team and Enterprise plans and only for repositories on GitHub. It is not available to organizations with Zero Data Retention, the HIPAA configuration or customer-managed encryption keys. Billing is usage-based: Approvals has no base fee, but classifiers consume tokens, and a policy that relies on Claude's review triggers a billed Code Review even in observe mode.
+
+**The vendor's own recommendation** is to start in observe mode, where Approvals posts its decision but approves nothing, and only then require its approval through GitHub branch protection.
+
+## Why it matters
+
+**The approval policy becomes critical code.** In many teams today, the rule of "who has to approve what" lives in `CODEOWNERS`, in habits and in senior engineers' heads. With Approvals, it becomes a file that decides on its own whether a change reaches production without human eyes. Whoever can edit that file holds a lot of power. It needs an owner, mandatory review and history, like any security configuration.
+
+**Separation of duties gets subtler.** If one agent writes the code and another agent from the same vendor approves it, the independent review that audits and control frameworks expect may, in practice, disappear. That is no reason to reject the tool, but it is a reason to define in writing which classes of change may be approved by AI alone and what evidence is kept.
+
+**Observe mode is a (nearly) free evaluation.** Running Approvals alongside human reviewers produces exactly the data most AI rollouts lack: how often the machine's decision matches a person's, and where it goes wrong. It is a shadow test built into the product. Use it before deciding anything.
+
+**Compliance may decide for you.** Excluding organizations with ZDR, HIPAA or their own keys means the most regulated environments are left out of this beta. If your company is in that group, the question is not technical; it is about contracts and data policy.
+
+**Cost stops being predictable.** Token-based review on every PR, plus classifiers, plus Steward work, scales with team volume. Without a spending limit, the bill tracks productivity.
+
+## What to do in practice
+
+If I were evaluating Claude Ship (or any similar tool) right now, this is how I would do it:
+
+1. **Start with a low-risk repository**, such as documentation, internal tools or tests, with a monthly spending limit set from day one.
+2. **Run in observe mode for a few weeks** and measure agreement between the AI's decision and human reviewers'. Log the disagreements: they become the examples for refining the policy.
+3. **Treat the policy file as sensitive code**: a named owner, mandatory human approval for any change to it, and branch protection that stops an agent from changing and approving it in the same flow.
+4. **Write the list of what is never approved by AI alone**: authentication, permissions, payments, data migrations, infrastructure and the approval policy itself.
+5. **Review branch rules before turning on any agent.** The tool inherits the permissions of whoever uses it. If someone can merge without approval today, an agent acting with that person's credentials can too.
+6. **Track outcome metrics, not volume**: revert rate, change-related incidents, time to merge and cost per PR. More merged PRs, on its own, says nothing about quality.
+7. **Bring security and compliance in early** to decide whether AI approval meets the controls the company must demonstrate in an audit.
+
+## In short
+
+Claude Ship moves AI from writing code to approving it, under a policy the team writes itself. The speed gain may be real, but the risk also moves: from the line of code to the file that decides what skips human review. Teams that adopt it with observe mode, spending limits, firm branch rules and a clear list of what always needs a person will get the benefit without giving up control.
