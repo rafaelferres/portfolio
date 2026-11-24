@@ -290,8 +290,8 @@
   },
   "contact": {
     "label": "Next step",
-    "title": "Need someone to lead AI on your team?",
-    "text": "Tell me about the role. I reply within one business day.",
+    "title": "Need AI consulting or help with an AI project?",
+    "text": "Tell me about the challenge, the project or the role. I reply within one business day.",
     "emailCta": "Send an email",
     "linkedinCta": "LinkedIn",
     "form": {

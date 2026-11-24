@@ -290,8 +290,8 @@
   },
   "contact": {
     "label": "Próximo paso",
-    "title": "¿Necesitas a alguien que lidere la IA en tu equipo?",
-    "text": "Cuéntame sobre la vacante. Respondo en un día hábil.",
+    "title": "¿Necesitas consultoría o ayuda con un proyecto de IA?",
+    "text": "Cuéntame sobre el desafío, el proyecto o la vacante. Respondo en un día hábil.",
     "emailCta": "Enviar e-mail",
     "linkedinCta": "LinkedIn",
     "form": {
