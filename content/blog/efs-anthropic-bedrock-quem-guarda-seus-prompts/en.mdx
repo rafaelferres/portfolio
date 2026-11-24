@@ -1,0 +1,71 @@
+---
+title: "Enterprise Frontier Safeguards: when prompt retention becomes an architecture decision"
+description: "Anthropic opened EFS in beta and AWS launched the Trusted Access API on Bedrock. Prompts stay in your bucket, under your key. What changes for data governance and AI operations."
+date: "2026-11-24T18:40:00-03:00"
+tags: ["Governance", "Privacy", "AI Security", "Amazon Bedrock", "Anthropic"]
+sources:
+  - title: "AWS Machine Learning Blog — Introducing the Amazon Bedrock Trusted Access API with Anthropic's Enterprise Frontier Safeguards and Enterprise Data Controls"
+    url: "https://aws.amazon.com/blogs/machine-learning/introducing-the-amazon-bedrock-trusted-access-api-with-anthropics-enterprise-frontier-safeguards-and-enterprise-data-controls/"
+  - title: "Claude — Zero data retention with Enterprise Frontier Safeguards is now in beta"
+    url: "https://claude.com/resources/articles/zero-data-retention-with-enterprise-frontier-safeguards"
+  - title: "Anthropic — Developing Enterprise Frontier Safeguards with our customers"
+    url: "https://www.anthropic.com/news/enterprise-frontier-safeguards"
+  - title: "Techgenyz — Anthropic Launches Enterprise Frontier Safeguards Beta"
+    url: "https://techgenyz.com/anthropic-enterprise-frontier-safeguards-zdr-beta/"
+  - title: "explainx.ai — Bedrock Trusted Access API: EFS vs EDC"
+    url: "https://explainx.ai/blog/amazon-bedrock-trusted-access-api-anthropic-efs-edc-november-2026"
+---
+
+On November 23, Anthropic opened a public beta of **Enterprise Frontier Safeguards (EFS)**, and on the same day AWS announced general availability of the Amazon Bedrock **Trusted Access API**, with EFS and a second option, **Enterprise Data Controls (EDC)**, in public preview. The core idea is simple: the most advanced models stay under misuse monitoring, but prompts and responses are stored in the customer's cloud, encrypted with the customer's key.
+
+For anyone running AI in production, this turns what used to be a contract question ("does the vendor keep my data?") into an architecture question: where does the data live, who holds the key, and who responds when monitoring flags a risk.
+
+## What happened
+
+**The context.** Since Claude Fable 5 arrived, Anthropic has required 30-day data retention on its frontier models. In September, the company announced EFS as an alternative for enterprise customers, developed with more than 100 customers, including a quarter of the Fortune 100 (the company's own figures).
+
+**What EFS is**, according to Anthropic and AWS:
+
+- Prompts and responses go to storage **in the customer's cloud account** (Amazon S3 or Google Cloud Storage, depending on the platform), encrypted with customer keys.
+- **Automated monitoring** looks for patterns that only show up across many requests, such as attempts at offensive cyber operations or agents going beyond what the user asked for.
+- When it finds a risk, the system creates a **Safety Case** for the customer's team to review.
+- There is no human review by Anthropic or by the cloud provider. According to Anthropic, it only receives monitoring metadata and safety correspondence, not the inputs and outputs.
+- The data is not used to train models.
+- Anthropic does not charge for EFS. The customer pays for storage, reads, writes and key operations in its own cloud.
+
+**Where it is available.** The beta covers Claude Platform, Claude Platform on AWS, Amazon Bedrock and Claude on Google Cloud. Microsoft Foundry support has not arrived yet, according to Anthropic. Access depends on eligibility, and Anthropic says it notifies eligible customers.
+
+**On Bedrock**, AWS laid out three paths:
+
+| Path | Where the data lives | Retention |
+|---|---|---|
+| Default | AWS-managed storage | Up to 30 days |
+| EFS | Customer's S3 bucket, with the customer's KMS key | Customer rules, 30-day minimum |
+| EDC | AWS-managed storage, AWS key | Up to 30 days, then deleted |
+
+The models covered in the preview are Claude Fable, Claude Mythos and, within the Cyber Verification Program, Opus 5.5 and Sonnet 5.5. The Trusted Access API reports whether an account can enroll right away (`eligible`) or needs approval first (`requestable`), and enrollment can be done per account, organization or project. There is also a ZDR exception, with no retention, through at least June 30, 2027, for current Fable models and internal use of CVP models.
+
+One operational detail matters a lot: if Bedrock loses access to the customer's key or bucket, it **stops serving the covered models 24 hours later**.
+
+## Why it matters
+
+**1. Retention is now part of your infrastructure.** Before, the data sat with the vendor and the risk was contractual. With EFS, it sits in your environment. That helps with privacy law, audits and data residency, but it comes with the job of configuring the bucket, access policy, logs and lifecycle.
+
+**2. The encryption key becomes a production switch.** A badly edited KMS policy or a bucket deleted by mistake can cut off model access within 24 hours. It is a strong control, but also a new critical point of failure.
+
+**3. Someone on your team has to review the alerts.** The Safety Case lands in your bucket, and the response (violation or not, with the policy category) is written by your team. Without an owner, a process and a deadline, the control exists only on paper.
+
+**4. It is easier to compare vendors on the right criterion.** A "we don't keep your data" badge depends on trusting the vendor. Keeping the data in your own environment, under your key and with an audit trail, is a guarantee you can verify.
+
+## What to do in practice
+
+- **Map your frontier model use cases** and classify each one: does it need ZDR, can it use EFS, or is EDC enough? Flows with customer data or business secrets tend to call for EFS.
+- **Check eligibility** for each account through the Trusted Access API before planning the migration. The preview does not cover every Bedrock model.
+- **Treat key and bucket as production**: alarms on KMS and S3 policy changes, deletion protection and a runbook for the "Bedrock lost access" scenario.
+- **Assign an owner for Safety Cases**: who receives them, how fast they respond, how they escalate. If you can, route the cases into the same flow as your security alerts.
+- **Estimate storage costs** with your real token volume and the 30-day minimum retention. EFS has no Anthropic fee, but S3, KMS and data transfer land on your bill.
+- **Read the documentation before turning it on**: confirm which platform features fall outside EFS and how enrollment affects any ZDR settings you already have.
+
+## In short
+
+EFS and the Trusted Access API move retention into the cloud of whoever uses the model, reconciling misuse monitoring with data protection. The gain in control is large, but it comes with work: the key, the bucket and the alert queue become systems your team operates. Since everything is in beta and preview, it makes sense to start with a pilot, measure cost and review effort, and only then move the most sensitive flows.
