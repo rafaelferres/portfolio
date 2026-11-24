@@ -71,7 +71,7 @@ export function llmsTxt(full = false): string {
   lines.push(`- Certifications: ${t.education.certs.join("; ")}`);
   lines.push(`- Languages: ${t.education.languages.map((l) => `${l.name} (${l.level})`).join(", ")}`);
   lines.push("");
-  lines.push("## Roles of interest");
-  lines.push(t.hire.roles.join(", "));
+  lines.push("## Consulting services");
+  for (const o of t.services.offers) lines.push(`- ${o.title} (${o.duration}): ${o.text} Deliverables: ${o.deliverables.join(", ")}.`);
   return lines.join("\n") + "\n";
 }

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Rafael Ferrés — Head of AI · Generative AI & LLMs",
-    "description": "Rafael Ferrés, Head of Artificial Intelligence in São Paulo. I lead AI strategy and engineering and take Generative AI from prototype to production."
+    "title": "Rafael Ferrés — AI Consulting · Agents & LLMs in production",
+    "description": "AI consulting with Rafael Ferrés: assessment, agents and LLMs from pilot to production, and advisory for leadership. 15+ AI systems in production since 2023."
   },
   "nav": {
     "skip": "Skip to content",
@@ -15,7 +15,7 @@
     "close": "Close",
     "language": "Language",
     "localTime": "São Paulo",
-    "hire": "Why me",
+    "hire": "Services",
     "projects": "Projects",
     "blog": "Blog"
   },
@@ -25,10 +25,10 @@
     "location": "São Paulo, BR",
     "first": "Rafael",
     "last": "Ferrés",
-    "subtitle": "Head of AI · Generative AI & LLMs",
-    "bio": "I lead Artificial Intelligence strategy and engineering. I take Generative AI from prototype to production, connect models to real systems and build the teams that make it happen.",
+    "subtitle": "AI Consulting · Agents & LLMs",
+    "bio": "I help companies take AI from pilot to production: assessment, agents, RAG and LLMs, with measured quality and cost. Head of AI with 15+ AI systems in production since 2023.",
     "ctaCareer": "See my career",
-    "ctaContact": "Get in touch",
+    "ctaContact": "Book a call",
     "specTitle": "Spec sheet",
     "specCode": "RF-01",
     "spec": [
@@ -59,12 +59,13 @@
         "label": "shipping Generative AI since"
       },
       {
-        "value": "8+",
-        "label": "AI projects I lead today"
+        "value": "15+",
+        "label": "AI systems in production"
       }
     ],
     "toolsLabel": "Tools",
-    "available": "Open to conversations"
+    "available": "Booking AI consulting",
+    "ctaServices": "See services"
   },
   "about": {
     "label": "About",
@@ -460,7 +461,7 @@
     "facts": [
       {
         "label": "Status",
-        "value": "Open to conversations"
+        "value": "Booking AI consulting"
       },
       {
         "label": "Today",
@@ -535,7 +536,7 @@
       }
     ],
     "soloLabel": "Pioneers · 2023",
-    "ledLabel": "Projects I led",
+    "ledLabel": "Cases",
     "ledIntro": "3 teams · 5 people each · NDA",
     "led": [
       {
@@ -665,8 +666,68 @@
     "more": "More posts",
     "empty": "The first posts are on their way.",
     "published": "Published on",
-    "cta": "Want to talk about AI on your team?",
-    "ctaButton": "Get in touch",
+    "cta": "Need AI consulting?",
+    "ctaButton": "Book a call",
     "rss": "RSS"
+  },
+  "services": {
+    "label": "Services",
+    "title": "How I can help your company.",
+    "offers": [
+      {
+        "code": "S/01",
+        "title": "AI Assessment",
+        "text": "I find where AI pays off in your business and deliver a prioritized plan.",
+        "deliverables": [
+          "Use-case map",
+          "Estimated cost and return",
+          "90-day roadmap"
+        ],
+        "duration": "2–3 weeks"
+      },
+      {
+        "code": "S/02",
+        "title": "Pilot to production",
+        "text": "I ship one use case to production, with quality, cost and safety measured.",
+        "deliverables": [
+          "Agent or RAG in production",
+          "Evaluation and observability",
+          "Handover to your team"
+        ],
+        "duration": "6–10 weeks"
+      },
+      {
+        "code": "S/03",
+        "title": "AI Advisory",
+        "text": "I support leadership and engineering on AI decisions, every month.",
+        "deliverables": [
+          "Architecture reviews",
+          "Model selection",
+          "Team upskilling"
+        ],
+        "duration": "Monthly"
+      }
+    ],
+    "processTitle": "How I work",
+    "steps": [
+      {
+        "title": "Understand",
+        "text": "Business, data and goal."
+      },
+      {
+        "title": "Prioritize",
+        "text": "Where AI pays off."
+      },
+      {
+        "title": "Build",
+        "text": "A short, measured pilot."
+      },
+      {
+        "title": "Scale",
+        "text": "Production and an autonomous team."
+      }
+    ],
+    "ctaTitle": "Shall we talk about your project?",
+    "ctaText": "30 minutes, no commitment."
   }
 }

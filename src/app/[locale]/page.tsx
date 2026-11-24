@@ -38,6 +38,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   if (!isLocale(locale)) notFound();
   const t = await getDictionary(locale);
     const cvHref = `/${t.cv.file}`;
+  const sv = t.services;
   const pr = t.projects;
   const latest = getPosts(locale).slice(0, 3);
   const companies = [
@@ -112,7 +113,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <p className="hero__subtitle">{t.hero.subtitle}</p>
               <div className="hero__ctas">
                 <a href="#contact" className="btn btn--primary">{t.hero.ctaContact} ↗</a>
-                <a href={cvHref} target="_blank" rel="noopener" className="btn btn--ghost"><Download />{t.cv.download}</a>
+                <a href="#hire" className="btn btn--ghost">{t.hero.ctaServices}</a>
               </div>
               <div className="hero-stats">
                 {t.hero.stats.map((s) => (
@@ -157,46 +158,47 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
         {/* ───────── § 01 WHY ME ───────── */}
         <section id="hire" className="section container">
-          <SectionHeader index={1} label={t.hire.label} title={t.hire.title} />
-          <div className="hire">
-            <div className="reasons">
-              {t.hire.reasons.map((r, i) => (
-                <Reveal key={r.title} className="reason" delay={i * 70}>
-                  <span className="mono reason__n" data-scramble>W/{pad(i + 1)}</span>
-                  <span className="reason__kpi" data-count>{r.kpi}</span>
-                  <h3>{r.short}</h3>
-                </Reveal>
-              ))}
-            </div>
-            <Reveal as="aside" className="facts">
-              <div className="facts__who">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/rafael-avatar.jpg" width={56} height={56} alt="" className="facts__avatar" />
-                <div>
-                  <p className="facts__name">Rafael Ferrés</p>
-                  <p className="facts__role">Head of Artificial Intelligence</p>
-                </div>
-                <span className="pulse facts__live" aria-hidden="true" />
-              </div>
-              <h3 className="mono edu__panel-title">{t.hire.factsTitle}</h3>
-              <dl>
-                {t.hire.facts.map((f) => (
-                  <div key={f.label} className="spec__row">
-                    <dt className="mono">{f.label}</dt>
-                    <dd>{f.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              <h3 className="mono edu__panel-title facts__roles-title">{t.hire.rolesTitle}</h3>
-              <ul className="roles">
-                {t.hire.roles.map((r) => (
-                  <li key={r} className="chip chip--lg">{r}</li>
-                ))}
-              </ul>
-              <a href="#contact" className="btn btn--primary facts__cta">{t.hero.ctaContact} ↗</a>
-              <a href={cvHref} target="_blank" rel="noopener" className="btn btn--ghost facts__cta facts__cv"><Download />{t.cv.download}</a>
-            </Reveal>
+          <SectionHeader index={1} label={sv.label} title={sv.title} />
+          <div className="reasons svc-kpis">
+            {t.hire.reasons.map((r, i) => (
+              <Reveal key={r.title} className="reason" delay={i * 70}>
+                <span className="reason__kpi" data-count>{r.kpi}</span>
+                <h3>{r.short}</h3>
+              </Reveal>
+            ))}
           </div>
+          <div className="offers">
+            {sv.offers.map((o, i) => (
+              <Reveal key={o.code} className="offer" delay={i * 90}>
+                <div className="offer__top mono">
+                  <span className="offer__code" data-scramble>{o.code}</span>
+                  <span className="offer__dur">{o.duration}</span>
+                </div>
+                <h3 className="offer__title">{o.title}</h3>
+                <p className="offer__text">{o.text}</p>
+                <ul className="offer__list">
+                  {o.deliverables.map((x) => <li key={x}>{x}</li>)}
+                </ul>
+              </Reveal>
+            ))}
+          </div>
+          <h3 className="mono proj__label">{sv.processTitle}</h3>
+          <ol className="steps">
+            {sv.steps.map((st, i) => (
+              <Reveal as="li" key={st.title} className="step" delay={i * 80}>
+                <span className="step__n mono">{pad(i + 1)}</span>
+                <span className="step__title">{st.title}</span>
+                <span className="step__text">{st.text}</span>
+              </Reveal>
+            ))}
+          </ol>
+          <Reveal className="svc-cta">
+            <div>
+              <p className="svc-cta__title">{sv.ctaTitle}</p>
+              <p className="mono svc-cta__text">{sv.ctaText}</p>
+            </div>
+            <a href="#contact" className="btn btn--primary btn--lg">{t.hero.ctaContact} ↗</a>
+          </Reveal>
         </section>
 
         {/* ───────── § 02 PROJECTS ───────── */}

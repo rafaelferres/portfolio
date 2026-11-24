@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Rafael Ferrés — Head of AI · IA Generativa & LLMs",
-    "description": "Rafael Ferrés, Head of Artificial Intelligence en São Paulo. Lidero la estrategia y la ingeniería de IA y llevo la IA Generativa del prototipo a producción."
+    "title": "Rafael Ferrés — Consultoría en IA · Agentes y LLMs en producción",
+    "description": "Consultoría en Inteligencia Artificial con Rafael Ferrés: diagnóstico, agentes y LLMs del piloto a producción, y advisory para el liderazgo. 15+ sistemas de IA en producción desde 2023."
   },
   "nav": {
     "skip": "Saltar al contenido",
@@ -15,7 +15,7 @@
     "close": "Cerrar",
     "language": "Idioma",
     "localTime": "São Paulo",
-    "hire": "Por qué yo",
+    "hire": "Servicios",
     "projects": "Proyectos",
     "blog": "Blog"
   },
@@ -25,10 +25,10 @@
     "location": "São Paulo, BR",
     "first": "Rafael",
     "last": "Ferrés",
-    "subtitle": "Head of AI · IA Generativa & LLMs",
-    "bio": "Lidero la estrategia y la ingeniería de Inteligencia Artificial. Llevo la IA Generativa del prototipo a producción, conecto modelos a sistemas reales y formo los equipos que lo hacen posible.",
+    "subtitle": "Consultoría en IA · Agentes & LLMs",
+    "bio": "Ayudo a empresas a llevar la IA del piloto a producción: diagnóstico, agentes, RAG y LLMs, con calidad y costo medidos. Head of AI, con 15+ sistemas de IA en producción desde 2023.",
     "ctaCareer": "Ver carrera",
-    "ctaContact": "Hablemos",
+    "ctaContact": "Agendar conversación",
     "specTitle": "Ficha técnica",
     "specCode": "RF-01",
     "spec": [
@@ -59,12 +59,13 @@
         "label": "IA Generativa en producto desde"
       },
       {
-        "value": "8+",
-        "label": "proyectos de IA que lidero hoy"
+        "value": "15+",
+        "label": "sistemas de IA en producción"
       }
     ],
     "toolsLabel": "Herramientas",
-    "available": "Abierto a conversaciones"
+    "available": "Agenda abierta para consultoría",
+    "ctaServices": "Ver servicios"
   },
   "about": {
     "label": "Sobre mí",
@@ -460,7 +461,7 @@
     "facts": [
       {
         "label": "Estado",
-        "value": "Abierto a conversaciones"
+        "value": "Agenda abierta para consultoría"
       },
       {
         "label": "Hoy",
@@ -535,7 +536,7 @@
       }
     ],
     "soloLabel": "Pioneros · 2023",
-    "ledLabel": "Proyectos que lideré",
+    "ledLabel": "Cases",
     "ledIntro": "3 equipos · 5 personas cada uno · NDA",
     "led": [
       {
@@ -665,8 +666,68 @@
     "more": "Más posts",
     "empty": "Los primeros posts están en camino.",
     "published": "Publicado el",
-    "cta": "¿Hablamos de IA en tu equipo?",
-    "ctaButton": "Hablemos",
+    "cta": "¿Necesitas consultoría en IA?",
+    "ctaButton": "Agendar conversación",
     "rss": "RSS"
+  },
+  "services": {
+    "label": "Servicios",
+    "title": "Cómo puedo ayudar a tu empresa.",
+    "offers": [
+      {
+        "code": "S/01",
+        "title": "Diagnóstico de IA",
+        "text": "Descubro dónde la IA genera retorno en tu negocio y entrego un plan priorizado.",
+        "deliverables": [
+          "Mapa de casos de uso",
+          "Costo y retorno estimados",
+          "Roadmap de 90 días"
+        ],
+        "duration": "2–3 semanas"
+      },
+      {
+        "code": "S/02",
+        "title": "Del piloto a producción",
+        "text": "Pongo un caso de uso en producción, con calidad, costo y seguridad medidos.",
+        "deliverables": [
+          "Agente o RAG en producción",
+          "Evaluación y observabilidad",
+          "Traspaso a tu equipo"
+        ],
+        "duration": "6–10 semanas"
+      },
+      {
+        "code": "S/03",
+        "title": "Advisory de IA",
+        "text": "Acompaño al liderazgo y al equipo técnico en las decisiones de IA, cada mes.",
+        "deliverables": [
+          "Revisión de arquitectura",
+          "Elección de modelos",
+          "Formación del equipo"
+        ],
+        "duration": "Mensual"
+      }
+    ],
+    "processTitle": "Cómo trabajo",
+    "steps": [
+      {
+        "title": "Entender",
+        "text": "Negocio, datos y meta."
+      },
+      {
+        "title": "Priorizar",
+        "text": "Dónde la IA se paga."
+      },
+      {
+        "title": "Construir",
+        "text": "Piloto corto y medido."
+      },
+      {
+        "title": "Escalar",
+        "text": "Producción y equipo autónomo."
+      }
+    ],
+    "ctaTitle": "¿Hablamos de tu proyecto?",
+    "ctaText": "30 minutos, sin compromiso."
   }
 }
