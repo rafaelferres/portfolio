@@ -1,0 +1,69 @@
+---
+title: "Walmart Agent Gateway: AI agents get their own identity and a spending limit"
+description: "Walmart opened its Agent Gateway and Meta's Muse agent already shops there, with a separate profile, a spending limit and approvals. What it teaches about giving agents autonomy."
+date: "2026-11-25T11:40:00-03:00"
+tags: ["Agents", "Agentic commerce", "MCP", "AI governance"]
+sources:
+  - title: "Walmart — Walmart's Black Friday Deals Continue. Meta's Muse Can Now Shop Them, Too."
+    url: "https://corporate.walmart.com/news/2026/11/black-friday-deals-with-meta-muse"
+  - title: "Walmart — Walmart Makes It Possible for Agents to Shop on Behalf of Customers, While Keeping Customers in Control"
+    url: "https://corporate.walmart.com/news/2026/10/Making-It-Possible-for-Agents-to-Shop-on-Behalf-of-Customers"
+  - title: "Digiday — Walmart is letting Meta's Muse shop its shelves — but on its own terms"
+    url: "https://digiday.com/marketing/walmart-is-letting-metas-muse-shop-its-shelves-but-on-its-own-terms/"
+  - title: "PPC Land — Meta's Muse AI can now shop at Walmart, but Walmart picks the products"
+    url: "https://ppc.land/metas-muse-ai-can-now-shop-at-walmart-but-walmart-picks-the-products/"
+---
+
+Since November 24, people using Muse, Meta's personal agent, can ask for Walmart's Black Friday deals and complete the purchase without leaving the conversation. It sounds like retail news. For anyone running agents in production, it is something else: a concrete example, at a retailer of Walmart's size, of a company defining **how a third-party agent may act on a customer's behalf**, with its own identity, a spending limit and rules for blocking it.
+
+## What happened
+
+On October 21, Walmart announced three pieces that work together: **Agent Profiles**, the **Walmart Agent Gateway** and terms of use written specifically for AI agents. On November 24, Muse became the first public experience built on that gateway.
+
+According to Walmart, the flow works like this:
+
+- The customer tells Muse what they need and builds the cart in the chat. Muse passes the list to Walmart, and Walmart finds the products that match the request.
+- To buy, Muse sends the customer to Walmart to sign in and then brings them back to the conversation.
+- The first time an item goes into the cart, the customer sets up an **Agent Profile** inside their own account, with a spending limit they choose.
+- Payment uses a card already saved in the Walmart account. Prices match the website and the usual return policy applies.
+
+In the October announcement, Walmart explains the problem it wanted to solve. Until then, an agent signed in as if it were the customer, and both sets of purchases were mixed together. With a dedicated profile, the agent's purchases show up separately. The customer chooses between approving every purchase or allowing purchases up to a limit (the examples given are $50, $100 or $200), and can turn the permission off at any time. Walmart compares it to adding an authorized user to a credit card.
+
+The gateway uses **MCP (Model Context Protocol)**, according to Walmart and Digiday, instead of agents navigating the site through a browser, which the company itself describes as slow and error-prone. In October, it was introduced as a beta for companies and developers.
+
+The agent terms are clear: by default, the customer approves the agent's purchases; Walmart may require extra approval even within the limit; the agent does not receive card data and cannot add or change payment methods; it only accesses what the task requires and the customer allows; and agents that break the rules will be blocked. Walmart also says the gateway helps the agent find the customer's usual items without sharing their broader purchase history.
+
+## Why it matters
+
+The key point is not Muse buying a TV. It is the design of **delegated authority**. So far, most agents that act in the real world borrow the human's identity: the same login, the same session, the same permissions. That works in a demo and fails in an audit. When something goes wrong, you cannot separate what the person did from what the agent did.
+
+Walmart's model treats the agent as **a principal of its own**, with four properties that apply to any enterprise system:
+
+1. **Separate identity**: the agent has a distinct profile and its own history.
+2. **Explicit limits**: a spending cap set by whoever delegates, not by the agent.
+3. **Escalation to a human**: mandatory approval above the limit, and the right of the receiving side to ask for extra approval.
+4. **Secrets out of reach**: the agent uses a payment method without ever seeing the sensitive data.
+
+There is also a shift in power worth noting. According to Walmart's description, Walmart picks the products, not Meta's agent. PPC Land and Digiday both highlight this. Whoever controls the gateway controls what the agent sees. For companies that will be "called" by third-party agents, this is a product and business decision, not just an integration detail.
+
+## What to do in practice
+
+If you lead AI in production, I would use this case as a reference on two fronts.
+
+**For the agents you build:**
+
+- Stop giving the agent the user's credentials. Create one service identity per agent, with minimal scope and a separate audit trail.
+- Define limits in business units (value, volume, number of actions per day), not only in technical permissions.
+- Have a human-approval threshold that the delegating person can configure, with a conservative default.
+- Keep sensitive data (cards, tokens, documents) out of the model's context. The agent should reference it, not handle it.
+
+**For the systems that external agents will access:**
+
+- Expose a structured path (such as an MCP server) instead of letting agents scrape your interface. You gain control, observability and fewer errors.
+- Publish clear terms for agents: what they can do, what they must never do, and when they will be blocked.
+- Decide what the agent sees of the customer's history. Delivering "the usual milk" without opening the full history is a good data-minimization pattern.
+- Separate agent actions from human actions in your data from day one. It will matter for support, fraud and metrics.
+
+## In short
+
+Walmart's Agent Gateway, with Muse as its first public client, shows a concrete model for giving agents autonomy without losing control: their own identity, a spending limit, human approval and no access to payment data. It is still early, in beta and at a single retailer. But the pattern applies to any company that will let agents act on its systems, or that will send its own agents to act on someone else's.
