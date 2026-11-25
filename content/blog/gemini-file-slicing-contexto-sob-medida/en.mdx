@@ -1,0 +1,56 @@
+---
+title: "File slicing in Gemini: context gets chosen, not dumped"
+description: "The Gemini API now lets you send only the pages, cells, or audio and video segments that matter, and bills only for what the model reads. What changes for cost and agent design."
+date: "2026-11-25T08:45:00-03:00"
+tags: ["Gemini", "Agents", "AI Cost", "Documents", "LLMs"]
+sources:
+  - title: "Google Blog — Introducing file slicing controls in the Gemini API"
+    url: "https://blog.google/innovation-and-ai/technology/developers-tools/file-slicing-controls/"
+  - title: "Unite.AI — Google Adds File Slicing and Native Office Support to Gemini API"
+    url: "https://www.unite.ai/google-adds-file-slicing-and-native-office-support-to-gemini-api/"
+---
+
+On November 23, Google launched **file slicing controls** in the Gemini API: instead of sending a whole file to the model, the application (or the agent itself) chooses which parts it should read. A page range from a PDF, one sheet and a cell range from a spreadsheet, a few minutes of a video. Native upload of Microsoft Office and OpenDocument files came along with it.
+
+It looks like an API detail. It isn't. For anyone running AI in production on top of documents, this is one of the biggest levers for cost and quality, and until now it lived outside the model, in preprocessing code that every team wrote its own way.
+
+## What happened
+
+According to Google's announcement, written by Rohan Doshi and Ben Caine of Google DeepMind:
+
+- **Documents and presentations** (PDF, Office and OpenDocument) can be sliced by start and end page. You can pick the resolution (low, medium or high) and the content layers: just the page text, the page image, or both.
+- **Spreadsheets** (.xlsx, .xls and .ods) can be read by sheet and by cell range, with the option to send values, formulas or a visual rendering.
+- **Video** can be trimmed by time interval, with control over frames per second, resolution and layers (transcript, frames and audio). **Audio** also accepts a start and end.
+- If nothing is specified, documents are sent as page images that preserve the layout, and spreadsheets go with values, formulas and the names of every sheet.
+- Billing covers **only the tokens Gemini actually inspects**.
+- The feature works with all Gemini 4 models and is available through the API in Google AI Studio and the Gemini platform. Existing file size and page limits stay the same.
+
+The most interesting part for agents: a tool can return, inside its function response (`function_result`), which parts of a file the model should inspect. In other words, the agent can read a contract's table of contents, decide it needs pages 40 to 45, and ask for just those.
+
+**The savings figures are not Google's.** The post itself cites partners: Vercel says extracting text to skim a page used 14 times fewer tokens than rendering the whole PDF, and LiteLLM reports prompt-token cuts of 67% on a PDF and 33% on a spreadsheet. These are partner measurements on their own cases, with no independent verification.
+
+## Why it matters
+
+**Cost per task, not per file.** In workflows with long documents (contracts, reports, tenders, financial spreadsheets), most tokens usually go to content the model didn't need to see. Once the slice becomes an API parameter, cost follows the question rather than the size of the attachment.
+
+**Less noise, better answers.** Too much context is not just expensive; it also gets in the way. Sending only the relevant pages lowers the chance that the model leans on the wrong passage and makes it easier to audit where each answer came from.
+
+**Two-pass reading becomes the default.** The design likely to spread is "skim, then dig in": first a cheap read (text only, low resolution, few pages), then an expensive read (high-resolution image) only where there is a table, a chart or a signature. Before, this required your own OCR and cropping pipeline; now it's configuration.
+
+**The risk moves.** If the agent chooses what to read, a bad choice in the first pass makes it skip the clause that mattered. The savings only hold if the retrieval step is good. That is the point most worth testing before any migration.
+
+**Vendor lock-in.** The parameters are specific to the Gemini API. Teams that route across several models need to decide whether to keep slicing in their own code (portable) or use the native feature (simpler, but tied to Gemini).
+
+## What to do in practice
+
+- **Measure before you change.** Take 50 to 100 real document tasks and record input tokens, cost and accuracy with your current approach. Without that baseline, the partners' 67% or 14x says nothing about your case.
+- **Test the two-pass pattern.** First pass with text only and low resolution; second pass with images and higher resolution only on the pages the first pass flagged.
+- **Treat spreadsheets separately from documents.** For spreadsheets, compare sending values, formulas or the visual rendering. Formulas help with audits; values are usually enough for business questions.
+- **Evaluate first-pass recall.** Build a set of questions whose answers sit on known pages and check whether the agent asks for the right ones. This is where savings can turn into silent errors.
+- **Log the requested slices.** Record which pages, cells or intervals the agent read for each answer. That gives you traceability for audits and for debugging wrong answers.
+- **Keep an abstraction layer.** If you use more than one provider, wrap "read pages X to Y" in your own interface that uses Gemini's native feature when available and local slicing elsewhere.
+- **Review your current preprocessing.** Some of the .docx and .xlsx conversion code your team maintains may no longer be needed with native upload. Less in-house code means fewer things to break.
+
+## In short
+
+File slicing turns context from a dump into an explicit choice, made by the application or by the agent itself, with billing only for what gets read. It's a small change in the API and a big one in how document systems are designed. The real gain depends on something the announcement doesn't solve for you: the quality of the first read. Measure, test recall, and only then change the architecture.

@@ -1,0 +1,56 @@
+---
+title: "File slicing en Gemini: el contexto se elige, ya no se vuelca entero"
+description: "La Gemini API ahora permite enviar solo las páginas, celdas o fragmentos de audio y video que importan, y cobra solo por lo que el modelo lee. Qué cambia en costo y en el diseño de agentes."
+date: "2026-11-25T08:45:00-03:00"
+tags: ["Gemini", "Agentes", "Costo de IA", "Documentos", "LLMs"]
+sources:
+  - title: "Google Blog — Introducing file slicing controls in the Gemini API"
+    url: "https://blog.google/innovation-and-ai/technology/developers-tools/file-slicing-controls/"
+  - title: "Unite.AI — Google Adds File Slicing and Native Office Support to Gemini API"
+    url: "https://www.unite.ai/google-adds-file-slicing-and-native-office-support-to-gemini-api/"
+---
+
+El 23 de noviembre, Google lanzó en la Gemini API los **controles de file slicing**: en lugar de enviar un archivo completo al modelo, la aplicación (o el propio agente) elige qué partes debe leer. Un rango de páginas de un PDF, una hoja y un rango de celdas de una planilla, unos minutos de un video. Junto con eso llegó la carga nativa de archivos de Microsoft Office y OpenDocument.
+
+Parece un detalle de API. No lo es. Para quien pone IA en producción sobre documentos, esta es una de las mayores palancas de costo y de calidad, y hasta ahora quedaba fuera del modelo, en código de preprocesamiento que cada equipo escribía a su manera.
+
+## Qué pasó
+
+Según el anuncio de Google, firmado por Rohan Doshi y Ben Caine, de Google DeepMind:
+
+- **Documentos y presentaciones** (PDF, Office y OpenDocument) se pueden recortar por página inicial y final. Se puede elegir la resolución (baja, media o alta) y las capas de contenido: solo el texto de la página, la imagen de la página o ambos.
+- **Planillas** (.xlsx, .xls y .ods) se pueden leer por hoja y por rango de celdas, con la opción de enviar los valores, las fórmulas o una versión visual.
+- **Video** se puede recortar por intervalo de tiempo, con control de cuadros por segundo, resolución y capas (transcripción, cuadros y audio). **Audio** también acepta inicio y fin.
+- Si no se especifica nada, los documentos se envían como imágenes de las páginas, preservando el diseño, y las planillas van con valores, fórmulas y nombres de todas las hojas.
+- El cobro considera **solo los tokens que Gemini realmente inspecciona**.
+- La función vale para todos los modelos Gemini 4 y está disponible por la API en Google AI Studio y en la plataforma Gemini. Los límites de tamaño y de páginas de los archivos siguen iguales.
+
+El punto más interesante para agentes: una herramienta puede devolver, dentro de la respuesta de función (`function_result`), qué partes de un archivo debe inspeccionar el modelo. Es decir, el agente puede mirar el índice de un contrato, decidir que necesita las páginas 40 a 45 y pedir solo esas.
+
+**Las cifras de ahorro no son de Google.** El propio post cita a socios: Vercel dice que extraer el texto para "echar un vistazo" a una página usó 14 veces menos tokens que renderizar el PDF completo, y LiteLLM reporta recortes del 67% en los tokens de prompt en un PDF y del 33% en una planilla. Son mediciones de los socios, en sus propios casos, sin verificación independiente.
+
+## Por qué importa
+
+**Costo por tarea, no por archivo.** En flujos con documentos largos (contratos, informes, licitaciones, planillas financieras), la mayor parte de los tokens suele ir a contenido que el modelo ni necesitaba ver. Cuando el recorte se vuelve un parámetro de la API, el costo sigue a la pregunta y no al tamaño del adjunto.
+
+**Menos ruido, mejores respuestas.** Demasiado contexto no solo es caro: también estorba. Enviar solo las páginas relevantes reduce la probabilidad de que el modelo se apoye en el fragmento equivocado y facilita auditar de dónde salió cada respuesta.
+
+**La lectura en dos etapas se vuelve estándar.** El diseño que tiende a difundirse es "hojear y profundizar": primero una lectura barata (solo texto, baja resolución, pocas páginas), luego una lectura cara (imagen en alta resolución) solo donde hay una tabla, un gráfico o una firma. Antes, eso exigía un pipeline propio de OCR y recorte; ahora es configuración.
+
+**El riesgo cambia de lugar.** Si el agente elige qué leer, una mala elección en la primera etapa hace que ignore la cláusula que importaba. El ahorro solo se sostiene si la etapa de búsqueda es buena. Es el punto que más merece pruebas antes de cualquier migración.
+
+**Dependencia del proveedor.** Los parámetros son específicos de la Gemini API. Quien enruta entre varios modelos tiene que decidir si mantiene el recorte en su propio código (portable) o si aprovecha la función nativa (más simple, pero atada a Gemini).
+
+## Qué hacer en la práctica
+
+- **Mide antes de cambiar.** Toma de 50 a 100 tareas reales con documentos y registra tokens de entrada, costo y acierto con el envío actual. Sin esa línea de base, el 67% o las 14 veces de los socios no dicen nada sobre tu caso.
+- **Prueba el patrón en dos etapas.** Primera pasada solo con texto y baja resolución; segunda pasada con imagen y mayor resolución solo en las páginas que señaló la primera.
+- **Separa planillas de documentos.** En planillas, compara enviar valores, fórmulas o la versión visual. Las fórmulas ayudan en auditorías; los valores suelen bastar para preguntas de negocio.
+- **Evalúa el recall de la primera etapa.** Arma un conjunto de preguntas cuya respuesta está en páginas conocidas y verifica si el agente pide las páginas correctas. Aquí es donde el ahorro puede volverse un error silencioso.
+- **Registra los recortes pedidos.** Guarda en el log qué páginas, celdas o intervalos leyó el agente en cada respuesta. Eso da trazabilidad para auditorías y para depurar respuestas incorrectas.
+- **Mantén una capa de abstracción.** Si usas más de un proveedor, encapsula "leer páginas X a Y" en una interfaz propia que use la función nativa de Gemini cuando esté disponible y un recorte local en los demás casos.
+- **Revisa el preprocesamiento actual.** Parte del código de conversión de .docx y .xlsx que mantiene el equipo puede dejar de ser necesario con la carga nativa. Menos código propio es menos cosas que se rompen.
+
+## En resumen
+
+El file slicing transforma el contexto de un volcado en una elección explícita, hecha por la aplicación o por el propio agente, con cobro solo por lo que se lee. Es un cambio pequeño en la API y grande en el diseño de sistemas con documentos. La ganancia real depende de algo que el anuncio no resuelve por ti: la calidad de la primera lectura. Mide, prueba el recall y solo entonces cambia la arquitectura.
