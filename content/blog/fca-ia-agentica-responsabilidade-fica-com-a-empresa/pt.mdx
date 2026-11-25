@@ -1,0 +1,54 @@
+---
+title: "FCA e IA agêntica: o agente age, mas a responsabilidade continua da empresa"
+description: "O regulador financeiro do Reino Unido publicou como enxerga agentes de IA: a conta fica com a empresa e seus executivos, inclusive quando o agente é de terceiros. O que isso muda na operação."
+date: "2026-11-25T18:35:00-03:00"
+tags: ["Agentes", "Regulação", "Governança de IA", "Serviços financeiros"]
+sources:
+  - title: "FCA — Our approach to Agentic AI"
+    url: "https://www.fca.org.uk/firms/innovation/ai-approach/agentic-ai"
+  - title: "Regulation Tomorrow — New FCA webpage: Our approach to Agentic AI"
+    url: "https://www.regulationtomorrow.com/2026/11/new-fca-webpage-our-approach-to-agentic-ai/"
+  - title: "Insurance Business — FCA sets out accountability expectations for agentic AI in financial services"
+    url: "https://www.insurancebusinessmag.com/uk/news/technology/fca-sets-out-accountability-expectations-for-agentic-ai-in-financial-services-598548.aspx"
+---
+
+Em 24 de novembro, a Financial Conduct Authority (FCA), regulador financeiro do Reino Unido, publicou uma página chamada "Our approach to Agentic AI". Ela não cria regras novas para IA. Faz algo mais útil para quem opera: diz, com clareza, como as regras que já existem se aplicam quando um sistema de IA deixa de só responder e passa a agir. A mensagem central é curta: o agente pode executar a tarefa, mas a responsabilidade continua sendo da empresa e dos executivos que o colocaram em produção.
+
+## O que aconteceu
+
+A página da FCA organiza a posição do regulador em alguns pontos.
+
+- **Responsabilidade não se terceiriza.** Quem desenvolve, implanta ou apenas contrata um agente de um fornecedor continua responsável por cumprir as obrigações regulatórias. Usar um provedor externo não transfere a conta.
+- **Entender o sistema é obrigação.** A FCA espera que a empresa consiga demonstrar que entende os sistemas que usa, o grau de autonomia deles, os riscos que criam e os controles necessários em tempo real e em situações de estresse.
+- **Consumer Duty vale para agentes.** O dever de evitar danos previsíveis, dar ao cliente a informação de que ele precisa e acompanhar os resultados se aplica a produtos agênticos, incluindo governança, monitoramento de resultados e reparação.
+- **Executivos respondem pelo que está na sua área.** Pelo regime de responsabilização de executivos (SM&CR), o gestor sênior responde pelos modelos de IA usados na sua área, sejam próprios ou de terceiros. Precisa entender os riscos, supervisionar, questionar a implantação e garantir escalonamento adequado.
+- **Autorização pode ser necessária desde o lançamento.** Segundo a página, alguns produtos agênticos podem exigir regulação já no lançamento, ou evoluir até que ela passe a se aplicar. Isso acontece quando a IA sai da informação e passa a iniciar transações, movimentar dinheiro, contratar crédito ou tomar decisões de investimento.
+- **Agentes dos clientes também entram na conta.** A FCA pede que as empresas pensem em como reagir quando o cliente usa um agente de IA para falar com elas: como saber que estão lidando com um agente, quais consentimentos existem, o que esse agente pode fazer e como o cliente recebe suporte se algo der errado. Nos pagamentos, a empresa deve avaliar se faz sentido aceitar ordens dadas por um agente ou por uma carteira digital controlada por ele, e quais riscos assume ao aceitar.
+- **Empresa de tecnologia não é rótulo de proteção.** Provedores de tecnologia e plataformas precisam avaliar se o que fazem já é atividade regulada, como pagamentos, crédito ou aconselhamento financeiro. Chamar-se de empresa de tecnologia não resolve a questão.
+
+O regulador também oferece o AI Lab para testar produtos e diz que pretende organizar um "policy sprint" sobre agentes com empresas e fornecedores, ainda sem datas. O blog jurídico Regulation Tomorrow e a revista Insurance Business confirmam a publicação e o foco em responsabilização. Vale um cuidado: algumas coberturas atribuem à FCA frases mais fortes do que as da página, como a de que nunca haverá regras específicas para IA. O texto oficial diz apenas que a abordagem é baseada em princípios e resultados.
+
+## Por que importa
+
+A FCA regula o mercado britânico, mas o raciocínio serve para qualquer empresa que coloca agentes para agir sobre dinheiro, contratos ou dados de clientes. Três pontos merecem atenção.
+
+Primeiro, **a responsabilidade tem nome e cargo**. Não basta ter um comitê de IA genérico. Para cada agente em produção, alguém precisa conseguir explicar o que ele faz, até onde vai e como é desligado.
+
+Segundo, **o momento em que o risco muda é quando o agente começa a agir**. Um assistente que explica um produto e um agente que inicia uma transferência podem usar o mesmo modelo, mas não são o mesmo produto. A linha que importa é a da ação, não a da tecnologia.
+
+Terceiro, **o agente do outro lado também é problema seu**. Até aqui, quase toda a discussão de governança olhava para os agentes que a empresa constrói. A FCA lembra que os clientes vão chegar com os próprios agentes, e que a empresa precisa decidir como identificá-los, o que aceitar deles e como atender o cliente quando algo sair errado.
+
+## O que fazer na prática
+
+Se eu estivesse revisando um programa de agentes hoje, com ou sem operação no Reino Unido, faria isto:
+
+1. **Inventário com dono.** Liste cada agente em produção ou piloto, o fornecedor do modelo, as ferramentas que ele chama e o executivo responsável. Agente sem dono é o primeiro achado de qualquer auditoria.
+2. **Classifique por capacidade de ação.** Separe agentes que só informam dos que escrevem em sistemas, movimentam dinheiro ou assumem compromissos em nome do cliente. Os do segundo grupo pedem análise jurídica antes do lançamento, não depois.
+3. **Contratos não substituem controles.** Para agentes de terceiros, exija logs, limites configuráveis e forma de desligar. A responsabilidade continua sua, então a visibilidade precisa ser sua também.
+4. **Teste o cenário de estresse.** Defina o que acontece quando o modelo erra em escala, o fornecedor cai ou a política muda: limites de gasto, aprovação humana em faixas de risco e um botão de parada testado.
+5. **Prepare a porta para agentes de clientes.** Decida como sua API ou canal identifica tráfego de agentes, que consentimento precisa ver, que operações aceita sem confirmação humana e como o cliente reclama.
+6. **Meça resultado do cliente, não só acurácia.** Acompanhe reclamações, reversões e casos de dano ligados a decisões do agente. É isso que o regulador vai perguntar.
+
+## Em resumo
+
+A FCA não inventou um regime novo para agentes. Disse que o regime atual já cobre o caso e que a responsabilidade fica com a empresa e com executivos identificáveis, mesmo quando o agente vem de fora. Para quem lidera IA em produção, a pergunta a fazer é simples: para cada agente que age em nome da empresa ou do cliente, quem responde, com que limites e com que evidência?
