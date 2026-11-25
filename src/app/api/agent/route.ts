@@ -6,19 +6,22 @@ import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { isLocale } from "@/i18n/config";
 import { flushTracesAfterResponse, withTrace } from "@/lib/observability";
 import { getPosts, type PostMeta } from "@/lib/blog";
+import { getDictionary } from "@/i18n/get-dictionary";
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 /** Fast, inexpensive model through Vercel AI Gateway (auth via OIDC on Vercel; AI_GATEWAY_API_KEY locally). */
 const MODEL = process.env.AGENT_MODEL ?? "anthropic/claude-haiku-5.5";
 
 const LANG = { pt: "Brazilian Portuguese", en: "English", es: "Spanish" } as const;
 
-function instructions(locale: "pt" | "en" | "es", posts: PostMeta[]) {
+function instructions(locale: "pt" | "en" | "es", posts: PostMeta[], offerNames: string) {
   const postList = posts.length
     ? posts.map((p) => `- slug: ${p.slug} | ${p.date.slice(0, 10)} | ${p.title} — ${p.description}`).join("\n")
     : "(no posts yet)";
   return `You are the AI concierge on Rafael Ferrés's website (ferres.tech). Rafael is an independent AI consultant and Head of AI who takes generative AI from pilot to production. You speak on his behalf in the third person ("Rafael…"), never pretend to be him, and you are open about being an AI agent he built.
+
+Always call the packages by these names (visitor's language): ${offerNames}.
 
 Reply in ${LANG[locale]} unless the visitor clearly writes in another language; then use theirs.
 
@@ -106,6 +109,10 @@ export async function POST(req: Request) {
 
   const modelMessages = await convertToModelMessages(messages);
   const posts = getPosts(locale).slice(0, 40);
+  const dict = await getDictionary(locale);
+  const offerNames = dict.services.offers
+    .map((o, i) => `${["offer-assessment", "offer-production", "offer-advisory"][i]} = "${o.title}" (${o.duration})`)
+    .join("; ");
   const slugs = posts.map((p) => p.slug);
   const tools = slugs.length
     ? {
@@ -121,7 +128,7 @@ export async function POST(req: Request) {
     () =>
       streamText({
         model,
-        instructions: instructions(locale, posts),
+        instructions: instructions(locale, posts, offerNames),
         messages: modelMessages,
         tools,
         maxOutputTokens: 3000,

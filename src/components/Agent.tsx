@@ -33,26 +33,32 @@ function Md({ text }: { text: string }) {
   };
   return (
     <>
-      {blocks.map((b, i) => {
-        const lines = b.split("\n");
-        if (lines.every((l) => /^\s*([-*•]|\d+\.)\s+/.test(l))) {
-          return (
-            <ul key={i}>
-              {lines.map((l, j) => (
-                <li key={j}>{inline(l.replace(/^\s*([-*•]|\d+\.)\s+/, ""))}</li>
+      {blocks.flatMap((b, i) => {
+        /* split a block into runs of plain lines and bullet lines */
+        const runs: { list: boolean; lines: string[] }[] = [];
+        for (const l of b.split("\n")) {
+          const list = /^\s*([-*•]|\d+\.)\s+/.test(l);
+          const last = runs[runs.length - 1];
+          if (last && last.list === list) last.lines.push(l);
+          else runs.push({ list, lines: [l] });
+        }
+        return runs.map((r, j) =>
+          r.list ? (
+            <ul key={`${i}-${j}`}>
+              {r.lines.map((l, k) => (
+                <li key={k}>{inline(l.replace(/^\s*([-*•]|\d+\.)\s+/, ""))}</li>
               ))}
             </ul>
-          );
-        }
-        return (
-          <p key={i}>
-            {lines.map((l, j) => (
-              <span key={j}>
-                {j > 0 && <br />}
-                {inline(l)}
-              </span>
-            ))}
-          </p>
+          ) : (
+            <p key={`${i}-${j}`}>
+              {r.lines.map((l, k) => (
+                <span key={k}>
+                  {k > 0 && <br />}
+                  {inline(l)}
+                </span>
+              ))}
+            </p>
+          ),
         );
       })}
     </>

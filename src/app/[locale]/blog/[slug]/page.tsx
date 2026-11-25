@@ -8,6 +8,7 @@ import Nav from "@/components/Nav";
 import ScrollProgress from "@/components/ScrollProgress";
 import Effects from "@/components/Effects";
 import SiteFooter from "@/components/SiteFooter";
+import BookButton from "@/components/BookButton";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => getSlugs().map((slug) => ({ locale, slug })));
@@ -106,7 +107,7 @@ export default async function PostPage({ params }: { params: Params }) {
             <p className="post__ai mono">{t.blog.aiNote}</p>
             <div className="post__cta">
               <p>{t.blog.cta}</p>
-              <a href={`/${locale}#contact`} className="btn btn--primary">{t.blog.ctaButton} ↗</a>
+              <BookButton>{t.blog.ctaButton} ↗</BookButton>
             </div>
           </footer>
 
