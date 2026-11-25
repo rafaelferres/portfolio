@@ -806,5 +806,27 @@
     "booked": "¡Reunión agendada! La invitación con el enlace de la llamada está en tu correo.",
     "bookNow": "Agendar conversación ahora",
     "openCalendar": "Abrir agenda"
+  },
+  "booking": {
+    "title": "Conversación de 30 min",
+    "subtitle": "Elige un horario. La invitación con el enlace de la llamada llega a tu correo.",
+    "loading": "Buscando horarios libres…",
+    "none": "Sin horarios libres en los próximos días.",
+    "tz": "Horarios en",
+    "pick": "Elige un horario",
+    "change": "Cambiar horario",
+    "name": "Nombre",
+    "email": "Correo",
+    "company": "Empresa (opcional)",
+    "notes": "¿De qué te gustaría hablar? (opcional)",
+    "confirm": "Confirmar conversación",
+    "confirming": "Agendando…",
+    "done": "¡Conversación agendada!",
+    "doneText": "La invitación con el enlace de la llamada se envió a",
+    "error": "Ese horario acaba de ocuparse o algo falló. Elige otro horario.",
+    "fallback": "Abrir la agenda en otra pestaña",
+    "close": "Cerrar",
+    "skip": "Ahora no",
+    "duration": "30 min · videollamada"
   }
 }

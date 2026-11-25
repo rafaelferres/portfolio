@@ -806,5 +806,27 @@
     "booked": "Reunião marcada! O convite com o link da chamada foi para o seu e-mail.",
     "bookNow": "Agendar conversa agora",
     "openCalendar": "Abrir agenda"
+  },
+  "booking": {
+    "title": "Conversa de 30 min",
+    "subtitle": "Escolha um horário. O convite com o link da chamada chega no seu e-mail.",
+    "loading": "Buscando horários livres…",
+    "none": "Sem horários livres nos próximos dias.",
+    "tz": "Horários em",
+    "pick": "Escolha um horário",
+    "change": "Trocar horário",
+    "name": "Nome",
+    "email": "E-mail",
+    "company": "Empresa (opcional)",
+    "notes": "Sobre o que quer conversar? (opcional)",
+    "confirm": "Confirmar conversa",
+    "confirming": "Agendando…",
+    "done": "Conversa marcada!",
+    "doneText": "O convite com o link da chamada foi enviado para",
+    "error": "Esse horário acabou de ser ocupado ou algo falhou. Escolha outro horário.",
+    "fallback": "Abrir a agenda em outra aba",
+    "close": "Fechar",
+    "skip": "Agora não",
+    "duration": "30 min · chamada de vídeo"
   }
 }

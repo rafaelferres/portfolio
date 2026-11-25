@@ -11,6 +11,7 @@ import "../motion.css";
 import "../agent.css";
 import Loader from "@/components/Loader";
 import Agent from "@/components/Agent";
+import BookingModal from "@/components/BookingModal";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -90,7 +91,8 @@ export default async function LocaleLayout({
         />
         <Loader />
         {children}
-        <Agent t={t.agent} locale={locale} />
+        <Agent t={t.agent} booking={t.booking} locale={locale} />
+        <BookingModal t={t.booking} locale={locale} />
       </body>
     </html>
   );

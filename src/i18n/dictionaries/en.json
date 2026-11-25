@@ -806,5 +806,27 @@
     "booked": "Meeting booked! The invite with the call link is in your inbox.",
     "bookNow": "Book a call now",
     "openCalendar": "Open calendar"
+  },
+  "booking": {
+    "title": "30-minute call",
+    "subtitle": "Pick a time. The invite with the call link goes to your inbox.",
+    "loading": "Finding open times…",
+    "none": "No open times in the next few days.",
+    "tz": "Times in",
+    "pick": "Pick a time",
+    "change": "Change time",
+    "name": "Name",
+    "email": "Email",
+    "company": "Company (optional)",
+    "notes": "What would you like to discuss? (optional)",
+    "confirm": "Confirm call",
+    "confirming": "Booking…",
+    "done": "Call booked!",
+    "doneText": "The invite with the call link was sent to",
+    "error": "That time was just taken or something failed. Please pick another time.",
+    "fallback": "Open the calendar in a new tab",
+    "close": "Close",
+    "skip": "Not now",
+    "duration": "30 min · video call"
   }
 }
