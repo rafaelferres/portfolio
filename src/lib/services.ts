@@ -441,3 +441,15 @@ export function getService(id: ServiceId, l: Locale): ServiceContent {
   const c = C[id][l];
   return { ...c, faq: [...c.faq, ...COMMON_FAQ[l]] };
 }
+
+/** Same page in another language, translating localized service paths (/pt/servicos/x ↔ /en/services/y). */
+export function localizedPath(pathname: string, target: Locale): string {
+  const parts = pathname.split("/");
+  const from = parts[1] as Locale;
+  if (parts[2] && SERVICE_SEGMENT[from] === parts[2] && parts[3]) {
+    const id = serviceBySlug(from, parts[3]);
+    if (id) return servicePath(id, target);
+  }
+  parts[1] = target;
+  return parts.join("/") || `/${target}`;
+}

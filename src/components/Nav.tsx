@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import { localeLabels, locales, type Locale } from "@/i18n/config";
+import { localizedPath } from "@/lib/services";
 
 type NavDict = {
   skip: string;
@@ -67,11 +68,7 @@ export default function Nav({ dict, locale }: { dict: NavDict; locale: Locale })
     { href: h("contact"), label: dict.contact },
   ];
 
-  const swapLocale = (target: Locale) => {
-    const parts = (pathname ?? `/${locale}`).split("/");
-    parts[1] = target;
-    return parts.join("/") || `/${target}`;
-  };
+  const swapLocale = (target: Locale) => localizedPath(pathname ?? `/${locale}`, target);
 
   const rememberLocale = (target: Locale) => {
     document.cookie = `NEXT_LOCALE=${target}; path=/; max-age=31536000; samesite=lax`;

@@ -3,6 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls, type UIMessage } from "ai";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { localizedPath } from "@/lib/services";
 import { TARGET_SECTION, cleanBrief, encodeBrief, type AgentTarget, type Brief } from "@/lib/agent";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { site } from "@/lib/site";
@@ -131,8 +132,7 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
         addToolOutput({ tool: "setLocale", toolCallId: toolCall.toolCallId, output: "switching" });
         sessionStorage.setItem(`${STORE}-open`, "1");
         window.setTimeout(() => {
-          const rest = window.location.pathname.replace(/^\/(pt|en|es)(?=\/|$)/, "");
-          window.location.assign(`/${args.locale}${rest}${window.location.hash}`);
+          window.location.assign(`${localizedPath(window.location.pathname, args.locale as "pt" | "en" | "es")}${window.location.hash}`);
         }, 900);
       } else if (toolCall.toolName === "openPost") {
         const slug = String(args.slug ?? "").replace(/[^a-z0-9-]/gi, "");

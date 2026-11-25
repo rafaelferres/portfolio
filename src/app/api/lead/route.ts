@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     summary = "(resumo indisponível)";
   }
 
-  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ferres.tech";
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ferres.tech";
   const lines = [
     `Nome: ${name}`,
     `E-mail: ${email}`,
