@@ -11,6 +11,7 @@ import Reveal from "@/components/Reveal";
 import ScrollProgress from "@/components/ScrollProgress";
 import Assembly from "@/components/Assembly";
 import ContactForm from "@/components/ContactForm";
+import AgentPrompt from "@/components/AgentPrompt";
 
 const pad = (n: number, l = 2) => String(n).padStart(l, "0");
 
@@ -115,6 +116,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <a href="#contact" className="btn btn--primary">{t.hero.ctaContact} ↗</a>
                 <a href="#hire" className="btn btn--ghost">{t.hero.ctaServices}</a>
               </div>
+              <AgentPrompt label={t.agent.heroLabel} placeholder={t.agent.heroPlaceholder} send={t.agent.send} />
               <div className="hero-stats">
                 {t.hero.stats.map((s) => (
                   <div key={s.label} className="stat">
@@ -169,7 +171,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
           <div className="offers">
             {sv.offers.map((o, i) => (
-              <Reveal key={o.code} className="offer" delay={i * 90}>
+              <Reveal key={o.code} className="offer" delay={i * 90} data-agent={["offer-assessment", "offer-production", "offer-advisory"][i]}>
                 <div className="offer__top mono">
                   <span className="offer__code" data-scramble>{o.code}</span>
                   <span className="offer__dur">{o.duration}</span>
@@ -183,7 +185,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             ))}
           </div>
           <h3 className="mono proj__label">{sv.processTitle}</h3>
-          <ol className="steps">
+          <ol className="steps" data-agent="process">
             {sv.steps.map((st, i) => (
               <Reveal as="li" key={st.title} className="step" delay={i * 80}>
                 <span className="step__n mono">{pad(i + 1)}</span>
@@ -204,7 +206,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         {/* ───────── § 02 PROJECTS ───────── */}
         <section id="projects" className="section container">
           <SectionHeader index={2} label={pr.label} title={pr.title} />
-          <Reveal className="now">
+          <Reveal className="now" data-agent="now">
             <div className="now__stat">
               <span className="now__value" data-count>{pr.now.stat}</span>
               <span className="mono now__statlabel">{pr.now.statLabel}</span>
@@ -232,7 +234,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </Reveal>
 
 
-          <Reveal className="lab">
+          <Reveal className="lab" data-agent="krun">
             <div className="lab__head">
               <div className="pj__top mono">
                 <span className="pj__code" data-scramble>{pr.lab.code}</span>
@@ -266,7 +268,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <h3 className="mono proj__label">{pr.soloLabel}</h3>
           <div className="proj">
             {pr.items.map((it, i) => (
-              <Reveal as="article" key={it.code} className="pj" delay={i * 80}>
+              <Reveal as="article" key={it.code} className="pj" delay={i * 80} data-agent={["pioneer-career-test", "pioneer-agent-builder"][i]}>
                 <span className="pj__year" aria-hidden="true">2023</span>
                 <div className="pj__top mono">
                   <span className="pj__code" data-scramble>{it.code}</span>
@@ -287,8 +289,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <h3 className="mono proj__label">{pr.ledLabel} · {pr.ledIntro}</h3>
             </div>
             <div className="led__grid">
-              {pr.led.map((x) => (
-                <article key={x.code} className="lc">
+              {pr.led.map((x, i) => (
+                <article key={x.code} className="lc" data-agent={["case-sales", "case-media", "case-pricing"][i]}>
                   <div className="pj__top mono">
                     <span className="pj__code" data-scramble>{x.code}</span>
                     <span className="chip">{x.cloud}</span>
@@ -368,7 +370,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <section id="stack" className="section container">
           <SectionHeader index={5} label={t.stack.label} title={t.stack.title} />
           <h3 className="mono proj__label">{t.stack.modelsTitle}</h3>
-          <div className="providers">
+          <div className="providers" data-agent="models">
             {t.stack.providers.map((pv, i) => (
               <Reveal key={pv.name} className="prov" delay={i * 60}>
                 <span className="mono prov__code" data-scramble>M/{pad(i + 1)}</span>

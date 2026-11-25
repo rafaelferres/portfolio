@@ -729,5 +729,76 @@
     ],
     "ctaTitle": "¿Hablamos de tu proyecto?",
     "ctaText": "30 minutos, sin compromiso."
+  },
+  "agent": {
+    "open": "Pregunta a la IA",
+    "title": "Agente de Rafael",
+    "subtitle": "IA entrenada en el trabajo de Rafael · navega el sitio por ti",
+    "placeholder": "Pregunta sobre IA para tu empresa…",
+    "send": "Enviar",
+    "close": "Cerrar",
+    "reset": "Nueva conversación",
+    "hello": "¡Hola! Soy el agente de IA de Rafael. Cuéntame el desafío de tu empresa: te muestro en el sitio cómo puede ayudar y armo una propuesta al momento.",
+    "suggestions": [
+      "Quiero un agente de atención en WhatsApp",
+      "¿Cómo funciona el diagnóstico?",
+      "Muéstrame un caso real",
+      "Arma una propuesta para mi empresa"
+    ],
+    "heroLabel": "Pregunta al agente de IA",
+    "heroPlaceholder": "Ej.: quiero usar IA en la atención al cliente",
+    "thinking": "Pensando…",
+    "navigating": "Mostrándolo en el sitio",
+    "switching": "Cambiando el idioma",
+    "briefLabel": "Propuesta",
+    "briefOpen": "Abrir propuesta",
+    "briefCopy": "Copiar enlace",
+    "copied": "Enlace copiado",
+    "offers": {
+      "assessment": "Diagnóstico de IA",
+      "production": "Del piloto a producción",
+      "advisory": "Advisory de IA"
+    },
+    "cases": {
+      "case-sales": "Agente de ventas en WhatsApp",
+      "case-media": "Insights y generación de medios pagados",
+      "case-pricing": "Pricing dinámico",
+      "pioneer-career-test": "Test vocacional con IA generativa",
+      "pioneer-agent-builder": "Plataforma de creación de agentes",
+      "krun": "Krun One",
+      "none": ""
+    },
+    "lead": {
+      "title": "¿Quieres que Rafael te contacte?",
+      "name": "Nombre",
+      "email": "Correo",
+      "company": "Empresa",
+      "phone": "WhatsApp (opcional)",
+      "consent": "Acepto enviar mis datos y esta conversación a Rafael para que me contacte.",
+      "submit": "Enviar a Rafael",
+      "sending": "Enviando…",
+      "sent": "¡Listo! Rafael lo recibió y responde en un día hábil.",
+      "fallback": "No pude enviarlo ahora. Escribe a",
+      "skip": "Ahora no"
+    },
+    "error": "Tuve un problema al responder. Inténtalo de nuevo en un momento.",
+    "limit": "Demasiados mensajes en poco tiempo. Inténtalo en unos minutos.",
+    "disclaimer": "Respuestas generadas por IA. Para decisiones, habla con Rafael.",
+    "page": {
+      "kicker": "Propuesta preliminar",
+      "generated": "Generada por el agente de IA de ferres.tech",
+      "context": "Contexto",
+      "challenge": "Desafío",
+      "approach": "Cómo lo abordaría",
+      "package": "Paquete recomendado",
+      "steps": "Etapas",
+      "related": "Experiencia relacionada",
+      "next": "Próximo paso",
+      "cta": "Agendar conversación",
+      "print": "Imprimir / PDF",
+      "invalid": "No encontré esta propuesta. Conversa con el agente para generar una nueva.",
+      "back": "Volver al sitio",
+      "note": "Borrador generado por IA a partir de la conversación. Alcance, plazo e inversión se definen con Rafael."
+    }
   }
 }

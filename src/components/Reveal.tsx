@@ -14,6 +14,7 @@ export default function Reveal({
   className?: string;
   delay?: number;
   [key: `aria-${string}`]: string | undefined;
+  [key: `data-${string}`]: string | undefined;
 }) {
   const ref = useRef<HTMLElement>(null);
 

@@ -8,7 +8,9 @@ import { site } from "@/lib/site";
 import "../globals.css";
 import "../portfolio.css";
 import "../motion.css";
+import "../agent.css";
 import Loader from "@/components/Loader";
+import Agent from "@/components/Agent";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -76,6 +78,7 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  const t = await getDictionary(locale);
 
   return (
     <html lang={htmlLang[locale]} className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
@@ -87,6 +90,7 @@ export default async function LocaleLayout({
         />
         <Loader />
         {children}
+        <Agent t={t.agent} locale={locale} />
       </body>
     </html>
   );
