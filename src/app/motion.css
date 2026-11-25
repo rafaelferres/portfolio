@@ -223,7 +223,7 @@ h1,h2,h3,.offer__title,.pj__title,.now__title,.post-row__title{overflow-wrap:any
 .fx [data-count]{display:inline-block;clip-path:inset(-0.2em -0.1em -0.2em -0.1em)}
 .fx [data-count]:not(.in){opacity:0;transform:translateY(.45em)}
 .fx [data-count].in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
-html:not(.rf-seen) .assembly [data-count].in{transition-delay:2.35s}
+html:not(.rf-seen) .assembly [data-count].in{transition-delay:1.25s}
 @media (prefers-reduced-motion:reduce){.fx [data-count]{opacity:1!important;transform:none!important}}
 .cert-link{color:var(--fg);border-bottom:1px solid rgba(255,71,87,.5);transition:border-color .2s,color .2s}
 .cert-link:hover{color:var(--accent);border-color:var(--accent)}

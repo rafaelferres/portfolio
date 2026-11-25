@@ -141,6 +141,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <span className="hero__name--outline" data-split>{t.hero.last}</span>
               </h1>
               <p className="hero__subtitle">{t.hero.subtitle}</p>
+              <p className="hero__bio">{t.hero.pitch}</p>
               <div className="hero__ctas">
                 <BookButton>{t.hero.ctaContact} ↗</BookButton>
                 <a href="#hire" className="btn btn--ghost">{t.hero.ctaServices}</a>
@@ -333,6 +334,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     <span className="chip">{x.cloud}</span>
                   </div>
                   <h4 className="lc__title">{x.title}</h4>
+                  <p className="lc__text">{x.text}</p>
                   <ul className="pcard__tags">
                     {x.tags.map((tg) => <li key={tg} className="chip mono">{tg}</li>)}
                   </ul>

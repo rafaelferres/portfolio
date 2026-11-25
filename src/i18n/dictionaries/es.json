@@ -26,6 +26,7 @@
     "first": "Rafael",
     "last": "Ferrés",
     "subtitle": "Consultoría en IA · Agentes & LLMs",
+    "pitch": "Llevo la IA de tu empresa del piloto a la producción, con calidad y costo medidos.",
     "bio": "Ayudo a empresas a llevar la IA del piloto a producción: diagnóstico, agentes, RAG y LLMs, con calidad y costo medidos. Head of AI, con 15+ sistemas de IA en producción desde 2023.",
     "ctaCareer": "Ver carrera",
     "ctaContact": "Agendar conversación",
@@ -320,7 +321,7 @@
       "copy": "Copiar mensaje",
       "copied": "¡Copiado!",
       "again": "Escribir otro",
-      "subject": "Oportunidad en IA para Rafael Ferrés",
+      "subject": "Proyecto de IA — contacto desde el sitio",
       "sentText": "Mensaje enviado a rafael@ferres.tech. ¡Gracias! Respondo personalmente, normalmente en un día hábil."
     },
     "or": "o escribe directo a"
