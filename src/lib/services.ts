@@ -101,7 +101,7 @@ export const SHARED: Record<Locale, Shared> = {
 };
 
 /* FAQ entries that apply to every service */
-const COMMON_FAQ: Record<Locale, QA[]> = {
+export const COMMON_FAQ: Record<Locale, QA[]> = {
   pt: [
     { q: "Quanto custa?", a: "Depende do escopo. Depois de uma conversa de 30 minutos eu envio uma proposta com escopo, prazo e investimento fechados." },
     { q: "Vocês assinam NDA?", a: "Sim. Boa parte dos projetos que liderei é confidencial, e trabalho sob NDA sempre que o cliente precisa." },

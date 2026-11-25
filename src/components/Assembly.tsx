@@ -56,14 +56,24 @@ export default function Assembly({ dict }: { dict: AssemblyDict }) {
   useEffect(() => {
     let disposed = false;
     let cleanup = () => {};
-    import("three")
-      .then((THREE) => {
-        if (disposed || !canvasRef.current || !stageRef.current) return;
-        cleanup = buildChip(THREE, canvasRef.current, stageRef.current, () => progressRef.current);
-      })
-      .catch(() => setNoWebgl(true));
+    const start = () => {
+      import("three")
+        .then((THREE) => {
+          if (disposed || !canvasRef.current || !stageRef.current) return;
+          cleanup = buildChip(THREE, canvasRef.current, stageRef.current, () => progressRef.current);
+        })
+        .catch(() => setNoWebgl(true));
+    };
+    /* let the intro and the first paint finish before the 3D work */
+    const introMs = document.documentElement.classList.contains("rf-seen") ? 0 : 1600;
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    const timer = window.setTimeout(() => {
+      if (w.requestIdleCallback) w.requestIdleCallback(start, { timeout: 1200 });
+      else start();
+    }, introMs);
     return () => {
       disposed = true;
+      window.clearTimeout(timer);
       cleanup();
     };
   }, []);

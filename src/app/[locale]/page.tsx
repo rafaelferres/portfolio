@@ -13,7 +13,7 @@ import Assembly from "@/components/Assembly";
 import ContactForm from "@/components/ContactForm";
 import AgentPrompt from "@/components/AgentPrompt";
 import BookButton from "@/components/BookButton";
-import { SERVICE_IDS, SHARED as SVC_SHARED, servicePath } from "@/lib/services";
+import { COMMON_FAQ, SERVICE_IDS, SHARED as SVC_SHARED, getService, servicePath } from "@/lib/services";
 
 const pad = (n: number, l = 2) => String(n).padStart(l, "0");
 
@@ -49,6 +49,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     { name: "Cogna Educação", note: "AI Pro Hub" },
     { name: "JBS", note: "" },
   ];
+  const homeFaq = [getService("assessment", locale).faq[0], getService("production", locale).faq[0], ...COMMON_FAQ[locale]];
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -102,6 +103,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             itemOffered: { "@type": "Service", name: o.title, description: o.text, url: `${site.url}${servicePath(SERVICE_IDS[i], locale)}` },
           })),
         },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${site.url}/${locale}#faq`,
+        mainEntity: homeFaq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
       },
       {
         "@type": "WebSite",
@@ -434,7 +440,17 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
             <Reveal className="edu__panel" delay={120}>
               <h3 className="mono edu__panel-title">{t.education.certsTitle}</h3>
-              <ul className="certs">{t.education.certs.map((c) => <li key={c}>{c}</li>)}</ul>
+              <ul className="certs">
+                {t.education.certs.map((c, i) => (
+                  <li key={c}>
+                    {i === 0 ? (
+                      <a href={t.education.certUrl} target="_blank" rel="noopener noreferrer" className="cert-link">{c} ↗</a>
+                    ) : (
+                      c
+                    )}
+                  </li>
+                ))}
+              </ul>
             </Reveal>
             <Reveal className="edu__panel" delay={180}>
               <h3 className="mono edu__panel-title">{t.education.languagesTitle}</h3>
@@ -470,6 +486,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <a href={`/${locale}/blog`} className="btn btn--ghost blog-all">{t.blog.all} →</a>
           </section>
         )}
+
+        {/* ───────── FAQ ───────── */}
+        <section id="faq" className="section container" aria-labelledby="faq-title">
+          <h2 id="faq-title" className="mono proj__label">{SVC_SHARED[locale].faqTitle}</h2>
+          <div className="svc-faq">
+            {homeFaq.map((f) => (
+              <details key={f.q} className="svc-faq__item">
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
 
         {/* ───────── CONTACT ───────── */}
         <section id="contact" className="contact">

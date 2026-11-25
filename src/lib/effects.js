@@ -51,22 +51,8 @@ function splitWords(root) {
 function countUp(el) {
   if (el.dataset.counted) return;
   el.dataset.counted = "1";
-  const raw = el.textContent.trim();
-  const m = raw.match(/^(\D*)(\d+)(.*)$/);
-  if (!m) return;
-  const [, pre, num, suf] = m;
-  const target = parseInt(num, 10);
-  const from = target > 1900 ? target - 12 : 0;
-  const dur = 1400;
-  const t0 = performance.now();
-  const step = (t) => {
-    const k = clamp((t - t0) / dur, 0, 1);
-    const e = 1 - Math.pow(1 - k, 4);
-    el.textContent = pre + Math.round(from + (target - from) * e) + suf;
-    if (k < 1) requestAnimationFrame(step);
-  };
-  el.textContent = pre + from + suf;
-  requestAnimationFrame(step);
+  /* the value is always the final one; it rises into place once (CSS: [data-count].in) */
+  el.classList.add("in");
 }
 
 /* ── 3. Machine "decode" effect on mono codes ── */

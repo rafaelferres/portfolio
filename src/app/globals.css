@@ -9,6 +9,7 @@
   --line: #2a2a27;
   --line-2: #3a3a36;
   --text: #f2f0ea;
+  --fg: var(--text);
   --muted: #a3a097;
   --dim: #8a877e;
   --accent: #ff4757;      /* electric lime */

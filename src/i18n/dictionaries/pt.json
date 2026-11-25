@@ -260,6 +260,7 @@
     ],
     "certsTitle": "Certificações",
     "certs": [
+      "Claude Certified Architect – Professional · SkillsBooster Academy (Coursera)",
       "Introducing Multimodal Llama 3.2",
       "GraphQL Parte 2: Substituindo uma API REST por GraphQL",
       "Aprenda Rust do Zero Praticando com Exemplos de Computação",
@@ -287,12 +288,13 @@
         "level": "Básico",
         "pct": 30
       }
-    ]
+    ],
+    "certUrl": "https://www.coursera.org/account/accomplishments/verify/QNMOCCXM9KT0"
   },
   "contact": {
     "label": "Próximo passo",
     "title": "Precisa de consultoria ou de ajuda com um projeto de IA?",
-    "text": "Conte sobre o desafio, o projeto ou a vaga. Respondo em até um dia útil.",
+    "text": "Conte sobre o desafio ou o projeto. Respondo em até um dia útil.",
     "emailCta": "Mandar e-mail",
     "linkedinCta": "LinkedIn",
     "form": {

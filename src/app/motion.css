@@ -218,3 +218,21 @@
 h1,h2,h3,.offer__title,.pj__title,.now__title,.post-row__title{overflow-wrap:anywhere}
 /* very large screens */
 @media (min-width:2000px){html{font-size:112%}.section{padding-block:160px}}
+
+/* numbers: real value always, revealed with a short rise */
+.fx [data-count]{display:inline-block;clip-path:inset(-0.2em -0.1em -0.2em -0.1em)}
+.fx [data-count]:not(.in){opacity:0;transform:translateY(.45em)}
+.fx [data-count].in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+html:not(.rf-seen) .assembly [data-count].in{transition-delay:2.35s}
+@media (prefers-reduced-motion:reduce){.fx [data-count]{opacity:1!important;transform:none!important}}
+.cert-link{color:var(--fg);border-bottom:1px solid rgba(255,71,87,.5);transition:border-color .2s,color .2s}
+.cert-link:hover{color:var(--accent);border-color:var(--accent)}
+
+/* keyboard focus, visible everywhere (mouse clicks stay clean) */
+:where(a,button,summary,input,textarea,select,[tabindex]):focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.btn:focus-visible{outline-offset:4px;border-radius:999px}
+.svc-faq__item summary:focus-visible{outline-offset:6px}
+/* AA contrast for small dark text on the red accent */
+.band--lime .band__label{color:#0b0b0a}
+.band--lime .co small{opacity:1;color:#2a0e10}
+.svc-cta__text{opacity:1;color:#2a0e10}

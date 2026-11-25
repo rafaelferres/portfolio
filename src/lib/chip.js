@@ -11,8 +11,15 @@ const LOGO = [
 
 export function buildChip(THREE, canvas, stage, getProgress) {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  /* lite mode: phones, few cores, little memory or data saver → fewer pixels, particles and frames */
+  const nav = navigator;
+  const lite =
+    window.matchMedia("(max-width: 820px), (pointer: coarse)").matches ||
+    (nav.hardwareConcurrency || 8) <= 4 ||
+    (nav.deviceMemory || 8) <= 4 ||
+    !!(nav.connection && nav.connection.saveData);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lite, alpha: true, powerPreference: lite ? "low-power" : "high-performance" });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lite ? 1.5 : 2));
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -54,6 +61,7 @@ export function buildChip(THREE, canvas, stage, getProgress) {
 
   /* ── textures ── */
   const tex = (draw, size = 1024) => {
+    if (lite) size = Math.min(size, 512);
     const c = document.createElement("canvas");
     c.width = c.height = size;
     draw(c.getContext("2d"), size);
@@ -71,7 +79,7 @@ export function buildChip(THREE, canvas, stage, getProgress) {
     g.fillStyle = emissive ? "#000" : "#140f10";
     g.fillRect(0, 0, s, s);
     if (!emissive) {
-      for (let i = 0; i < 2600; i++) {
+      for (let i = 0; i < (lite ? 900 : 2600); i++) {
         g.fillStyle = `rgba(255,255,255,${rnd() * 0.025})`;
         g.fillRect(rnd() * s, rnd() * s, 2, 2);
       }
@@ -339,7 +347,7 @@ export function buildChip(THREE, canvas, stage, getProgress) {
   add(rings, { p: [0, -1.6, 0], s: 0.2 });
 
   /* P/07 data pulse: particle field + pulses running along the traces */
-  const N = 900, pos = new Float32Array(N * 3);
+  const N = lite ? 320 : 900, pos = new Float32Array(N * 3);
   for (let i = 0; i < N; i++) {
     const a = Math.random() * Math.PI * 2, rr = 2.6 + Math.random() * 2.8;
     pos[i * 3] = Math.cos(a) * rr;
@@ -414,9 +422,16 @@ export function buildChip(THREE, canvas, stage, getProgress) {
 
   const clock = new THREE.Clock();
   let prev = 0;
-  const frame = () => {
+  let lastDraw = 0;
+  const frame = (now = 0) => {
     raf = 0;
-    if (!visible) return;
+    if (!visible || document.hidden) return;
+    /* ~30 fps in lite mode */
+    if (lite && now - lastDraw < 31) {
+      raf = requestAnimationFrame(frame);
+      return;
+    }
+    lastDraw = now;
     const t = clock.getElapsedTime();
     const dt = Math.min(0.05, t - prev);
     prev = t;
@@ -463,12 +478,17 @@ export function buildChip(THREE, canvas, stage, getProgress) {
     if (visible && !raf) raf = requestAnimationFrame(frame);
   });
   vis.observe(stage);
+  const onVisibility = () => {
+    if (!document.hidden && visible && !raf) raf = requestAnimationFrame(frame);
+  };
+  document.addEventListener("visibilitychange", onVisibility);
   raf = requestAnimationFrame(frame);
 
   return () => {
     cancelAnimationFrame(raf);
     ro.disconnect();
     vis.disconnect();
+    document.removeEventListener("visibilitychange", onVisibility);
     stage.removeEventListener("pointermove", onMove);
     stage.removeEventListener("pointerleave", onLeave);
     pmrem.dispose();
