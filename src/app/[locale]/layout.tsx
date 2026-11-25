@@ -40,7 +40,8 @@ export async function generateMetadata({
     creator: "Rafael Ferrés",
     publisher: "Rafael Ferrés",
     keywords: [
-      "Rafael Ferrés", "Head of AI", "Head de IA", "Diretor de IA", "AI Engineering Manager", "Gerente de Engenharia de IA",
+      "Rafael Ferrés", "consultoria em IA", "consultor de IA", "AI consulting", "AI consultant", "consultoría de IA",
+      "diagnóstico de IA", "agentes de IA em produção", "Head of AI", "Head de IA",
       "IA Generativa", "Generative AI", "LLM", "Agentes de IA", "AI agents", "RAG", "LangGraph", "LangChain",
       "OpenAI", "Anthropic", "Gemini", "Machine Learning", "São Paulo", "KHAL",
     ],
@@ -67,6 +68,9 @@ export async function generateMetadata({
       googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
     },
     formatDetection: { telephone: false },
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+      : {}),
     other: { "llms-txt": `${site.url}/llms.txt` },
   };
 }

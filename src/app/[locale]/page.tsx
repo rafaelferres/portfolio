@@ -13,6 +13,7 @@ import Assembly from "@/components/Assembly";
 import ContactForm from "@/components/ContactForm";
 import AgentPrompt from "@/components/AgentPrompt";
 import BookButton from "@/components/BookButton";
+import { SERVICE_IDS, SHARED as SVC_SHARED, servicePath } from "@/lib/services";
 
 const pad = (n: number, l = 2) => String(n).padStart(l, "0");
 
@@ -80,6 +81,27 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         name: t.meta.title,
         inLanguage: locale === "pt" ? "pt-BR" : locale,
         mainEntity: { "@id": `${site.url}/#person` },
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": `${site.url}/#consulting`,
+        name: "Rafael Ferrés — Consultoria em IA",
+        description: t.meta.description,
+        url: `${site.url}/${locale}`,
+        image: `${site.url}/rafael.jpg`,
+        email: site.email,
+        areaServed: "Worldwide",
+        address: { "@type": "PostalAddress", addressLocality: "São Paulo", addressCountry: "BR" },
+        founder: { "@id": `${site.url}/#person` },
+        knowsLanguage: ["pt-BR", "en", "es"],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: t.services.title,
+          itemListElement: t.services.offers.map((o, i) => ({
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: o.title, description: o.text, url: `${site.url}${servicePath(SERVICE_IDS[i], locale)}` },
+          })),
+        },
       },
       {
         "@type": "WebSite",
@@ -182,6 +204,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <ul className="offer__list">
                   {o.deliverables.map((x) => <li key={x}>{x}</li>)}
                 </ul>
+                <a href={servicePath(SERVICE_IDS[i], locale)} className="mono offer__more">
+                  {SVC_SHARED[locale].learnMore} →
+                </a>
               </Reveal>
             ))}
           </div>

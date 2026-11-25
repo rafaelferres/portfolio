@@ -5,7 +5,7 @@ import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 
 export const runtime = "nodejs";
-export const alt = "Rafael Ferrés — Head of AI";
+export const alt = "Rafael Ferrés — Consultoria em IA · AI Consulting";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -33,7 +33,12 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
           </div>
           <div style={{ fontSize: 92, fontWeight: 700, letterSpacing: -4, lineHeight: 1 }}>Rafael Ferrés</div>
           <div style={{ fontSize: 34, color: "#ff4757", fontWeight: 700 }}>{t.hero.subtitle}</div>
-          <div style={{ display: "flex", gap: 32, marginTop: 18 }}>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            {t.services.offers.map((o) => (
+              <div key={o.title} style={{ fontSize: 20, color: "#f2f0ea", border: "1px solid #3a3935", borderRadius: 999, padding: "6px 16px" }}>{o.title}</div>
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: 32, marginTop: 8 }}>
             {t.hero.stats.map((s) => (
               <div key={s.label} style={{ display: "flex", flexDirection: "column" }}>
                 <div style={{ fontSize: 46, fontWeight: 700, color: "#ff4757" }}>{s.value}</div>

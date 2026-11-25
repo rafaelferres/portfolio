@@ -1,3 +1,4 @@
+import { SERVICE_IDS, servicePath } from "@/lib/services";
 import en from "@/i18n/dictionaries/en.json";
 import pt from "@/i18n/dictionaries/pt.json";
 import { site } from "@/lib/site";
@@ -33,6 +34,11 @@ export function llmsTxt(full = false): string {
   lines.push(`- [Currículo PDF (Português)](${site.url}/${pt.cv.file})`);
   lines.push(`- [Full profile for LLMs](${site.url}/llms-full.txt)`);
   lines.push(`- [Blog (English)](${site.url}/en/blog): notes on applied AI`);
+  lines.push("");
+  lines.push("## Consulting services");
+  t.services.offers.forEach((o, i) =>
+    lines.push(`- [${o.title}](${site.url}${servicePath(SERVICE_IDS[i], "en")}) (${o.duration}): ${o.text} Deliverables: ${o.deliverables.join(", ")}.`),
+  );
   const posts = getPosts("en").slice(0, full ? 100 : 15);
   if (posts.length) {
     lines.push("");
@@ -71,7 +77,5 @@ export function llmsTxt(full = false): string {
   lines.push(`- Certifications: ${t.education.certs.join("; ")}`);
   lines.push(`- Languages: ${t.education.languages.map((l) => `${l.name} (${l.level})`).join(", ")}`);
   lines.push("");
-  lines.push("## Consulting services");
-  for (const o of t.services.offers) lines.push(`- ${o.title} (${o.duration}): ${o.text} Deliverables: ${o.deliverables.join(", ")}.`);
   return lines.join("\n") + "\n";
 }

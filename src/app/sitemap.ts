@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { htmlLang, locales } from "@/i18n/config";
 import { site } from "@/lib/site";
 import { getPosts } from "@/lib/blog";
+import { SERVICE_IDS, servicePath } from "@/lib/services";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const languages = Object.fromEntries(locales.map((l) => [htmlLang[l], `${site.url}/${l}`]));
@@ -32,5 +33,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages: Object.fromEntries(locales.map((x) => [htmlLang[x], `${site.url}/${x}/blog/${p.slug}`])) },
     }))
   );
-  return [...pages, ...blogIndex, ...posts, ...files];
+  const services: MetadataRoute.Sitemap = SERVICE_IDS.flatMap((id) =>
+    locales.map((l) => ({
+      url: `${site.url}${servicePath(id, l)}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+      alternates: { languages: Object.fromEntries(locales.map((x) => [htmlLang[x], `${site.url}${servicePath(id, x)}`])) },
+    }))
+  );
+  return [...pages, ...services, ...blogIndex, ...posts, ...files];
 }
