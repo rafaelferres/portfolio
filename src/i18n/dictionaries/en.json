@@ -26,6 +26,7 @@
     "first": "Rafael",
     "last": "Ferrés",
     "subtitle": "AI Consulting · Agents & LLMs",
+    "pitch": "I take your company's AI from pilot to production, with quality and cost measured.",
     "bio": "I help companies take AI from pilot to production: assessment, agents, RAG and LLMs, with measured quality and cost. Head of AI with 15+ AI systems in production since 2023.",
     "ctaCareer": "See my career",
     "ctaContact": "Book a call",
@@ -320,7 +321,7 @@
       "copy": "Copy message",
       "copied": "Copied!",
       "again": "Write another",
-      "subject": "AI opportunity for Rafael Ferrés",
+      "subject": "AI project — contact from the website",
       "sentText": "Message sent to rafael@ferres.tech. Thank you! I reply personally, usually within one business day."
     },
     "or": "or write directly to"

@@ -174,12 +174,12 @@
 @media (max-width:560px){.frow{grid-template-columns:1fr}}
 
 /* ───────── loader: RF being drawn ───────── */
-.loader{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:var(--bg);animation:loaderOut .8s cubic-bezier(.76,0,.24,1) 2.25s forwards}
+.loader{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:var(--bg);animation:loaderOut .6s cubic-bezier(.76,0,.24,1) 1.1s forwards}
 .loader__inner{display:flex;flex-direction:column;align-items:center;gap:22px}
 .loader__rf{width:132px;height:132px;overflow:visible}
-.loader__box{fill:var(--accent);fill-opacity:0;stroke:var(--accent);stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1;animation:ldDraw .9s cubic-bezier(.6,0,.2,1) .1s forwards,ldFill .45s ease 1.35s forwards}
-.loader__l{fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:ldDraw .55s cubic-bezier(.6,0,.2,1) forwards,ldInk .45s ease 1.35s forwards}
-.loader__l--1{animation-delay:.35s,1.35s}.loader__l--2{animation-delay:.75s,1.35s}.loader__l--3{animation-delay:.9s,1.35s}.loader__l--4{animation-delay:1.1s,1.35s}
+.loader__box{fill:var(--accent);fill-opacity:0;stroke:var(--accent);stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1;animation:ldDraw .5s cubic-bezier(.6,0,.2,1) .05s forwards,ldFill .3s ease .75s forwards}
+.loader__l{fill:none;stroke:var(--accent);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:ldDraw .35s cubic-bezier(.6,0,.2,1) forwards,ldInk .3s ease .75s forwards}
+.loader__l--1{animation-delay:.15s,.75s}.loader__l--2{animation-delay:.3s,.75s}.loader__l--3{animation-delay:.4s,.75s}.loader__l--4{animation-delay:.5s,.75s}
 .loader__bar{width:180px;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
 .loader__bar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transform:scaleX(0);transform-origin:left;animation:ldBar 1.9s cubic-bezier(.4,0,.2,1) .1s forwards}
 .loader__label{color:var(--muted);opacity:0;animation:ldFade .5s ease 1.4s forwards}
