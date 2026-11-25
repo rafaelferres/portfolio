@@ -805,7 +805,8 @@
     "scheduling": "Abriendo la agenda de Rafael",
     "booked": "¡Reunión agendada! La invitación con el enlace de la llamada está en tu correo.",
     "bookNow": "Agendar conversación ahora",
-    "openCalendar": "Abrir agenda"
+    "openCalendar": "Abrir agenda",
+    "openingPost": "Abriendo el post"
   },
   "booking": {
     "title": "Conversación de 30 min",

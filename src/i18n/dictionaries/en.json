@@ -805,7 +805,8 @@
     "scheduling": "Opening Rafael's calendar",
     "booked": "Meeting booked! The invite with the call link is in your inbox.",
     "bookNow": "Book a call now",
-    "openCalendar": "Open calendar"
+    "openCalendar": "Open calendar",
+    "openingPost": "Opening the post"
   },
   "booking": {
     "title": "30-minute call",

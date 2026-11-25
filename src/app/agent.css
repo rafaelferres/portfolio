@@ -86,7 +86,7 @@
 @keyframes ahl{0%{box-shadow:0 0 0 0 rgba(255,71,87,0)}15%{box-shadow:0 0 0 3px var(--accent),0 0 60px rgba(255,71,87,.45)}70%{box-shadow:0 0 0 3px var(--accent),0 0 40px rgba(255,71,87,.25)}100%{box-shadow:0 0 0 0 rgba(255,71,87,0)}}
 
 /* desktop: leave room so highlighted content is not under the panel */
-@media (min-width:1100px){html.agent-open .container{transition:padding .4s}html.agent-open main .container{padding-right:calc(min(420px,32vw) + 24px)}}
+@media (min-width:1100px){html.agent-open .container{transition:padding .4s}html.agent-open main:has(#top) .container{padding-right:calc(min(420px,32vw) + 24px)}}
 
 /* mobile: full screen sheet, "peek" shrinks it so the page shows */
 @media (max-width:720px){

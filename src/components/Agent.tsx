@@ -25,10 +25,12 @@ const STORE = "rf-agent-v1";
 /* ── tiny, safe markdown: paragraphs, bullets, **bold** ── */
 function Md({ text }: { text: string }) {
   const blocks = text.trim().split(/\n{2,}/);
-  const inline = (s: string) =>
-    s.split(/(\*\*[^*]+\*\*)/g).map((seg, i) =>
+  const inline = (raw: string) => {
+    const s = raw.replace(/\[([^\]]+)\]\((?:https?:\/\/|\/)[^)\s]+\)/g, "$1");
+    return s.split(/(\*\*[^*]+\*\*)/g).map((seg, i) =>
       seg.startsWith("**") && seg.endsWith("**") ? <strong key={i}>{seg.slice(2, -2)}</strong> : <span key={i}>{seg}</span>,
     );
+  };
   return (
     <>
       {blocks.map((b, i) => {
@@ -96,15 +98,9 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
   const [open, setOpen] = useState(false);
   const [peek, setPeek] = useState(false);
   const [input, setInput] = useState("");
-  const [initial] = useState<UIMessage[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      return JSON.parse(sessionStorage.getItem(STORE) ?? "[]");
-    } catch {
-      return [];
-    }
-  });
   const listRef = useRef<HTMLDivElement>(null);
+  const pendingNav = useRef<string | null>(null);
+  const restored = useRef(false);
   const [booked, setBooked] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const localeRef = useRef(locale);
@@ -117,7 +113,6 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
 
   const { messages, sendMessage, addToolOutput, status, error, setMessages, stop, clearError, regenerate } = useChat({
     transport,
-    messages: initial,
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     onToolCall({ toolCall }) {
       if (toolCall.dynamic || ("invalid" in toolCall && toolCall.invalid)) return;
@@ -133,6 +128,10 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
           const rest = window.location.pathname.replace(/^\/(pt|en|es)(?=\/|$)/, "");
           window.location.assign(`/${args.locale}${rest}${window.location.hash}`);
         }, 900);
+      } else if (toolCall.toolName === "openPost") {
+        const slug = String(args.slug ?? "").replace(/[^a-z0-9-]/gi, "");
+        addToolOutput({ tool: "openPost", toolCallId: toolCall.toolCallId, output: "opening" });
+        if (slug) pendingNav.current = `/${localeRef.current}/blog/${slug}`;
       } else if (toolCall.toolName === "showBrief") {
         track("brief_created", { offer: String((toolCall.input as Partial<Brief>)?.offer ?? "") });
         const url = `/${localeRef.current}/proposta#${encodeBrief(toolCall.input as Partial<Brief>)}`;
@@ -150,12 +149,30 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
 
   /* persist the conversation for language switches / reloads */
   useEffect(() => {
+    if (!restored.current) return;
     if (status === "ready" || status === "error") {
       try {
         sessionStorage.setItem(STORE, JSON.stringify(messages.slice(-40)));
       } catch {}
+      /* the agent asked to open a page: go once its reply has finished, keeping the chat open */
+      const to = pendingNav.current;
+      if (to && status === "ready") {
+        pendingNav.current = null;
+        sessionStorage.setItem(`${STORE}-open`, "1");
+        if (window.location.pathname !== to) window.setTimeout(() => window.location.assign(to), 700);
+      }
     }
   }, [messages, status]);
+
+  /* restore the conversation after hydration (server has no sessionStorage) */
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(STORE) ?? "[]") as UIMessage[];
+      if (saved.length) setMessages(saved);
+    } catch {}
+    restored.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (sessionStorage.getItem(`${STORE}-open`)) {
@@ -324,6 +341,9 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
                       onSkip={() => addToolOutput({ tool: "scheduleCall", toolCallId: p.toolCallId!, output: { booked: false, declined: true } })}
                     />
                   );
+                }
+                if (p.type === "tool-openPost") {
+                  return <div key={key} className="mono agent__event">↳ {t.openingPost}</div>;
                 }
                 if (p.type === "tool-setLocale") {
                   return <div key={key} className="mono agent__event">↳ {t.switching}</div>;

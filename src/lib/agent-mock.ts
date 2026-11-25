@@ -60,6 +60,8 @@ export function mockAgentModel() {
             }),
             finish(true),
           ];
+        } else if (q.includes("post")) {
+          chunks = [...text("Esse post fala de agentes com identidade própria e limite de gasto. Vou abrir para você."), call("openPost", { slug: "walmart-agent-gateway-agentes-com-limite-de-gasto" }), finish(true)];
         } else if (q.includes("agendar") || q.includes("reunião")) {
           chunks = [...text("Perfeito, abri a agenda do Rafael para você escolher um horário."), call("scheduleCall", { reason: "Agente de atendimento no WhatsApp" }), finish(true)];
         } else if (q.includes("contato") || q.includes("falar")) {
