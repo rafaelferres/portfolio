@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { site } from "@/lib/site";
+import { track } from "@/lib/track";
 
 type T = Dictionary["booking"];
 type Day = { date: string; slots: string[] };
@@ -46,6 +47,11 @@ export default function BookingWidget({
   const [error, setError] = useState(false);
   const [done, setDone] = useState<Booked | null>(null);
   const [reload, setReload] = useState(0);
+
+  useEffect(() => {
+    track("booking_open", { from: compact ? "agent" : "site" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -103,6 +109,7 @@ export default function BookingWidget({
       if (!res.ok || !j.ok) throw new Error();
       const b = { start: j.start || slot, email: String(f.get("email")) };
       setDone(b);
+      track("booking_confirmed", { from: compact ? "agent" : "site" }, { beacon: false });
       onBooked?.(b);
     } catch {
       setError(true);
@@ -164,7 +171,15 @@ export default function BookingWidget({
           </p>
           <div className="bk__slots">
             {days[day].slots.map((s) => (
-              <button key={s} type="button" className="bk__slot" onClick={() => setSlot(s)}>
+              <button
+                key={s}
+                type="button"
+                className="bk__slot"
+                onClick={() => {
+                  setSlot(s);
+                  track("booking_slot_selected", { from: compact ? "agent" : "site" });
+                }}
+              >
                 {fmtTime(s)}
               </button>
             ))}

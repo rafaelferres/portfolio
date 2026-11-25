@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/track";
 
 type FormDict = {
   name: string; email: string; company: string; optional: string; type: string; types: string[];
@@ -40,7 +41,7 @@ export default function ContactForm({ dict, sentText }: { dict: FormDict; sentTe
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: v("name"), email: v("email"), company: v("company"), message: v("message"), website: v("website") }),
       });
-      if (res.ok) { setStatus("sent"); return; }
+      if (res.ok) { track("contact_form_sent"); setStatus("sent"); return; }
     } catch {}
     // No email service configured (or it failed): open the visitor's mail app instead.
     setStatus("fallback");

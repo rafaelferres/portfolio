@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createBooking } from "@/lib/cal";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { recordEvent } from "@/lib/observability";
 
 export async function POST(req: Request) {
   if (!rateLimit(`book:${clientIp(req)}`, 6, 60 * 60_000)) return NextResponse.json({ ok: false, reason: "limit" }, { status: 429 });
@@ -30,6 +31,7 @@ export async function POST(req: Request) {
       language: locale,
       notes: [company && `Empresa: ${company}`, notes].filter(Boolean).join("\n\n"),
     });
+    await recordEvent("booking_confirmed", { company: company || "—", locale, start: booking.start });
     return NextResponse.json({ ok: true, ...booking });
   } catch (e) {
     console.error(e);

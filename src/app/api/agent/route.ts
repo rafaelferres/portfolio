@@ -4,6 +4,7 @@ import { llmsTxt } from "@/lib/llms";
 import { AGENT_SECTIONS, AGENT_TARGETS, CASES, OFFERS } from "@/lib/agent";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { isLocale } from "@/i18n/config";
+import { flushTracesAfterResponse, withTrace } from "@/lib/observability";
 
 export const maxDuration = 30;
 
@@ -80,7 +81,7 @@ export async function POST(req: Request) {
   if (!rateLimit(`agent:${clientIp(req)}`, 40, 10 * 60_000)) {
     return new Response("Too many requests", { status: 429 });
   }
-  let body: { messages?: UIMessage[]; locale?: string };
+  let body: { id?: string; messages?: UIMessage[]; locale?: string };
   try {
     body = await req.json();
   } catch {
@@ -94,15 +95,22 @@ export async function POST(req: Request) {
 
   const model = process.env.AGENT_MOCK === "1" ? (await import("@/lib/agent-mock")).mockAgentModel() : MODEL;
 
-  const result = streamText({
-    model,
-    instructions: instructions(locale),
-    messages: await convertToModelMessages(messages),
-    tools,
-    maxOutputTokens: 3000,
-    temperature: 0.4,
-    stopWhen: isStepCount(3),
-  });
+  const modelMessages = await convertToModelMessages(messages);
+  const result = await withTrace(
+    { traceName: "site-agent", sessionId: body.id?.slice(0, 80), tags: ["site-agent", locale], metadata: { locale } },
+    () =>
+      streamText({
+        model,
+        instructions: instructions(locale),
+        messages: modelMessages,
+        tools,
+        maxOutputTokens: 3000,
+        temperature: 0.4,
+        stopWhen: isStepCount(3),
+        telemetry: { functionId: "site-agent" },
+      }),
+  );
+  flushTracesAfterResponse();
 
   return createUIMessageStreamResponse({ stream: toUIMessageStream({ stream: result.stream }) });
 }

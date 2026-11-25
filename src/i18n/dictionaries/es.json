@@ -783,7 +783,7 @@
     },
     "error": "Tuve un problema al responder. Inténtalo de nuevo en un momento.",
     "limit": "Demasiados mensajes en poco tiempo. Inténtalo en unos minutos.",
-    "disclaimer": "Respuestas generadas por IA. Para decisiones, habla con Rafael.",
+    "disclaimer": "Respuestas generadas por IA. Las conversaciones se registran para mejorar la atención.",
     "page": {
       "kicker": "Propuesta preliminar",
       "generated": "Generada por el agente de IA de ferres.tech",

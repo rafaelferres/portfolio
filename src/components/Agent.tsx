@@ -8,6 +8,7 @@ import type { Dictionary } from "@/i18n/get-dictionary";
 import { site } from "@/lib/site";
 import { openBooking } from "@/lib/booking";
 import BookingWidget from "@/components/BookingWidget";
+import { track } from "@/lib/track";
 
 type T = Dictionary["agent"];
 type Part = UIMessage["parts"][number] & {
@@ -133,6 +134,7 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
           window.location.assign(`/${args.locale}${rest}${window.location.hash}`);
         }, 900);
       } else if (toolCall.toolName === "showBrief") {
+        track("brief_created", { offer: String((toolCall.input as Partial<Brief>)?.offer ?? "") });
         const url = `/${localeRef.current}/proposta#${encodeBrief(toolCall.input as Partial<Brief>)}`;
         addToolOutput({ tool: "showBrief", toolCallId: toolCall.toolCallId, output: { shown: true, url } });
       }
@@ -167,10 +169,11 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
     (text: string) => {
       const q = text.trim().slice(0, 1500);
       if (!q || status === "streaming" || status === "submitted") return;
+      if (!messages.some((m) => m.role === "user")) track("agent_message", { locale: localeRef.current });
       clearError();
       sendMessage({ text: q });
     },
-    [sendMessage, status, clearError],
+    [sendMessage, status, clearError, messages],
   );
   useEffect(() => {
     const onAsk = (e: Event) => {
@@ -183,6 +186,20 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
     window.addEventListener("rf-agent", onAsk);
     return () => window.removeEventListener("rf-agent", onAsk);
   }, [ask]);
+
+  useEffect(() => {
+    if (open) track("agent_open", { locale });
+  }, [open, locale]);
+
+  /* CV downloads anywhere on the page */
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement).closest?.("a[href*='/cv/']");
+      if (a) track("cv_download", { locale });
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [locale]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("agent-open", open);
@@ -472,6 +489,7 @@ function LeadForm({
       });
       if (!res.ok) throw new Error(String(res.status));
       setWho({ name: String(f.get("name") ?? ""), email: String(f.get("email") ?? "") });
+      track("lead_sent", { locale }, { beacon: false });
       onDone({ sent: true });
     } catch {
       setFailed(true);
