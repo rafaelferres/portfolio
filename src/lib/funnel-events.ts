@@ -9,5 +9,6 @@ export const FUNNEL_EVENTS = [
   "booking_confirmed",
   "contact_form_sent",
   "cv_download",
+  "whatsapp_click",
 ] as const;
 export type FunnelEvent = (typeof FUNNEL_EVENTS)[number];

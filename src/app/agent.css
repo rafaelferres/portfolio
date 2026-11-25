@@ -222,3 +222,8 @@ html.bk-lock{overflow:hidden}
 .svc-other__title{font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:-.02em;line-height:1.2}
 .svc-other__more{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
 @media (max-width:760px){.svc-for,.svc-get,.svc-other{grid-template-columns:1fr}}
+.btn--wa{display:inline-flex;align-items:center;gap:8px}
+.btn--wa svg{color:#25d366}
+.svc-cta__actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn--wa-dark{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#0b0b0a;border:1px solid rgba(11,11,10,.45)}
+.btn--wa-dark:hover{background:rgba(11,11,10,.08)}

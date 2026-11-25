@@ -217,8 +217,9 @@ export default function Agent({ t, booking, locale }: { t: T; booking: Dictionar
   /* CV downloads anywhere on the page */
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      const a = (e.target as HTMLElement).closest?.("a[href*='/cv/']");
-      if (a) track("cv_download", { locale });
+      const el = e.target as HTMLElement;
+      if (el.closest?.("a[href*='/cv/']")) track("cv_download", { locale });
+      if (el.closest?.("a[href^='https://wa.me/']")) track("whatsapp_click", { locale, from: location.pathname });
     };
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);

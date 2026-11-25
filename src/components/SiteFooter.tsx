@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import { site } from "@/lib/site";
+import { site, whatsappUrl } from "@/lib/site";
 import Logo from "./Logo";
 
 export default function SiteFooter({ t, locale }: { t: Dictionary; locale: Locale }) {
@@ -29,6 +29,7 @@ export default function SiteFooter({ t, locale }: { t: Dictionary; locale: Local
         <div>
           <h3 className="mono footer__title">{t.footer.elsewhere}</h3>
           <ul>
+            <li><a href={whatsappUrl(locale)} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
             <li><a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             <li><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
             <li><a href={`mailto:${site.email}`}>{site.email}</a></li>

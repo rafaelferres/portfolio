@@ -6,7 +6,7 @@ import BookButton from "@/components/BookButton";
 import Reveal from "@/components/Reveal";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
-import { site } from "@/lib/site";
+import { site, whatsappUrl } from "@/lib/site";
 import { SERVICE_IDS, SHARED, getService, servicePath, type ServiceId } from "@/lib/services";
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -133,7 +133,12 @@ export default async function ServicePage({ id, locale }: { id: ServiceId; local
               <p className="svc-cta__title">{sh.ctaTitle}</p>
               <p className="mono svc-cta__text">{sh.ctaText}</p>
             </div>
-            <BookButton className="btn btn--primary btn--lg">{sh.ctaButton} ↗</BookButton>
+            <div className="svc-cta__actions">
+              <BookButton className="btn btn--primary btn--lg">{sh.ctaButton} ↗</BookButton>
+              <a href={whatsappUrl(locale)} target="_blank" rel="noopener noreferrer" className="btn btn--lg btn--wa-dark">
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5.1 5.24-1.37A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.1.81.83-3.03-.2-.31a8.2 8.2 0 1 1 6.95 3.86Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.71-1.33.08-.16.04-.3-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.41-.56-.42h-.47a.9.9 0 0 0-.66.31 2.77 2.77 0 0 0-.86 2.06c0 1.21.88 2.39 1 2.55.12.17 1.74 2.66 4.22 3.73 1.57.68 2.18.74 2.97.62.48-.07 1.46-.6 1.67-1.18.2-.58.2-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></svg> WhatsApp
+              </a>
+            </div>
           </div>
         </section>
 
