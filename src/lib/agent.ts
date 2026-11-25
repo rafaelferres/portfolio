@@ -54,7 +54,25 @@ export type Brief = {
 };
 
 /** URL-safe base64 of UTF-8 JSON, so a brief can live in a link without a database. */
-export function encodeBrief(b: Brief): string {
+const cut = (s: unknown, n: number) => String(s ?? "").slice(0, n);
+
+/** Clamp a model-produced brief to sane sizes so links stay short and the page never breaks. */
+export function cleanBrief(b: Partial<Brief>): Brief {
+  return {
+    title: cut(b.title, 120),
+    company: b.company ? cut(b.company, 80) : undefined,
+    context: cut(b.context, 500),
+    challenge: cut(b.challenge, 500),
+    approach: (Array.isArray(b.approach) ? b.approach : []).slice(0, 6).map((a) => cut(a, 220)),
+    offer: OFFERS.includes(b.offer as Offer) ? (b.offer as Offer) : "production",
+    steps: (Array.isArray(b.steps) ? b.steps : []).slice(0, 5).map((st) => ({ title: cut(st?.title, 50), text: cut(st?.text, 220) })),
+    relatedCase: CASES.includes(b.relatedCase as Brief["relatedCase"]) ? (b.relatedCase as Brief["relatedCase"]) : "none",
+    nextStep: cut(b.nextStep, 260),
+  };
+}
+
+export function encodeBrief(raw: Partial<Brief>): string {
+  const b = cleanBrief(raw);
   const bytes = new TextEncoder().encode(JSON.stringify(b));
   let bin = "";
   bytes.forEach((x) => (bin += String.fromCharCode(x)));
@@ -68,7 +86,7 @@ export function decodeBrief(s: string): Brief | null {
     const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
     const b = JSON.parse(new TextDecoder().decode(bytes));
     if (!b || typeof b.title !== "string" || !Array.isArray(b.approach)) return null;
-    return b as Brief;
+    return cleanBrief(b);
   } catch {
     return null;
   }

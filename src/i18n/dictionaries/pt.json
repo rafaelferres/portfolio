@@ -799,6 +799,8 @@
       "invalid": "Não encontrei esta proposta. Converse com o agente para gerar uma nova.",
       "back": "Voltar ao site",
       "note": "Rascunho gerado por IA a partir da conversa. Escopo, prazo e investimento são definidos com o Rafael."
-    }
+    },
+    "building": "Montando a proposta…",
+    "retry": "Tentar de novo"
   }
 }

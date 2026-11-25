@@ -33,7 +33,14 @@ export function mockAgentModel() {
       } else {
         const content = last.content as { type: string; text?: string }[];
         const q = (Array.isArray(content) ? content.map((c) => c.text ?? "").join(" ") : String(content)).toLowerCase();
-        if (q.includes("proposta")) {
+        if (q.includes("travar")) {
+          chunks = [
+            ...text("Vou montar a proposta."),
+            { type: "tool-input-start", id: "x1", toolName: "showBrief" },
+            { type: "tool-input-delta", id: "x1", delta: '{"title":"IA para' },
+            { type: "finish", finishReason: { unified: "length", raw: undefined }, usage },
+          ];
+        } else if (q.includes("proposta")) {
           chunks = [
             ...text("Montei uma proposta preliminar com base no que você contou:"),
             call("showBrief", {

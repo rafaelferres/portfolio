@@ -134,3 +134,6 @@
   .brief__block,.brief__offer{background:#fff;border-color:#ddd}
   .brief__block p,.brief__approach ul,.step__title{color:#111}
 }
+.agent__event--live{animation:aspark 1.4s ease-in-out infinite}
+.agent__retry{align-self:flex-start;margin-top:8px}
+.amsg--err .agent__retry{display:block}

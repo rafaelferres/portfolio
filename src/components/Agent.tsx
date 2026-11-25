@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls, type UIMessage } from "ai";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-import { TARGET_SECTION, encodeBrief, type AgentTarget, type Brief } from "@/lib/agent";
+import { TARGET_SECTION, cleanBrief, encodeBrief, type AgentTarget, type Brief } from "@/lib/agent";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { site } from "@/lib/site";
 
@@ -106,12 +106,12 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
     [],
   );
 
-  const { messages, sendMessage, addToolOutput, status, error, setMessages, stop, clearError } = useChat({
+  const { messages, sendMessage, addToolOutput, status, error, setMessages, stop, clearError, regenerate } = useChat({
     transport,
     messages: initial,
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
     onToolCall({ toolCall }) {
-      if (toolCall.dynamic) return;
+      if (toolCall.dynamic || ("invalid" in toolCall && toolCall.invalid)) return;
       const args = (toolCall.input ?? {}) as Record<string, string>;
       if (toolCall.toolName === "navigate") {
         const ok = showOnPage(args.target, args.section);
@@ -125,7 +125,7 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
           window.location.assign(`/${args.locale}${rest}${window.location.hash}`);
         }, 900);
       } else if (toolCall.toolName === "showBrief") {
-        const url = `/${localeRef.current}/proposta#${encodeBrief(toolCall.input as Brief)}`;
+        const url = `/${localeRef.current}/proposta#${encodeBrief(toolCall.input as Partial<Brief>)}`;
         addToolOutput({ tool: "showBrief", toolCallId: toolCall.toolCallId, output: { shown: true, url } });
       }
       // requestContact waits for the visitor (rendered as a form below).
@@ -183,6 +183,19 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
   }, [messages, status]);
 
   const busy = status === "submitted" || status === "streaming";
+  const last = messages[messages.length - 1];
+  const lastParts = (last?.parts ?? []) as Part[];
+  const lastHasContent = last?.role === "assistant" && lastParts.some((p) => (p.type === "text" && p.text?.trim()) || p.type.startsWith("tool-"));
+  /* the turn ended but nothing usable came back (no reply, or a tool call that never completed) */
+  const stalled =
+    status === "ready" &&
+    !!last &&
+    (last.role === "user" ||
+      (lastParts.length > 0 &&
+        (() => {
+          const tail = lastParts[lastParts.length - 1];
+          return tail.type.startsWith("tool-") && tail.type !== "tool-requestContact" && tail.state !== "output-available" && tail.state !== "output-error";
+        })()));
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!input.trim() || busy) return;
@@ -261,8 +274,12 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
                 if (p.type === "tool-setLocale") {
                   return <div key={key} className="mono agent__event">↳ {t.switching}</div>;
                 }
-                if (p.type === "tool-showBrief" && p.input && (p.state === "input-available" || p.state === "output-available")) {
-                  return <BriefCard key={key} brief={p.input as unknown as Brief} t={t} locale={locale} />;
+                if (p.type === "tool-showBrief") {
+                  if (p.input && (p.state === "input-available" || p.state === "output-available")) {
+                    return <BriefCard key={key} brief={cleanBrief(p.input as Partial<Brief>)} t={t} locale={locale} />;
+                  }
+                  if (p.state === "input-streaming" && busy) return <div key={key} className="mono agent__event agent__event--live">✦ {t.building}</div>;
+                  return null;
                 }
                 if (p.type === "tool-requestContact" && p.toolCallId) {
                   return (
@@ -276,7 +293,7 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
                       getTranscript={() => transcriptOf(messages)}
                       getBriefUrl={() => {
                         const b = [...messages].reverse().flatMap((mm) => mm.parts as Part[]).find((pp) => pp.type === "tool-showBrief" && pp.input);
-                        return b ? `/${locale}/proposta#${encodeBrief(b.input as unknown as Brief)}` : "";
+                        return b ? `/${locale}/proposta#${encodeBrief(b.input as Partial<Brief>)}` : "";
                       }}
                       locale={locale}
                     />
@@ -287,10 +304,20 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
             </div>
           ))}
 
-          {status === "submitted" && (
+          {stalled && !error && (
+            <button type="button" className="agent__chip agent__retry" onClick={() => { clearError(); regenerate(); }}>↻ {t.retry}</button>
+          )}
+          {(status === "submitted" || (status === "streaming" && !lastHasContent)) && (
             <div className="amsg amsg--bot amsg--typing" aria-label={t.thinking}><span /><span /><span /></div>
           )}
-          {error && <div className="amsg amsg--err">{limited ? t.limit : t.error}</div>}
+          {error && (
+            <div className="amsg amsg--err">
+              {limited ? t.limit : t.error}
+              {!limited && (
+                <button type="button" className="agent__chip agent__retry" onClick={() => { clearError(); regenerate(); }}>↻ {t.retry}</button>
+              )}
+            </div>
+          )}
         </div>
 
         <form className="agent__form" onSubmit={onSubmit}>

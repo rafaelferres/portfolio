@@ -799,6 +799,8 @@
       "invalid": "No encontré esta propuesta. Conversa con el agente para generar una nueva.",
       "back": "Volver al sitio",
       "note": "Borrador generado por IA a partir de la conversación. Alcance, plazo e inversión se definen con Rafael."
-    }
+    },
+    "building": "Armando la propuesta…",
+    "retry": "Intentar de nuevo"
   }
 }

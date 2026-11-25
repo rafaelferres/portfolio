@@ -19,7 +19,7 @@ Reply in ${LANG[locale]} unless the visitor clearly writes in another language; 
 
 GOAL: help the visitor understand how Rafael can help their company, show the relevant parts of the site while you talk, and — when there is real interest — collect their contact so Rafael can follow up.
 
-STYLE: short, warm, concrete. 1–3 short paragraphs or a few bullets, never walls of text. Plain language for business people. Ask at most one question at a time.
+STYLE: short, warm, concrete. When you call showBrief, write at most one short sentence before it — the proposal itself carries the content. 1–3 short paragraphs or a few bullets, never walls of text. Plain language for business people. Ask at most one question at a time.
 
 TOOLS — use them actively, the site is your canvas:
 - navigate: whenever you mention a service, case, project or section, call navigate so the page scrolls there and highlights it. Do this in the same turn as your answer. Targets: offer-assessment (AI Assessment, 2–3 weeks), offer-production (Pilot to production, 6–10 weeks), offer-advisory (monthly AI advisory), process (how he works), now (current AI delivery leadership), krun (Krun One, his open-source model), pioneer-career-test (2023 generative-AI career test), pioneer-agent-builder (2023 no-code agent platform with RAG), case-sales (WhatsApp sales agent), case-media (paid-media insights & creative generation), case-pricing (dynamic pricing), models (models and stack). Sections: ${AGENT_SECTIONS.join(", ")}.
@@ -51,17 +51,18 @@ const tools = {
     inputSchema: z.object({ locale: z.enum(["pt", "en", "es"]) }),
   }),
   showBrief: tool({
-    description: "Render a personalised one-page AI proposal for the visitor's company, shown as a shareable page.",
+    description:
+      "Render a personalised one-page AI proposal for the visitor's company, shown as a shareable page. Keep every field short: title under 80 characters, context and challenge 1–2 sentences, 3–5 approach bullets of one line, 3–4 steps with a 1–3 word title and one short sentence.",
     inputSchema: z.object({
-      title: z.string().max(90).describe("Short title, e.g. 'AI for customer service at an online retailer'"),
-      company: z.string().max(60).optional(),
-      context: z.string().max(400).describe("1–2 sentences on the visitor's business"),
-      challenge: z.string().max(400).describe("The problem in their words, sharpened"),
-      approach: z.array(z.string().max(160)).min(2).max(5),
+      title: z.string().describe("Short title, e.g. 'AI agents for customer service at Acme'"),
+      company: z.string().optional(),
+      context: z.string().describe("1–2 sentences on the visitor's business"),
+      challenge: z.string().describe("The problem in their words, sharpened, 1–2 sentences"),
+      approach: z.array(z.string()).describe("3–5 one-line bullets"),
       offer: z.enum(OFFERS).describe("Best-fitting package"),
-      steps: z.array(z.object({ title: z.string().max(40), text: z.string().max(140) })).min(3).max(4),
+      steps: z.array(z.object({ title: z.string(), text: z.string() })).describe("3–4 steps"),
       relatedCase: z.enum(CASES),
-      nextStep: z.string().max(200),
+      nextStep: z.string().describe("One sentence"),
     }),
   }),
   requestContact: tool({
@@ -93,7 +94,7 @@ export async function POST(req: Request) {
     instructions: instructions(locale),
     messages: await convertToModelMessages(messages),
     tools,
-    maxOutputTokens: 900,
+    maxOutputTokens: 3000,
     temperature: 0.4,
     stopWhen: isStepCount(3),
   });
