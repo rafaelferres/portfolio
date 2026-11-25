@@ -20,6 +20,10 @@ export function llmsTxt(full = false): string {
   lines.push(`${t.projects.lab.title}. ${t.projects.lab.text} ${t.projects.lab.multiTitle}: ${t.projects.lab.multiText} ${t.projects.lab.note}`);
   for (const lk of t.projects.lab.links) lines.push(`- [${lk.label}](${lk.url})`);
   lines.push("");
+  lines.push("## Open source: FerresDB");
+  lines.push(`${t.projects.lab2.title}. ${t.projects.lab2.short} ${t.projects.lab2.note}`);
+  for (const lk of t.projects.lab2.links) lines.push(`- [${lk.label}](${lk.url})`);
+  lines.push("");
   lines.push("## Key facts");
   for (const f of t.hire.facts) lines.push(`- ${f.label}: ${f.value}`);
   lines.push(`- Contact: ${site.email}`);

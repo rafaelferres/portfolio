@@ -646,6 +646,46 @@
         }
       ],
       "short": "Modelo encoder que decide a próxima ação de um agente em ~15 ms, sem gerar texto."
+    },
+    "lab2": {
+      "badge": "Open source",
+      "label": "Laboratório próprio",
+      "code": "LAB/02",
+      "title": "FerresDB — banco vetorial em Rust para RAG",
+      "short": "Motor de busca vetorial que escrevi em Rust para busca semântica, RAG e recomendação: API REST, busca híbrida (vetor + BM25) e persistência com recuperação após falhas.",
+      "stats": [
+        {
+          "value": "Rust",
+          "label": "motor nativo"
+        },
+        {
+          "value": "HNSW",
+          "label": "índice vetorial"
+        },
+        {
+          "value": "BM25",
+          "label": "busca híbrida com vetores"
+        },
+        {
+          "value": "WAL",
+          "label": "durabilidade e recuperação"
+        }
+      ],
+      "note": "Licença Apache-2.0 / MIT · versão 0.1.2 · projeto em evolução",
+      "tags": [
+        "Rust",
+        "HNSW",
+        "BM25",
+        "REST API",
+        "RAG",
+        "TypeScript"
+      ],
+      "links": [
+        {
+          "label": "FerresDB no GitHub",
+          "url": "https://github.com/ferres-db/ferres-db"
+        }
+      ]
     }
   },
   "cv": {
