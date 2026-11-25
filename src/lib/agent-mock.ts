@@ -60,6 +60,8 @@ export function mockAgentModel() {
             }),
             finish(true),
           ];
+        } else if (q.includes("agendar") || q.includes("reunião")) {
+          chunks = [...text("Perfeito, abri a agenda do Rafael para você escolher um horário."), call("scheduleCall", { reason: "Agente de atendimento no WhatsApp" }), finish(true)];
         } else if (q.includes("contato") || q.includes("falar")) {
           chunks = [...text("Claro! Deixe seus dados que o Rafael fala com você."), call("requestContact", { reason: "Quer conversar sobre um agente de atendimento" }), finish(true)];
         } else if (q.includes("english") || q.includes("inglês")) {

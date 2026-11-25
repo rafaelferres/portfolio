@@ -801,6 +801,10 @@
       "note": "AI-generated draft based on the conversation. Scope, timeline and investment are defined with Rafael."
     },
     "building": "Drafting the proposal…",
-    "retry": "Try again"
+    "retry": "Try again",
+    "scheduling": "Opening Rafael's calendar",
+    "booked": "Meeting booked! The invite with the call link is in your inbox.",
+    "bookNow": "Book a call now",
+    "openCalendar": "Open calendar"
   }
 }

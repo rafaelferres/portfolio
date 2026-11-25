@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { decodeBrief, type Brief } from "@/lib/agent";
 import type { Dictionary } from "@/i18n/get-dictionary";
+import { openBooking } from "@/lib/booking";
 
 const OFFER_INDEX = { assessment: 0, production: 1, advisory: 2 } as const;
 
@@ -113,7 +114,13 @@ export default function BriefView({
       <div className="svc-cta brief__cta">
         <p className="svc-cta__title">{ctaTitle}</p>
         <div className="brief__cta-actions">
-          <a href={`/${locale}#contact`} className="btn btn--primary btn--lg">{t.page.cta} ↗</a>
+          <button
+            type="button"
+            className="btn btn--primary btn--lg"
+            onClick={() => openBooking({ notes: `${t.page.kicker}: ${brief.title}\n${typeof window !== "undefined" ? window.location.href : ""}` })}
+          >
+            {t.page.cta} ↗
+          </button>
           <button type="button" className="btn btn--ghost brief__print" onClick={() => window.print()}>{t.page.print}</button>
         </div>
       </div>

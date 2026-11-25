@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import { TARGET_SECTION, cleanBrief, encodeBrief, type AgentTarget, type Brief } from "@/lib/agent";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { site } from "@/lib/site";
+import { openBooking } from "@/lib/booking";
 
 type T = Dictionary["agent"];
 type Part = UIMessage["parts"][number] & {
@@ -73,6 +74,11 @@ function showOnPage(target?: string, section?: string) {
   return true;
 }
 
+function bookingNotes(reason: string, messages: UIMessage[]) {
+  const convo = transcriptOf(messages).slice(-1200);
+  return [`Via agente do site${reason ? ` — ${reason}` : ""}`, convo].filter(Boolean).join("\n\n");
+}
+
 function transcriptOf(messages: UIMessage[]) {
   return messages
     .map((m) => {
@@ -97,6 +103,8 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
     }
   });
   const listRef = useRef<HTMLDivElement>(null);
+  const messagesRef = useRef<UIMessage[]>([]);
+  const [booked, setBooked] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const localeRef = useRef(locale);
   localeRef.current = locale;
@@ -124,6 +132,11 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
           const rest = window.location.pathname.replace(/^\/(pt|en|es)(?=\/|$)/, "");
           window.location.assign(`/${args.locale}${rest}${window.location.hash}`);
         }, 900);
+      } else if (toolCall.toolName === "scheduleCall") {
+        const reason = String(args.reason ?? "");
+        openBooking({ notes: bookingNotes(reason, messagesRef.current) });
+        if (window.matchMedia("(max-width: 720px)").matches) setPeek(true);
+        addToolOutput({ tool: "scheduleCall", toolCallId: toolCall.toolCallId, output: { opened: true, booked: false } });
       } else if (toolCall.toolName === "showBrief") {
         const url = `/${localeRef.current}/proposta#${encodeBrief(toolCall.input as Partial<Brief>)}`;
         addToolOutput({ tool: "showBrief", toolCallId: toolCall.toolCallId, output: { shown: true, url } });
@@ -131,6 +144,14 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
       // requestContact waits for the visitor (rendered as a form below).
     },
   });
+
+  messagesRef.current = messages;
+
+  useEffect(() => {
+    const onBooked = () => setBooked(true);
+    window.addEventListener("rf-booked", onBooked);
+    return () => window.removeEventListener("rf-booked", onBooked);
+  }, []);
 
   /* persist the conversation for language switches / reloads */
   useEffect(() => {
@@ -271,6 +292,19 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
                 if (p.type === "tool-navigate") {
                   return <div key={key} className="mono agent__event">↳ {t.navigating}</div>;
                 }
+                if (p.type === "tool-scheduleCall") {
+                  const reason = String(p.input?.reason ?? "");
+                  return (
+                    <div key={key} className="agent__turn">
+                      <div className="mono agent__event">↳ {t.scheduling}</div>
+                      {p.state === "output-available" && !booked && (
+                        <button type="button" className="agent__chip agent__retry" onClick={() => openBooking({ notes: bookingNotes(reason, messages) })}>
+                          📅 {t.openCalendar}
+                        </button>
+                      )}
+                    </div>
+                  );
+                }
                 if (p.type === "tool-setLocale") {
                   return <div key={key} className="mono agent__event">↳ {t.switching}</div>;
                 }
@@ -304,6 +338,7 @@ export default function Agent({ t, locale }: { t: T; locale: string }) {
             </div>
           ))}
 
+          {booked && <div className="amsg amsg--ok">✓ {t.booked}</div>}
           {stalled && !error && (
             <button type="button" className="agent__chip agent__retry" onClick={() => { clearError(); regenerate(); }}>↻ {t.retry}</button>
           )}
@@ -392,11 +427,20 @@ function LeadForm({
 }) {
   const [sending, setSending] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [who, setWho] = useState<{ name?: string; email?: string }>({});
   const done = state === "output-available";
   const o = (output ?? {}) as { sent?: boolean; declined?: boolean };
 
   if (done) {
-    if (o.sent) return <div className="amsg amsg--ok">✓ {t.lead.sent}</div>;
+    if (o.sent)
+      return (
+        <div className="amsg amsg--ok">
+          ✓ {t.lead.sent}
+          <button type="button" className="agent__chip agent__retry" onClick={() => openBooking({ ...who, notes: bookingNotes(reason, []) })}>
+            📅 {t.bookNow}
+          </button>
+        </div>
+      );
     return null;
   }
   if (state !== "input-available") return null;
@@ -424,6 +468,7 @@ function LeadForm({
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
+      setWho({ name: String(f.get("name") ?? ""), email: String(f.get("email") ?? "") });
       onDone({ sent: true });
     } catch {
       setFailed(true);

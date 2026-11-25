@@ -801,6 +801,10 @@
       "note": "Rascunho gerado por IA a partir da conversa. Escopo, prazo e investimento são definidos com o Rafael."
     },
     "building": "Montando a proposta…",
-    "retry": "Tentar de novo"
+    "retry": "Tentar de novo",
+    "scheduling": "Abrindo a agenda do Rafael",
+    "booked": "Reunião marcada! O convite com o link da chamada foi para o seu e-mail.",
+    "bookNow": "Agendar conversa agora",
+    "openCalendar": "Abrir agenda"
   }
 }

@@ -12,6 +12,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import Assembly from "@/components/Assembly";
 import ContactForm from "@/components/ContactForm";
 import AgentPrompt from "@/components/AgentPrompt";
+import BookButton from "@/components/BookButton";
 
 const pad = (n: number, l = 2) => String(n).padStart(l, "0");
 
@@ -113,7 +114,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               </h1>
               <p className="hero__subtitle">{t.hero.subtitle}</p>
               <div className="hero__ctas">
-                <a href="#contact" className="btn btn--primary">{t.hero.ctaContact} ↗</a>
+                <BookButton>{t.hero.ctaContact} ↗</BookButton>
                 <a href="#hire" className="btn btn--ghost">{t.hero.ctaServices}</a>
               </div>
               <AgentPrompt label={t.agent.heroLabel} placeholder={t.agent.heroPlaceholder} send={t.agent.send} />
@@ -199,7 +200,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <p className="svc-cta__title">{sv.ctaTitle}</p>
               <p className="mono svc-cta__text">{sv.ctaText}</p>
             </div>
-            <a href="#contact" className="btn btn--primary btn--lg">{t.hero.ctaContact} ↗</a>
+            <BookButton className="btn btn--primary btn--lg">{t.hero.ctaContact} ↗</BookButton>
           </Reveal>
         </section>
 
@@ -454,6 +455,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <p className="contact__text">{t.contact.text}</p>
               <a href={`mailto:${site.email}`} className="contact__email">{site.email}</a>
               <div className="contact__actions">
+                <BookButton className="btn btn--primary">{t.hero.ctaContact} ↗</BookButton>
                 <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn--ghost">LinkedIn ↗</a>
                 <a href={site.github} target="_blank" rel="noopener noreferrer" className="btn btn--ghost">GitHub ↗</a>
                 <a href={cvHref} target="_blank" rel="noopener" className="btn btn--ghost"><Download />{t.cv.download}</a>
