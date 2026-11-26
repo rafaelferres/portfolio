@@ -1,0 +1,52 @@
+---
+title: "MCP gets Skills, Tasks and Elicitation: the server now ships the manual and asks for confirmation"
+description: "Anthropic brought three MCP features to Claude: server-supplied skills, long-running background tasks and user confirmation prompts. What changes for teams running agents."
+date: "2026-11-26T18:45:00-03:00"
+tags: ["MCP", "Agents", "Governance", "AI in production"]
+sources:
+  - title: "Claude — MCP servers can now ship skills, run tasks, and more with Claude"
+    url: "https://claude.com/resources/articles/skills-over-mcp-tasks-and-more"
+  - title: "Unite.AI — Anthropic Brings Server-Supplied Skills and Background Tasks to Claude"
+    url: "https://www.unite.ai/anthropic-brings-server-supplied-skills-and-background-tasks-to-claude/"
+  - title: "SmartScope — Claude: Skills over MCP Public Beta, Tasks and Elicitation GA on November 24"
+    url: "https://smartscope.blog/en/blog/claude-skills-over-mcp-public-beta-tasks-elicitation-2026/"
+---
+
+On November 24, Anthropic announced that MCP servers can now give Claude more than a list of tools. They can also ship usage instructions (skills), run long operations in the background (Tasks) and pause to ask the user for confirmation (Elicitation). It sounds like a protocol detail. In practice, it changes where the knowledge about how to use an integration lives, and who needs to review it.
+
+## What happened
+
+According to Anthropic's official article, confirmed by Unite.AI and SmartScope:
+
+- **Skills over MCP, in public beta** in Claude and Claude Code. On by default for Pro, Max and Ultra. On Team plans, an admin has to enable them. For Enterprise, the company says they are coming soon. The server publishes skills alongside its tools, and Claude only loads them when needed.
+- **Tasks, generally available** for Pro, Max and Ultra, rolling out to Team and Enterprise. The server runs a slow operation in the background while Claude keeps working.
+- **Elicitation, also generally available** on the same plans. The server pauses and asks the user for input through a form or a link, for example to confirm a cost before proceeding.
+- **File Uploads, "coming soon"**: sending PDFs, spreadsheets and images straight to the server without going through the context window.
+
+Anthropic presents these features as part of the open MCP specification and its extensions, meaning compatible servers should work in other clients too. One caveat: Unite.AI notes that the File Uploads repository describes it as experimental, outside the specification and subject to breaking changes.
+
+The article also includes Anthropic's own figures, with no independent verification: more than 700 million monthly MCP SDK downloads and more than 10,000 MCP connectors available for Claude.
+
+## Why it matters
+
+**The manual moves from your prompt to the server.** Until now, teams integrating a tool over MCP usually wrote the usage rules themselves, in the prompt or in a local skill: which tool to call first, which parameters to avoid, how to read the response. With server-supplied skills, whoever maintains the integration also maintains those instructions. That should improve call quality, since the vendor knows its own API best. But it also means text written by a third party now steers your agent's behavior.
+
+**That opens a new supply-chain surface.** A skill is an instruction, and instructions change what the model does. Unite.AI reports, based on the extension's documentation, that the host should check each file's size and SHA-256 hash against an approved manifest and ask for fresh approval when something changes. That is the right direction. Still, the same report notes that SDK and host support is still being implemented. Until that check is mature in your environment, treat skills from external servers as a dependency that needs review.
+
+**Long tasks stop breaking the flow.** Many agents fail on slow operations: a large export, a data job, a heavy query. With Tasks, the server returns an identifier and the client tracks its state until it finishes. That cuts down on timeout and retry hacks, and makes it easier to audit what was running when something went wrong.
+
+**Human confirmation becomes part of the protocol.** Elicitation gives servers a standard way to ask before acting: confirm a spend, choose between options, fill in missing data. According to Unite.AI, servers may not use forms to request passwords, API keys, tokens or payment details, and the client must show which server is asking and offer decline or cancel. If you need to prove control over agent actions, having that confirmation point in the protocol beats relying on each integration to invent its own.
+
+## What to do in practice
+
+- **Inventory the MCP servers you use** and flag which ones already ship skills. For each, know who maintains it, how often it changes and who on your team approves updates.
+- **Set a skills policy before enabling it on Team plans.** Since it requires an admin, use that step to decide: allow only internal servers and vetted vendors, or allow everything with review afterwards.
+- **Review third-party skills like code.** Read the content, look for instructions that widen scope ("always call", "ignore", "send to") and keep the approved version. If the hash changes, it goes back to review.
+- **Move slow operations to Tasks** where the server supports it, and log the task identifier so you can trace start, finish and cancellation.
+- **Map where Elicitation should show up.** Actions with cost, sending data outside the company and bulk changes are good candidates. Check that users understand which server is asking.
+- **Don't count on File Uploads yet.** While it is experimental, keep your current file flow and follow how the extension evolves.
+- **Test in another client** if portability matters to you. The open-spec promise only holds when the server behaves the same outside Claude.
+
+## In short
+
+With Skills, Tasks and Elicitation, an MCP server stops being just a tool catalog and starts shipping instructions, long-running execution and confirmation points. That improves integration quality and gives humans a clear place to say "yes" or "no". The cost is governance: the instructions guiding your agent can now come from outside, and they need to be reviewed like any other dependency.

@@ -1,0 +1,52 @@
+---
+title: "MCP com Skills, Tasks e Elicitation: o servidor agora traz o manual e pede confirmação"
+description: "A Anthropic levou ao Claude três recursos do MCP: skills entregues pelo servidor, tarefas longas em segundo plano e pedidos de confirmação ao usuário. O que muda para quem opera agentes."
+date: "2026-11-26T18:45:00-03:00"
+tags: ["MCP", "Agentes", "Governança", "IA em produção"]
+sources:
+  - title: "Claude — MCP servers can now ship skills, run tasks, and more with Claude"
+    url: "https://claude.com/resources/articles/skills-over-mcp-tasks-and-more"
+  - title: "Unite.AI — Anthropic Brings Server-Supplied Skills and Background Tasks to Claude"
+    url: "https://www.unite.ai/anthropic-brings-server-supplied-skills-and-background-tasks-to-claude/"
+  - title: "SmartScope — Claude: Skills over MCP Public Beta, Tasks and Elicitation GA on November 24"
+    url: "https://smartscope.blog/en/blog/claude-skills-over-mcp-public-beta-tasks-elicitation-2026/"
+---
+
+Em 24 de novembro, a Anthropic anunciou que servidores MCP passam a poder entregar ao Claude mais do que uma lista de ferramentas. Agora eles também podem trazer instruções de uso (skills), rodar operações longas em segundo plano (Tasks) e parar para pedir uma confirmação ao usuário (Elicitation). Parece detalhe de protocolo. Na prática, muda onde mora o conhecimento sobre como usar uma integração, e quem precisa revisar isso.
+
+## O que aconteceu
+
+Segundo o artigo oficial da Anthropic, confirmado pela Unite.AI e pela SmartScope:
+
+- **Skills sobre MCP, em beta pública** no Claude e no Claude Code. Vêm ligadas por padrão nos planos Pro, Max e Ultra. No plano Team, dependem de o administrador habilitar. Para o Enterprise, a empresa diz que chegam em breve. O servidor publica as skills junto com as ferramentas, e o Claude só as carrega quando precisa.
+- **Tasks, em disponibilidade geral** para Pro, Max e Ultra, com liberação gradual para Team e Enterprise. O servidor executa uma operação demorada em segundo plano enquanto o Claude segue trabalhando.
+- **Elicitation, também em disponibilidade geral** nos mesmos planos. O servidor pausa e pede uma informação ao usuário por formulário ou link, por exemplo para confirmar um custo antes de seguir.
+- **File Uploads, "em breve"**: envio de PDFs, planilhas e imagens direto ao servidor, sem passar pela janela de contexto.
+
+A Anthropic apresenta esses recursos como parte da especificação aberta do MCP e de suas extensões, o que significa que servidores compatíveis funcionariam em outros clientes também. Há uma ressalva: a Unite.AI aponta que o repositório do File Uploads o descreve como experimental, fora da especificação e sujeito a mudanças incompatíveis.
+
+O artigo também traz números da própria Anthropic, sem verificação independente: mais de 700 milhões de downloads mensais dos SDKs de MCP e mais de 10 mil conectores MCP disponíveis para o Claude.
+
+## Por que importa
+
+**O manual sai do seu prompt e vai para o servidor.** Até aqui, quem integrava uma ferramenta via MCP costumava escrever, no próprio prompt ou em uma skill local, as regras de uso: qual ferramenta chamar primeiro, que parâmetros evitar, como interpretar o retorno. Com skills entregues pelo servidor, quem mantém a integração passa a manter também essas instruções. Isso tende a melhorar a qualidade das chamadas, porque o fornecedor conhece melhor a própria API. Mas também significa que um texto escrito por terceiros passa a orientar o comportamento do seu agente.
+
+**Isso abre uma nova superfície de cadeia de suprimentos.** Uma skill é instrução, e instrução muda o que o modelo faz. A Unite.AI descreve, com base na documentação da extensão, que o host deve conferir tamanho e hash SHA-256 de cada arquivo contra um manifesto aprovado e pedir nova aprovação quando algo muda. É a direção certa. Ainda assim, a mesma reportagem nota que o suporte nos SDKs e hosts está em implementação. Até essa verificação estar madura no seu ambiente, trate skill de servidor externo como dependência que precisa de revisão.
+
+**Tarefas longas deixam de quebrar o fluxo.** Muitos agentes falham em operações que demoram: uma exportação grande, um job de dados, uma consulta pesada. Com Tasks, o servidor devolve um identificador, e o cliente acompanha o estado até o fim. Isso reduz gambiarras com timeouts e retentativas, e torna mais simples auditar o que estava rodando quando algo deu errado.
+
+**A confirmação humana vira parte do protocolo.** Elicitation dá um caminho padrão para o servidor perguntar antes de agir: confirmar um gasto, escolher entre opções, completar um dado que falta. Segundo a Unite.AI, servidores não podem usar formulários para pedir senhas, chaves de API, tokens ou dados de pagamento, e o cliente precisa mostrar qual servidor está perguntando e oferecer recusar ou cancelar. Para quem precisa provar controle sobre ações de agentes, ter esse ponto de confirmação no protocolo é melhor do que depender de cada integração inventar o seu.
+
+## O que fazer na prática
+
+- **Inventarie os servidores MCP em uso** e marque quais já entregam skills. Para cada um, saiba quem mantém, com que frequência muda e quem no seu time aprova a atualização.
+- **Defina a política de skills antes de habilitar no plano Team.** Como depende do administrador, use essa etapa para decidir: liberar só de servidores internos e de fornecedores avaliados, ou liberar geral com revisão posterior.
+- **Revise skills de terceiros como código.** Leia o conteúdo, procure instruções que ampliem escopo ("sempre chame", "ignore", "envie para") e guarde a versão aprovada. Mudou o hash, volta para revisão.
+- **Migre operações demoradas para Tasks** onde o servidor suportar, e registre o identificador da tarefa nos seus logs para rastrear início, fim e cancelamento.
+- **Mapeie onde Elicitation deve aparecer.** Ações com custo, envio para fora da empresa e mudanças em massa são boas candidatas. Teste se o usuário entende de qual servidor vem a pergunta.
+- **Não conte com File Uploads ainda.** Enquanto for experimental, mantenha o fluxo atual de arquivos e acompanhe a evolução da extensão.
+- **Teste em outro cliente** se a portabilidade importa para você. A promessa de especificação aberta só vale na prática quando o servidor se comporta igual fora do Claude.
+
+## Em resumo
+
+Com Skills, Tasks e Elicitation, um servidor MCP deixa de ser só um catálogo de ferramentas e passa a trazer instruções, execução longa e pontos de confirmação. Isso melhora a qualidade das integrações e dá ao humano um lugar claro para dizer "sim" ou "não". O custo é governança: as instruções que guiam seu agente agora podem vir de fora, e precisam ser revisadas como qualquer dependência.
