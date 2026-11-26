@@ -1,0 +1,62 @@
+---
+title: "Google Workspace fecha a porta dos fundos: agentes só entram por MCP ou CLI"
+description: "O Google tornou disponíveis os servidores MCP e a CLI do Workspace e avisou: a partir de 1º de fevereiro de 2027, agentes de IA não poderão mais usar as APIs REST diretamente. O que muda e como se preparar."
+date: "2026-11-26T11:35:00-03:00"
+tags: ["Agentes", "MCP", "Governança", "Google Workspace", "IA em produção"]
+sources:
+  - title: "Google Workspace Updates — Simplifying agent access while keeping organizations in control: MCP servers, CLI, standardized usage tiers, and admin policies"
+    url: "https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html"
+  - title: "Google Workspace Blog — Built for trust and control: New AI agent protections and developer tools in Google Workspace"
+    url: "https://workspace.google.com/blog/product-announcements/built-for-trust-and-control-new-ai-agent-protections-and-developer-tools-in-google-workspace"
+  - title: "AI Agent News — Google makes Workspace MCP servers and CLI generally available with agent controls"
+    url: "https://aiagentnews.io/stories/google-makes-workspace-mcp-servers-and-cli-generally-available-with-agent"
+---
+
+Em 24 de novembro, o Google anunciou a disponibilidade geral dos servidores MCP e da CLI oficial do Google Workspace. O anúncio traz uma regra nova que interessa a qualquer time com agentes lendo e-mail, agenda ou documentos: a partir de 1º de fevereiro de 2027, agentes de IA terão de acessar os dados do Workspace por esses caminhos oficiais, e não mais chamando as APIs REST diretamente.
+
+## O que aconteceu
+
+Os pontos principais, segundo os dois blogs oficiais do Google:
+
+- **Servidores MCP em GA** para Gmail, Drive, Docs, Sheets, Slides, Calendar, Chat e Tasks. O Keep está previsto para depois.
+- **CLI oficial do Workspace em GA**, pensada para agentes que rodam em terminal, máquina virtual ou contêiner, com login de escopo limitado.
+- **Agente precisa se declarar.** Clientes OAuth usados por agentes devem ser marcados como clientes de agente no console do Google Cloud. Recursos que não são de agente devem usar outro cliente. Telas de consentimento e o console de administração passam a mostrar se uma ferramenta é app ou agente.
+- **Confirmação do usuário em ações de alto impacto**, como enviar e-mail para fora da empresa, mudar o compartilhamento de arquivos no Drive ou fazer edições em massa, conforme a política definida pela TI.
+- **Controles para o administrador**: ver, controlar, auditar e revogar o acesso de agentes no console. As regras de DLP que já valem para o usuário passam a valer automaticamente para o agente que age em nome dele, e os logs registram as ações do agente e as confirmações do usuário.
+- **Faixas de uso padronizadas**, começando por Gmail, Drive e Calendar. A faixa Standard não tem custo e segue as cotas publicadas. A faixa Scaled tem limites maiores e cobra só pelo uso acima das franquias diárias gratuitas. O Google não informou valores nem franquias nesses anúncios.
+- **Um adendo contratual para ferramentas de IA**, que proíbe guardar dados brutos de forma permanente, treinar modelos com eles e fazer scraping das APIs do Workspace, e exige apagar os dados quando a conexão é desfeita.
+
+## As datas que importam
+
+- **Agora**: servidores MCP, CLI e faixas de uso já estão valendo. Os controles de administração chegam aos domínios ao longo de cerca de duas semanas.
+- **1º de fevereiro de 2027**: começa a aplicação técnica da regra. Agentes que chamam as APIs REST diretamente deixam de ser o caminho aceito.
+- **1º de abril de 2027**: começa a cobrança da faixa Scaled para as APIs de Gmail, Calendar e Drive e para os servidores MCP. Projetos que já passam dos limites da faixa Standard e não fizerem nada voltam para as cotas padrão e podem ser limitados.
+
+Há uma exceção relevante: projetos de uso interno, usados só dentro da organização, podem ser marcados como internos pelo administrador do Workspace e manter limites maiores dentro da assinatura. Os demais precisam vincular uma conta de faturamento para migrar para a faixa Scaled.
+
+Uma diferença de redação: a nota do blog de atualizações fala só em MCP, enquanto o post oficial do produto fala em MCP ou CLI. Vale tratar os dois como caminhos aceitos, mas confirmar na documentação antes de fechar a arquitetura.
+
+## Por que importa
+
+Até aqui, muita integração de agente com o Workspace foi feita do jeito mais rápido: uma conta de serviço ou um token OAuth genérico, chamando a API REST como se fosse qualquer outro sistema. Funciona, mas o administrador não consegue distinguir o agente de um app comum, nem aplicar regras específicas para ele. É exatamente isso que o Google está fechando.
+
+Para quem lidera IA em produção, há três consequências.
+
+A primeira é de arquitetura. O acesso a dados de produtividade passa a ter um protocolo padrão. Isso reduz o código de integração próprio. Mas também cria uma dependência no comportamento do servidor MCP do fornecedor, que devolve resultados já sintetizados em vez da resposta crua da API.
+
+A segunda é de governança. Identidade própria para o agente, confirmação em ações sensíveis e log de auditoria são os controles que times de segurança e compliance vinham pedindo. Agora eles vêm do próprio fornecedor.
+
+A terceira é de custo. A cota deixa de ser um detalhe técnico e vira linha de orçamento para projetos externos com uso alto. Sem números públicos nos anúncios, não dá para estimar o impacto ainda. Dá, porém, para medir hoje quanto cada agente consome.
+
+## O que fazer na prática
+
+1. **Faça o inventário.** Liste todo agente, script ou automação com IA que toca Gmail, Drive, Calendar ou Docs, e anote como cada um autentica.
+2. **Separe os clientes OAuth.** Um cliente marcado como agente para o agente, outro para o restante do produto. Escopos mínimos em cada um.
+3. **Planeje a migração para MCP ou CLI antes de fevereiro.** Comece pelos fluxos mais críticos e compare resultados entre a chamada REST atual e o servidor MCP, porque a resposta muda de formato.
+4. **Meça o consumo por projeto.** Descubra quais projetos já passam das cotas padrão e decida, antes de abril, se serão marcados como internos ou se vão para a faixa paga.
+5. **Defina com a TI quais ações exigem confirmação.** E-mail externo, mudança de compartilhamento e edição em massa são o ponto de partida. Teste o fluxo de confirmação com usuários reais, porque confirmação demais vira clique automático.
+6. **Revise contratos de fornecedores.** Se uma ferramenta de terceiros conecta agentes ao Workspace da sua empresa, verifique se ela segue o novo adendo, principalmente sobre armazenamento e treinamento.
+
+## Em resumo
+
+O Google está dizendo que agente não é só mais um app. Ele ganha porta de entrada própria, identidade declarada, confirmação em ações de risco e cota separada. Para quem opera IA em produção, o recado é simples: o acesso informal de agentes a dados corporativos tem prazo para acabar.

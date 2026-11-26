@@ -1,0 +1,62 @@
+---
+title: "Google Workspace closes the back door: agents get in only through MCP or the CLI"
+description: "Google made the Workspace MCP servers and CLI generally available and set a rule: from February 1, 2027, AI agents can no longer call the REST APIs directly. What changes and how to prepare."
+date: "2026-11-26T11:35:00-03:00"
+tags: ["Agents", "MCP", "Governance", "Google Workspace", "AI in production"]
+sources:
+  - title: "Google Workspace Updates — Simplifying agent access while keeping organizations in control: MCP servers, CLI, standardized usage tiers, and admin policies"
+    url: "https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html"
+  - title: "Google Workspace Blog — Built for trust and control: New AI agent protections and developer tools in Google Workspace"
+    url: "https://workspace.google.com/blog/product-announcements/built-for-trust-and-control-new-ai-agent-protections-and-developer-tools-in-google-workspace"
+  - title: "AI Agent News — Google makes Workspace MCP servers and CLI generally available with agent controls"
+    url: "https://aiagentnews.io/stories/google-makes-workspace-mcp-servers-and-cli-generally-available-with-agent"
+---
+
+On November 24, Google announced general availability of the Google Workspace MCP servers and the official Workspace CLI. The announcement comes with a new rule that matters to any team running agents that read email, calendars or documents: starting February 1, 2027, AI agents will have to reach Workspace data through these official paths, not by calling the REST APIs directly.
+
+## What happened
+
+The main points, according to Google's two official blogs:
+
+- **MCP servers in GA** for Gmail, Drive, Docs, Sheets, Slides, Calendar, Chat and Tasks. Keep is planned for later.
+- **Official Workspace CLI in GA**, built for agents running in a terminal, virtual machine or container, with scoped sign-in.
+- **Agents must declare themselves.** OAuth clients used by agents must be marked as agent clients in the Google Cloud console. Non-agent features should use a separate client. Consent screens and the admin console will show whether a tool is an app or an agent.
+- **User confirmation for high-impact actions**, such as sending email outside the company, changing Drive sharing or making bulk edits, following the policy set by IT.
+- **Admin controls**: view, control, audit and revoke agent access in the admin console. The DLP rules that already apply to a user apply automatically to an agent acting on their behalf, and logs record agent actions and user confirmations.
+- **Standardized usage tiers**, starting with Gmail, Drive and Calendar. The Standard tier is free and follows the published quotas. The Scaled tier has higher limits and charges only for usage above daily free allowances. Google did not publish prices or allowances in these announcements.
+- **A contract addendum for AI tools** that prohibits permanently storing raw data, training models on it and scraping the Workspace APIs, and requires deleting data when the connection is removed.
+
+## The dates that matter
+
+- **Now**: MCP servers, the CLI and usage tiers are live. Admin controls reach domains over roughly two weeks.
+- **February 1, 2027**: technical enforcement begins. Agents calling the REST APIs directly are no longer the accepted path.
+- **April 1, 2027**: Scaled tier billing begins for the Gmail, Calendar and Drive APIs and for the MCP servers. Projects already above Standard limits that take no action fall back to the standard quotas and may be throttled.
+
+There is one relevant exception: internal-use projects, used only inside the organization, can be marked as internal by the Workspace admin and keep higher limits within the subscription. The rest need to link a billing account to move to the Scaled tier.
+
+One wording difference: the Updates blog note mentions only MCP, while the official product post says MCP or CLI. It is reasonable to treat both as accepted paths, but confirm in the documentation before locking in the architecture.
+
+## Why it matters
+
+Until now, many agent integrations with Workspace were built the fastest way possible: a service account or a generic OAuth token calling the REST API like any other system. It works, but the admin cannot tell the agent apart from a regular app or apply specific rules to it. That is exactly what Google is closing.
+
+For anyone leading AI in production, there are three consequences.
+
+The first is architectural. Access to productivity data now has a standard protocol. That reduces custom integration code. But it also creates a dependency on how the vendor's MCP server behaves, since it returns synthesized results instead of the raw API response.
+
+The second is governance. Agent identity, confirmation for sensitive actions and audit logs are the controls security and compliance teams have been asking for. Now they come from the vendor itself.
+
+The third is cost. Quotas stop being a technical detail and become a budget line for external projects with heavy usage. With no public numbers in the announcements, the impact cannot be estimated yet. But you can measure today how much each agent consumes.
+
+## What to do in practice
+
+1. **Take inventory.** List every agent, script or AI automation that touches Gmail, Drive, Calendar or Docs, and note how each one authenticates.
+2. **Split your OAuth clients.** One client marked as an agent for the agent, another for the rest of the product. Minimal scopes on each.
+3. **Plan the move to MCP or the CLI before February.** Start with the most critical flows and compare results between the current REST call and the MCP server, because the response format changes.
+4. **Measure usage per project.** Find which projects already exceed the standard quotas and decide, before April, whether they will be marked internal or move to the paid tier.
+5. **Agree with IT on which actions require confirmation.** External email, sharing changes and bulk edits are the starting point. Test the confirmation flow with real users, because too many confirmations turn into automatic clicks.
+6. **Review vendor contracts.** If a third-party tool connects agents to your company's Workspace, check that it follows the new addendum, especially on storage and training.
+
+## In short
+
+Google is saying an agent is not just another app. It gets its own entry point, a declared identity, confirmation for risky actions and a separate quota. For anyone running AI in production, the message is simple: informal agent access to corporate data has an expiration date.
