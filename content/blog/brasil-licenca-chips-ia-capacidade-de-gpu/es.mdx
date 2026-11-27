@@ -1,0 +1,60 @@
+---
+title: "Brasil entra en la lista de licencias para chips de IA: la capacidad de GPU ya es un riesgo de proveedor"
+description: "Una nueva regla de EE. UU. exige licencia para enviar chips avanzados de IA a Brasil, y Nvidia ya pausó entregas en el Sudeste Asiático. Qué cambia para quien depende de GPU en producción."
+date: "2026-11-27T18:45:00-03:00"
+tags: ["Regulación", "Infraestructura", "GPUs", "Nube", "Riesgo de proveedor"]
+sources:
+  - title: "Bureau of Industry and Security — BIS Issues Rule Addressing Remote Access to American Super Intelligence Technology"
+    url: "https://media.bis.gov/sites/default/files/documents/BIS%20Issues%20Rule%20Addressing%20Remote%20Access%20to%20American%20Super%20Intelligence%20Technology.pdf"
+  - title: "Federal Register (inspección pública) — Addressing Remote Access to Advanced Semiconductors"
+    url: "https://public-inspection.federalregister.gov/2026-23529.pdf"
+  - title: "TechCrunch — Nvidia hits pause on chip shipments to Southeast Asia"
+    url: "https://techcrunch.com/2026/11/26/nvidia-hits-pause-on-chip-shipments-to-southeast-asia/"
+  - title: "Taipei Times — Nvidia halts server sales to 4 SE Asian nations: 'FT'"
+    url: "https://www.taipeitimes.com/News/biz/archives/2026/11/27/2003868455"
+  - title: "Simpson Thacher — BIS Issues Rule Restricting Remote Access to Advanced AI Chips"
+    url: "https://www.stblaw.com/bis-issues-rule-restrictingremote-access-to-advanced-ai-chips/"
+  - title: "Sidley — New Export Controls on Advanced Chips Close Remote Compute Access \"Loopholes\": Five Key Takeaways"
+    url: "https://www.sidley.com/en/insights/newsupdates/2026/11/new-export-controls-on-advanced-chips-close-remote-compute-access-loopholes-five-key-takeaways"
+  - title: "Exame — Por que o Brasil entrou na lista dos EUA para chips de IA, e o que muda para os data centers"
+    url: "https://exame.com/inteligencia-artificial/regra-eua-chips-ia-vigor-brasil-data-centers-big-techs/"
+---
+
+Nvidia pidió a fabricantes de servidores como Dell y Super Micro que pausaran, por tiempo indefinido, las entregas a Malasia, Singapur, Tailandia e Indonesia, según informes del Wall Street Journal y del Financial Times publicados entre el 26 y el 27 de noviembre. La pausa es el primer efecto visible de una regla que el gobierno de EE. UU. publicó la semana pasada y que también incluye a Brasil. Para quien opera IA en producción allí, el mensaje es directo: la capacidad de GPU ya no es solo una cuestión de precio, sino de cadena de suministro y cumplimiento.
+
+## Qué pasó
+
+El 16 de noviembre, el Bureau of Industry and Security (BIS), el organismo del Departamento de Comercio de EE. UU. que controla las exportaciones, divulgó la regla provisional "Addressing Remote Access to Advanced Semiconductors". Se publicó en el Federal Register el 19 de noviembre y entró en vigor con la publicación. Los puntos centrales, según el texto de la regla y los análisis de los despachos Simpson Thacher y Sidley:
+
+- **Licencia para cinco países.** Exportar, reexportar o transferir chips avanzados y artículos de computación relacionados a Brasil, Indonesia, Malasia, Singapur y Tailandia ahora requiere licencia. El BIS afirma que estos destinos presentan un riesgo de desvío superior al normal. Las solicitudes se analizan caso por caso, según la eficacia del control de exportaciones de cada país.
+- **Excepción para empresas estadounidenses.** No se exige licencia cuando el destinatario final tiene sede en EE. UU. o su matriz final está allí. A cambio, el exportador debe enviar al BIS un informe mensual con las partes, el producto, su capacidad de procesamiento y la cantidad. En la práctica, las filiales de proveedores estadounidenses de nube quedan fuera de la licencia, mientras que los operadores brasileños de centros de datos necesitan autorización, como destaca Exame.
+- **Acceso remoto.** La regla crea un requisito de licencia para enviar chips a centros de datos, en cualquier país, que ofrezcan más de 12 millones de TPP agregados (una medida de capacidad de procesamiento) a empresas con sede en China, Macao u otros países del grupo D:5. Los centros de datos que ya atienden a esos clientes en volumen significativo tienen 90 días para obtener licencia.
+- **Conozca a su cliente.** Si un centro de datos extranjero se niega a informar quién controla a sus clientes, eso cuenta como una señal de alerta que, en principio, le da al exportador "conocimiento" de una posible infracción.
+- **Fin de la regla de difusión.** El texto revoca formalmente la regla de difusión de IA del gobierno anterior, que nunca llegó a aplicarse.
+
+La regla está abierta a comentarios durante 60 días, hasta mediados de enero de 2027.
+
+## Por qué importa
+
+Brasil no entró en la pausa de Nvidia, que se limitó a los cuatro países asiáticos. Pero muestra lo rápido que la oferta de hardware puede congelarse mientras un proveedor evalúa cómo cumplir una regla nueva. Según TechCrunch, Nvidia quiere verificar si los socios de la región cumplen los requisitos estadounidenses antes de reanudar los envíos.
+
+Tres consecuencias para quien lidera IA en producción en Brasil:
+
+1. **Importa quién es el dueño del centro de datos.** La misma GPU, en el mismo edificio en São Paulo, tiene reglas distintas si el operador es una filial estadounidense o una empresa local. Los contratos con nubes y colocations brasileñas pueden traer plazos más largos para entregar capacidad nueva.
+2. **Los proyectos on-premise se vuelven más lentos.** Comprar servidores con GPU avanzadas para instalarlos en el propio centro de datos puede depender de una licencia analizada caso por caso, sin plazo garantizado. Eso afecta presupuesto y cronograma.
+3. **Las preguntas de cumplimiento llegan al cliente.** Con la presión de "conozca a su cliente", es probable que los proveedores empiecen a pedir información sobre la estructura societaria de quien contrata capacidad. La regla no dice que el cliente final deba responder, pero el proveedor que no tenga esa información queda expuesto.
+
+La regla trata de la exportación de hardware y de quién accede a él. No prohíbe a las empresas brasileñas usar APIs de modelos ni nubes estadounidenses. Según el análisis de Sidley, el requisito de acceso remoto no se aplica a la computación servida desde centros de datos en EE. UU.
+
+## Qué hacer en la práctica
+
+- **Mapee dónde corre realmente su inferencia.** Para cada sistema en producción, anote el proveedor, la región, el país del centro de datos y quién es la matriz del operador. Eso define si la regla afecta su capacidad.
+- **Revise los contratos de capacidad.** En contratos con nubes locales, neoclouds o colocations, pregunte cómo el proveedor está manejando la licencia, cuál es el plan si se retrasa la entrega de GPU y si hay cláusula de capacidad reservada.
+- **Tenga un plan B de región y de modelo.** Asegúrese de que los sistemas críticos puedan cambiar de región o de proveedor sin reescribir el código. Pruebe ese camino antes de necesitarlo, midiendo latencia y costo.
+- **Adelante las compras on-premise con margen.** Si hay un proyecto de clúster propio, incluya en el cronograma el tiempo de licencia y hable pronto con el integrador sobre el estado de la autorización.
+- **Prepare el expediente societario.** Tenga lista la documentación sobre el control y la estructura de la empresa, porque los cuestionarios de "conozca a su cliente" tienden a aparecer en la renovación de contratos.
+- **Siga las fechas.** El plazo de 90 días para los acuerdos existentes termina alrededor del 17 de febrero de 2027, y el período de comentarios va hasta mediados de enero. El texto aún puede cambiar.
+
+## En resumen
+
+La regla estadounidense colocó a Brasil entre los destinos que exigen licencia para chips avanzados de IA, con una excepción para empresas con matriz en EE. UU. La pausa de Nvidia en el Sudeste Asiático muestra que este tipo de regla se convierte rápido en entregas que no llegan. Para quien opera IA en producción, la lección es tratar la capacidad de GPU como un riesgo de proveedor: saber dónde está, quién la controla y cuál es la alternativa si se retrasa.

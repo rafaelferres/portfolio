@@ -1,0 +1,60 @@
+---
+title: "Brazil joins the AI chip license list: GPU capacity is now a vendor risk"
+description: "A new US rule requires a license to ship advanced AI chips to Brazil, and Nvidia has already paused deliveries in Southeast Asia. What changes for teams that depend on GPUs in production."
+date: "2026-11-27T18:45:00-03:00"
+tags: ["Regulation", "Infrastructure", "GPUs", "Cloud", "Vendor risk"]
+sources:
+  - title: "Bureau of Industry and Security — BIS Issues Rule Addressing Remote Access to American Super Intelligence Technology"
+    url: "https://media.bis.gov/sites/default/files/documents/BIS%20Issues%20Rule%20Addressing%20Remote%20Access%20to%20American%20Super%20Intelligence%20Technology.pdf"
+  - title: "Federal Register (public inspection) — Addressing Remote Access to Advanced Semiconductors"
+    url: "https://public-inspection.federalregister.gov/2026-23529.pdf"
+  - title: "TechCrunch — Nvidia hits pause on chip shipments to Southeast Asia"
+    url: "https://techcrunch.com/2026/11/26/nvidia-hits-pause-on-chip-shipments-to-southeast-asia/"
+  - title: "Taipei Times — Nvidia halts server sales to 4 SE Asian nations: 'FT'"
+    url: "https://www.taipeitimes.com/News/biz/archives/2026/11/27/2003868455"
+  - title: "Simpson Thacher — BIS Issues Rule Restricting Remote Access to Advanced AI Chips"
+    url: "https://www.stblaw.com/bis-issues-rule-restrictingremote-access-to-advanced-ai-chips/"
+  - title: "Sidley — New Export Controls on Advanced Chips Close Remote Compute Access \"Loopholes\": Five Key Takeaways"
+    url: "https://www.sidley.com/en/insights/newsupdates/2026/11/new-export-controls-on-advanced-chips-close-remote-compute-access-loopholes-five-key-takeaways"
+  - title: "Exame — Por que o Brasil entrou na lista dos EUA para chips de IA, e o que muda para os data centers"
+    url: "https://exame.com/inteligencia-artificial/regra-eua-chips-ia-vigor-brasil-data-centers-big-techs/"
+---
+
+Nvidia asked server makers such as Dell and Super Micro to pause deliveries to Malaysia, Singapore, Thailand and Indonesia for an unspecified period, according to Wall Street Journal and Financial Times reports released between November 26 and 27. The pause is the first visible effect of a rule the US government published last week, and that rule also covers Brazil. For anyone running AI in production there, the message is simple: GPU capacity is no longer just a pricing question. It is now a supply chain and compliance question.
+
+## What happened
+
+On November 16, the Bureau of Industry and Security (BIS), the US Commerce Department agency that controls exports, released the interim rule "Addressing Remote Access to Advanced Semiconductors". It was published in the Federal Register on November 19 and took effect on publication. The key points, based on the rule text and analyses by the law firms Simpson Thacher and Sidley:
+
+- **A license for five countries.** Exporting, reexporting or transferring advanced chips and related computing items to Brazil, Indonesia, Malaysia, Singapore and Thailand now requires a license. BIS says these destinations carry a higher-than-normal risk of diversion. Applications are reviewed case by case, taking into account how effective each country's export controls are.
+- **An exception for US companies.** No license is needed when the ultimate recipient is headquartered in the US, or its ultimate parent is. In return, the exporter must file a monthly report with BIS listing the parties, the product, its processing capacity and the quantity. In practice, subsidiaries of US cloud providers fall outside the license requirement, while Brazilian data center operators need authorization, as Exame points out.
+- **Remote access.** The rule creates a license requirement for shipping chips to data centers, in any country, that give more than 12 million aggregate TPP (a measure of processing capacity) to companies headquartered in China, Macau or other Country Group D:5 countries. Data centers already serving those customers at significant volume have 90 days to obtain a license.
+- **Know your customer.** If a foreign data center refuses to say who controls its customers, that counts as a red flag that presumptively gives the exporter "knowledge" of a possible violation.
+- **End of the diffusion rule.** The text formally rescinds the previous administration's AI diffusion rule, which was never enforced.
+
+The rule is open for comments for 60 days, until mid-January 2027.
+
+## Why it matters
+
+Brazil is not part of Nvidia's pause, which is limited to the four Asian countries. But the pause shows how quickly hardware supply can freeze while a vendor is still working out how to comply with a new rule. According to TechCrunch, Nvidia wants to check whether partners in the region meet US requirements before resuming shipments.
+
+Three consequences for anyone leading AI in production in Brazil:
+
+1. **Who owns the data center now matters.** The same GPU, in the same building in São Paulo, falls under different rules depending on whether the operator is a US subsidiary or a local company. Contracts with Brazilian clouds and colocation providers may come with longer lead times for new capacity.
+2. **On-premise projects get slower.** Buying servers with advanced GPUs for your own data center may depend on a license reviewed case by case, with no guaranteed timeline. That affects budget and schedule planning.
+3. **Compliance questions reach the customer.** With know-your-customer pressure, providers will likely start asking for information about the ownership structure of whoever buys capacity. The rule does not say the end customer must answer, but a provider without that information is exposed.
+
+It is worth being clear about what the rule does not say. It deals with hardware exports and who gets access to that hardware. It does not prohibit Brazilian companies from using model APIs or US clouds. According to Sidley's analysis, the remote access requirement does not apply to compute served from data centers in the US.
+
+## What to do in practice
+
+- **Map where your inference actually runs.** For each production system, write down the provider, the region, the data center's country and who owns the operator. That information determines whether the rule affects your capacity.
+- **Review capacity contracts.** With local clouds, neoclouds or colocation providers, ask how they are handling the license, what the plan is if GPU deliveries slip, and whether there is a reserved capacity clause.
+- **Have a fallback region and model.** Make sure critical systems can switch region or provider without rewriting code. Test that path before you need it, measuring latency and cost.
+- **Start on-premise purchases early.** If you plan your own cluster, build license time into the schedule and talk to your integrator early about the authorization status.
+- **Prepare your ownership file.** Have documentation on company control and structure ready, because know-your-customer questionnaires are likely to show up at contract renewals.
+- **Track the dates.** The 90-day window for existing arrangements ends around February 17, 2027, and the comment period runs until mid-January. Changes to the text could shift the picture.
+
+## In short
+
+The US rule put Brazil among the destinations that require a license for advanced AI chips, with an exception for companies whose parent is in the US. Nvidia's pause in Southeast Asia shows how fast this kind of rule turns into missed deliveries. For teams running AI in production, the lesson is to treat GPU capacity as a vendor risk: know where it is, who controls it and what the alternative is if it is delayed.
