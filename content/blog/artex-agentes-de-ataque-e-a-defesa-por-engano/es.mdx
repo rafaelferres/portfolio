@@ -1,0 +1,60 @@
+---
+title: "ARTEX: los atacantes ya usan agentes de IA, y la defensa tiene que funcionar a su velocidad"
+description: "Microsoft detalló ARTEX, un framework multiagente usado por grupos estatales y criminales, y Suiza confirmó los primeros ataques con agentes. Qué cambia para quien opera IA en producción."
+date: "2026-11-27T08:45:00-03:00"
+tags: ["Seguridad", "Agentes", "IA en producción", "Gobernanza"]
+sources:
+  - title: "Microsoft Security Blog — What defenders need to know about ARTEX, the agentic AI framework threat actors abuse"
+    url: "https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse/"
+  - title: "BACS (Oficina Federal de Ciberseguridad de Suiza) — Cyberattacks involving AI agents: First confirmed cases in Switzerland"
+    url: "https://www.bacs.admin.ch/en/26-ki-agenten-1-en"
+  - title: "The Decoder — Microsoft details how state-backed hackers use the ARTEX AI framework to automate cyberattacks"
+    url: "https://the-decoder.com/microsoft-details-how-state-backed-hackers-use-the-artex-ai-framework-to-automate-cyberattacks/"
+  - title: "Decrypt — What Is Artex? The AI Hacking Tool Linked to the US Spy Agency Breach"
+    url: "https://decrypt.co/383997/what-is-artex-ai-hacking-tool-us-spy-agency-breach"
+  - title: "Reuters (vía Yahoo) — AI agents used in five cyber attacks in Switzerland, government says"
+    url: "https://www.yahoo.com/news/articles/ai-agents-used-five-cyber-122502362.html"
+  - title: "The Hacker News — Switzerland Confirms AI-Assisted Cyberattacks Breached Critical Infrastructure Operators"
+    url: "https://thehackernews.com/2026/11/switzerland-confirms-ai-assisted.html"
+---
+
+El 25 de noviembre, Microsoft Threat Intelligence publicó una guía sobre ARTEX, un framework de agentes de IA para pruebas de penetración que se convirtió en herramienta de ataque de grupos estatales y criminales. Un día antes, la oficina federal de ciberseguridad de Suiza (BACS) confirmó los primeros ataques en el país realizados con ayuda de agentes de IA. Juntos, los dos informes muestran una cosa: la arquitectura de agentes que muchas empresas están poniendo en producción ya está también del otro lado.
+
+## Qué pasó
+
+Según Microsoft, y confirmado por Decrypt y The Decoder:
+
+- **Qué es ARTEX.** Un sistema de pentest con varios agentes: un planificador divide el objetivo en tareas, agentes ejecutores corren comandos en una shell real con herramientas conocidas de escaneo y explotación, y un agente redactor documenta lo que funcionó. El operador puede conectar cualquier LLM. Decrypt lo resume bien: no es un modelo, es un "harness" que permite al modelo usar otros programas.
+- **De dónde salió.** Se publicó como código abierto en GitHub en julio de 2026, con interfaz en chino. El código original se retiró en octubre, pero siguen circulando copias públicas. En noviembre, la empresa china ThreatBook empezó a reivindicar la autoría y a vender una versión "Pro".
+- **Quién lo usa.** Microsoft menciona seis grupos, entre ellos Salt Typhoon, Onyx Sleet y Storm-0940, y dice que hay tanto actores estatales como criminales.
+- **Escala.** En una campaña de Storm-0940, Microsoft contó más de 151.000 intentos de inicio de sesión fallidos, con un pico de 2.900 por minuto.
+- **El punto clave.** En palabras de la propia Microsoft, ARTEX "no introduce nuevas técnicas de ataque". Explota contraseñas débiles, fallas conocidas, secretos olvidados en archivos `.env` y permisos excesivos en la nube. La diferencia es la velocidad: un ataque puede avanzar en pocos minutos, con dos o tres frentes en paralelo.
+
+En Suiza, el comunicado de la BACS del 24 de noviembre dice que organizaciones y operadores de infraestructura crítica de al menos dos sectores fueron afectados, y que en los casos conocidos el uso de agentes llevó al compromiso de los sistemas. A Reuters, el organismo dio más detalle: cinco casos, cuatro exitosos, tres de ellos contra infraestructura crítica. La BACS también afirma que la cantidad de agentes de ataque accesibles por internet casi se duplicó desde octubre. ARTEX y CyberStrikeAI aparecen en el comunicado como ejemplos de estas herramientas, no como las usadas en los cinco casos. No se informó quién está detrás.
+
+## Por qué importa
+
+Para quien lidera IA, hay tres lecciones.
+
+**Primero, el atacante ahora tiene el mismo diseño que tú.** Planificador, ejecutores, memoria compartida, cambio automático de modelo cuando uno falla. Quien ya construyó agentes sabe para qué sirve esto: probar muchas cosas rápido, sin cansarse. Una defensa que depende de que un analista mire una alerta mañana por la mañana llega tarde.
+
+**Segundo, los objetivos son los de siempre, y muchos están en el stack de IA.** Claves de API de modelos en `.env`, service principals con demasiados permisos, endpoints de inferencia sin límite de solicitudes, credenciales de vector stores en repositorios. Los equipos de IA suelen moverse rápido y crear justamente este tipo de secretos. Microsoft incluso sugiere usar honeytokens para detectar el secuestro de capacidad de cómputo de IA.
+
+**Tercero, a los agentes se les puede engañar.** Es la parte más interesante de la guía. Microsoft recomienda señuelos (honeypots), "tarpits" que consumen el tiempo y el presupuesto de tokens del agente, y "victorias falsas" que convencen al agente de que cumplió su objetivo, para que se detenga. Según la empresa, en sus propias pruebas esto redujo el tráfico que llegaba a los activos reales y generó señales de alta confianza. Es un resultado del propio fabricante, sin verificación independiente, y The Decoder recuerda que agentes más adaptativos podrían no caer en estos trucos. Aun así, la lógica tiene sentido: un agente que persigue objetivos es predecible de una forma en que un humano no lo es.
+
+## Qué hacer en la práctica
+
+Lo que yo haría en las próximas semanas, combinando las listas de Microsoft y de la BACS:
+
+1. **Inventario de lo expuesto.** Listar todo lo que responde en internet, incluidos endpoints de modelos, playgrounds internos y APIs de RAG. La BACS pide reducir esa superficie y restringir el acceso con listas de IP cuando sea posible.
+2. **Parches en 24 horas.** Es el plazo máximo que recomienda la BACS para actualizaciones críticas en sistemas expuestos. Frente a un agente que prueba fallas conocidas en minutos, una ventana de un mes es una invitación.
+3. **Secretos fuera del código.** Activar el escaneo de secretos con bloqueo en el push, rotar de inmediato cualquier clave filtrada y migrar a identidades administradas. Esto vale el doble para las claves de proveedores de LLM.
+4. **MFA resistente al phishing y mínimo privilegio.** MFA o passkeys en todo lo accesible desde internet, sin excepción, y revisión de los permisos de las cuentas de servicio que usan pipelines y agentes internos.
+5. **Rate limiting y WAF en modo bloqueo.** Los agentes envían cientos de solicitudes para mapear un servidor. Límites por cliente y protección contra bots cuestan poco y rompen ese patrón.
+6. **Detección por comportamiento.** Firmas como el user agent cambian fácilmente. Vale más alertar sobre volúmenes anormales de comandos, rutas o datos, como sugiere la BACS.
+7. **Un piloto de engaño.** Plantar algunas credenciales falsas y un endpoint señuelo, y conectarles una alerta. Es barato y da una señal clara si alguien, humano o agente, está adentro.
+8. **Pentests con reglas claras.** Probar con frecuencia, incluso con herramientas agénticas autorizadas, para ver qué encontraría primero un atacante automatizado.
+
+## En resumen
+
+ARTEX no inventó una forma nueva de entrar. Automatizó las formas viejas y las puso a velocidad de máquina, con cualquier modelo disponible. Los casos en Suiza muestran que esto ya ocurre fuera del laboratorio. Para quien pone IA en producción, la respuesta tiene menos que ver con IA y más con higiene: superficie pequeña, parches rápidos, secretos bien guardados, mínimo privilegio. Y, como novedad útil, recordar que a los agentes también se los puede engañar.
