@@ -1,0 +1,63 @@
+---
+title: "Character.AI at auction: when user conversations become a bankruptcy asset"
+description: "42 US attorneys general are trying to block the sale of chat histories from more than 21 million Character.AI accounts. What it teaches about AI data and vendor risk."
+date: "2026-11-27T11:45:00-03:00"
+tags: ["Privacy", "AI Governance", "Vendor risk", "Data"]
+sources:
+  - title: "Minnesota Attorney General — Ellison challenges plan to auction off Character.AI users' private chats"
+    url: "https://www.ag.state.mn.us/Office/Communications/2026/11/23_CharacterAI.asp"
+  - title: "Colorado Attorney General — Weiser challenges auction of millions of private Character.AI conversations"
+    url: "https://coag.gov/press-releases/weiser-challenges-auction-of-millions-of-private-character-ai-conversations/"
+  - title: "California Attorney General — Bonta opposes asset sale of Character.AI amid child safety concerns"
+    url: "https://oag.ca.gov/news/press-releases/attorney-general-bonta-opposes-asset-sale-characterai-amid-child-safety-concerns"
+  - title: "Gizmodo — Character.ai wants to sell millions of user chats to the highest bidder"
+    url: "https://gizmodo.com/character-ai-wants-to-sell-millions-of-user-chats-to-the-highest-bidder-2000845664"
+---
+
+Character.AI, the character chatbot company, is in bankruptcy proceedings in the United States and plans to auction off nearly all of its remaining assets. Those assets include users' chat histories. This week, a bipartisan coalition of 42 state attorneys general asked the court not to approve the sale on the proposed terms. The case involves a consumer company, but the question it raises applies to any organization that uses AI: what happens to your prompts and logs when the vendor goes under?
+
+## What happened
+
+According to statements from the attorneys general of Minnesota, Colorado and California, published between November 23 and 25, the package up for sale includes the platform itself and data from more than 21 million US accounts, more than 2.1 million of them registered to minors. The data listed includes:
+
+- account information and chat histories tied to each user's profile;
+- IP addresses and other metadata, possibly including location;
+- risk scores the company itself assigned to flagged users.
+
+The states note that many of these conversations deal with sensitive topics such as mental health. Gizmodo, which reviewed the filing submitted to the court, confirms the figures and quotes passages in which the states describe users who disclosed medical and mental health information.
+
+The auction is scheduled for December 1. The states' main objections come down to four points:
+
+1. **The privacy policy does not travel with the data.** Under the proposed terms, the buyer would not have to follow the current policy or honor deletion or opt-out requests.
+2. **The sale could happen again.** Nothing would stop the buyer from reselling or transferring the data without telling users.
+3. **The original promise gets left behind.** Character.AI's policy said the company did not sell personal information for money. The states argue that selling the data now could amount to a deceptive practice.
+4. **There is little transparency about the buyer.** The selected bidder is a company formed one day before it was chosen. According to the states, the identity of its foreign investors would be disclosed only to Character.AI.
+
+The attorneys general are asking the court to deny the sale terms, reject the lead bidder and refuse a $350,000 break-up fee included in the deal. At a minimum, they want children's conversations and other sensitive data excluded from the package, with protections that can be enforced. As of this writing, I have not found a court ruling on that request.
+
+## Why it matters
+
+People who lead AI in companies usually treat data retention as a security question: who has access, where it lives, for how long. The Character.AI case shows another layer. **Stored data is an asset on the balance sheet**, and in a bankruptcy, assets are sold to pay creditors. At that point, the promise made on the website becomes just one legal argument among others.
+
+Three lessons stand out.
+
+First, **a privacy policy is not a contract with you**. It can change, and in a change of control the new owner may try not to follow it. What protects a business customer is the signed contract, with clear clauses on what happens to data in a sale, merger or bankruptcy.
+
+Second, **AI chat logs are more sensitive than they look**. Users tell chatbots things they would never write in a form. In internal tools, that includes strategy, customer data and people issues. A complete history, tied to identity and metadata, is exactly the kind of dataset that has value to a buyer.
+
+Third, **the AI market will consolidate**. Many AI startups depend on expensive capital and thin margins. Not all of them will survive. Judging a vendor only by model quality, without looking at its financial health and what it stores, leaves a large risk off the books.
+
+## What to do in practice
+
+This is not legal advice, and every case calls for a conversation with your legal and privacy teams. But this is where I would start:
+
+- **Map who stores what.** For each AI vendor, record whether it retains prompts, responses, files and metadata, for how long and where.
+- **Reduce what gets stored.** Use zero or minimal retention when the vendor offers it and the use case allows. What does not exist cannot be sold or leaked.
+- **Put it in the contract.** Ask for clauses that forbid selling or transferring your data, require verified deletion on a change of control or shutdown, and give you the right to export and delete.
+- **Separate identity from content.** Whenever possible, send the vendor as little personally identifying data as you can. Pseudonymize before the prompt.
+- **Add financial health to vendor reviews.** For critical vendors, track risk signals and keep an exit plan: where you would migrate and how you would request deletion of your data.
+- **If you run a chatbot, look at your own logs.** The same risks apply to your company: how long you keep customer conversations, for what purpose, and what your policy promises.
+
+## In short
+
+The 42 attorneys general are trying to stop conversations from more than 21 million Character.AI accounts from being auctioned without the protections users were promised. Whatever the ruling, the lesson for anyone running AI is direct: data retained by a vendor can change hands. Store less, contract better and treat vendor health as part of the risk.

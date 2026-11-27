@@ -1,0 +1,63 @@
+---
+title: "Character.AI em leilão: quando as conversas dos usuários viram ativo de falência"
+description: "42 procuradores-gerais dos EUA tentam barrar a venda de históricos de conversa de mais de 21 milhões de contas da Character.AI. O que isso ensina sobre dados de IA e risco de fornecedor."
+date: "2026-11-27T11:45:00-03:00"
+tags: ["Privacidade", "Governança de IA", "Risco de fornecedor", "Dados"]
+sources:
+  - title: "Minnesota Attorney General — Ellison challenges plan to auction off Character.AI users' private chats"
+    url: "https://www.ag.state.mn.us/Office/Communications/2026/11/23_CharacterAI.asp"
+  - title: "Colorado Attorney General — Weiser challenges auction of millions of private Character.AI conversations"
+    url: "https://coag.gov/press-releases/weiser-challenges-auction-of-millions-of-private-character-ai-conversations/"
+  - title: "California Attorney General — Bonta opposes asset sale of Character.AI amid child safety concerns"
+    url: "https://oag.ca.gov/news/press-releases/attorney-general-bonta-opposes-asset-sale-characterai-amid-child-safety-concerns"
+  - title: "Gizmodo — Character.ai wants to sell millions of user chats to the highest bidder"
+    url: "https://gizmodo.com/character-ai-wants-to-sell-millions-of-user-chats-to-the-highest-bidder-2000845664"
+---
+
+A Character.AI, empresa de chatbots de personagens, está em processo de falência nos Estados Unidos e pretende leiloar quase todos os ativos que restam. Entre eles estão os históricos de conversa dos usuários. Nesta semana, uma coalizão bipartidária de 42 procuradores-gerais estaduais pediu ao tribunal que não aprove a venda nos termos propostos. O caso é sobre uma empresa de consumo, mas a pergunta que ele levanta vale para qualquer organização que usa IA: o que acontece com os seus prompts e logs quando o fornecedor quebra?
+
+## O que aconteceu
+
+Segundo os comunicados dos procuradores-gerais de Minnesota, Colorado e Califórnia, publicados entre 23 e 25 de novembro, o pacote à venda inclui a própria plataforma e os dados de mais de 21 milhões de contas nos EUA, das quais mais de 2,1 milhões registradas por menores de idade. Os dados citados são:
+
+- informações de conta e históricos de conversa ligados ao perfil de cada usuário;
+- endereços IP e outros metadados, possivelmente incluindo localização;
+- pontuações de risco que a própria empresa atribuía a usuários sinalizados.
+
+Os estados lembram que muitas dessas conversas tratam de temas sensíveis, como saúde mental. A Gizmodo, que teve acesso ao documento enviado ao tribunal, confirma os números e cita trechos em que os estados falam de usuários que revelaram informações médicas e de saúde mental.
+
+O leilão está marcado para 1º de dezembro. As objeções principais dos estados são quatro:
+
+1. **A política de privacidade não acompanha os dados.** Pelos termos propostos, o comprador não precisaria seguir a política atual nem atender pedidos de exclusão ou de opt-out.
+2. **A venda pode se repetir.** Nada impediria o comprador de revender ou transferir os dados sem avisar os usuários.
+3. **A promessa original fica para trás.** A política da Character.AI dizia que a empresa não vendia informações pessoais em troca de dinheiro. Os estados argumentam que vender os dados agora pode configurar prática enganosa.
+4. **Falta transparência sobre o comprador.** O licitante escolhido é uma empresa constituída um dia antes de ser selecionada. Segundo os estados, a identidade dos investidores estrangeiros por trás dela seria informada apenas à Character.AI.
+
+Os procuradores pedem que o tribunal negue os termos da venda, rejeite o licitante principal e recuse uma multa de rescisão de US$ 350 mil prevista no acordo. No mínimo, querem que as conversas de crianças e outros dados sensíveis fiquem fora do pacote, com proteções que possam ser cobradas. Até a publicação deste texto, não encontrei decisão do tribunal sobre esse pedido.
+
+## Por que importa
+
+Quem lidera IA em empresas costuma tratar retenção de dados como uma questão de segurança: quem acessa, onde fica, por quanto tempo. O caso da Character.AI mostra outra camada. **Dado guardado é ativo no balanço**, e em uma falência os ativos são vendidos para pagar credores. A promessa feita no site, nesse momento, vira só um argumento jurídico a ser disputado.
+
+Três lições aparecem.
+
+Primeiro, **a política de privacidade não é contrato com você**. Ela pode mudar, e numa troca de controle o novo dono pode tentar não segui-la. O que protege uma empresa cliente é o contrato assinado, com cláusulas claras sobre o destino dos dados em caso de venda, fusão ou falência.
+
+Segundo, **log de conversa com IA é mais sensível do que parece**. Usuários contam a chatbots coisas que não escreveriam num formulário. Em ferramentas internas, isso inclui estratégia, dados de clientes e problemas de pessoas. Um histórico completo, ligado a identidade e metadados, é exatamente o tipo de base que tem valor para quem compra.
+
+Terceiro, **o mercado de IA vai ter consolidação**. Muitas startups de IA dependem de capital caro e margens apertadas. Nem todas vão sobreviver. Avaliar o fornecedor só pela qualidade do modelo, sem olhar a saúde financeira e o que ele guarda, deixa um risco grande fora da conta.
+
+## O que fazer na prática
+
+Isto não é aconselhamento jurídico, e cada caso pede conversa com o jurídico e com o time de privacidade. Mas eu começaria por aqui:
+
+- **Mapeie quem guarda o quê.** Para cada fornecedor de IA, registre se ele retém prompts, respostas, arquivos e metadados, por quanto tempo e onde.
+- **Reduza o que fica guardado.** Use retenção zero ou mínima quando o fornecedor oferecer e o caso de uso permitir. O que não existe não pode ser vendido nem vazar.
+- **Leve o tema para o contrato.** Peça cláusulas que proíbam venda ou transferência dos seus dados, exijam exclusão comprovada em caso de troca de controle ou encerramento e deem a você o direito de exportar e apagar.
+- **Separe identidade de conteúdo.** Sempre que puder, envie ao fornecedor o mínimo de dados que identifiquem pessoas. Pseudonimize antes do prompt.
+- **Inclua saúde financeira na avaliação de fornecedores.** Para fornecedores críticos, acompanhe sinais de risco e tenha um plano de saída: para onde migrar e como pedir a exclusão dos dados.
+- **Se você opera um chatbot, olhe para os seus próprios logs.** Os mesmos riscos valem para a sua empresa: quanto tempo você guarda conversas de clientes, com qual finalidade e o que a sua política promete.
+
+## Em resumo
+
+Os 42 procuradores-gerais tentam impedir que conversas de mais de 21 milhões de contas da Character.AI sejam leiloadas sem as proteções prometidas aos usuários. Seja qual for a decisão, a lição para quem opera IA é direta: dado retido por um fornecedor pode mudar de dono. Guarde menos, contrate melhor e trate a saúde do fornecedor como parte do risco.
