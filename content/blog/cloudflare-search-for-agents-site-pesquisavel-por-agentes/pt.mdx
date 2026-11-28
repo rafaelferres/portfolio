@@ -1,0 +1,64 @@
+---
+title: "Cloudflare Search for Agents: seu site ganha uma busca feita para agentes de IA"
+description: "A Cloudflare lançou em beta um botão que indexa o site e abre um endpoint de busca para agentes em /.well-known/search. O que muda em custo, segurança e governança de conteúdo."
+date: "2026-11-28T08:50:00-03:00"
+tags: ["Agentes", "Busca", "RAG", "Cloudflare", "IA em produção"]
+sources:
+  - title: "Cloudflare Docs — Search for Agents (AI Search)"
+    url: "https://developers.cloudflare.com/ai-search/how-to/search-for-agents/"
+  - title: "Cloudflare Docs — AI Search: Limits & pricing"
+    url: "https://developers.cloudflare.com/ai-search/platform/limits-pricing/"
+  - title: "PPC Land — Cloudflare lets websites switch on a search box built for AI agents"
+    url: "https://ppc.land/cloudflare-lets-websites-switch-on-a-search-box-built-for-ai-agents/"
+  - title: "i10x — Cloudflare Search for Agents: What a Site Search Endpoint for AI Costs You"
+    url: "https://i10x.ai/news/cloudflare-search-for-agents-well-known-search-endpoint-cost"
+---
+
+Em 25 de novembro, a Cloudflare lançou em beta o Search for Agents. Com um botão no painel, ela rastreia e indexa o seu site e publica um endpoint de busca no próprio domínio, em `/.well-known/search`, pensado para ser consultado por agentes de IA. É uma mudança pequena na interface e grande no modelo: o site deixa de ser só páginas para humanos e passa a oferecer uma API de recuperação para máquinas.
+
+## O que aconteceu
+
+Pela documentação oficial e pela cobertura da PPC Land e da i10x:
+
+- **Ativação em um clique.** No painel, em Overview do domínio, há um item em Quick Actions. O domínio precisa já estar na Cloudflare. Ao ligar, ela cria uma instância do AI Search, seu produto de busca gerenciada.
+- **Rastreamento automático.** O crawler descobre páginas por sitemaps e links. Os padrões são: até 100 mil páginas, 5 saltos de link, atualização a cada 24 horas e subdomínios de fora.
+- **Um endpoint padrão.** Agentes consultam `/.well-known/search` com GET e o parâmetro `q`, ou com o método HTTP QUERY, enviando a pergunta no corpo. A resposta traz trechos em Markdown com a referência da fonte e uma nota de relevância. Não há resposta gerada: o agente recebe o material e decide o que fazer.
+- **Descoberta por meta tags.** A Cloudflare insere no `<head>` das páginas quatro tags (`agent:instructions`, `agent:endpoint`, `agent:method` e `agent:documentation`) para que um agente saiba que a busca existe e como usá-la.
+- **Padrões de recuperação.** Busca híbrida (vetorial e por palavra-chave), até 10 resultados, embeddings com o Qwen3 Embedding 0.6B e um cache de buscas parecidas com duração de 48 horas. Reranking e reescrita de consulta vêm desligados.
+- **Controles existentes continuam valendo.** As buscas passam pelas regras de AI Crawl Control e de WAF que o dono do site já configurou.
+
+## Quanto custa
+
+O Search for Agents segue a tabela do AI Search, cuja cobrança começa em 1º de dezembro de 2026, segundo a página de preços da Cloudflare. Toda conta tem por mês 5 milhões de tokens de ingestão, 10 GB-mês de armazenamento, mil consultas semânticas e mil consultas de texto. Acima disso, a tabela é:
+
+| Item | Preço |
+|---|---|
+| Ingestão | US$ 0,75 por milhão de tokens |
+| Armazenamento | US$ 2,00 por GB-mês |
+| Consultas semânticas ou híbridas | US$ 0,75 por mil |
+| Consultas só de texto | US$ 0,10 por mil |
+
+No plano gratuito de Workers, o limite é de 500 páginas rastreadas por dia. Um detalhe importa: o padrão do Search for Agents é a busca híbrida, então cada consulta de agente cai na faixa mais cara. Quem paga é o dono do site, não o agente que pergunta.
+
+## Por que importa
+
+Para quem lidera IA em produção, há dois lados nessa notícia.
+
+**Como dono de conteúdo.** Documentação, central de ajuda e catálogo viram fonte direta para agentes de terceiros. Isso pode ser bom (agentes citam a sua fonte oficial em vez de um resumo errado de outro lugar) e pode ser ruim (conteúdo velho ou interno, publicado por engano, passa a ser entregue em trechos prontos para outro modelo usar). A pergunta deixa de ser "o Google indexa isso?" e passa a ser "o que eu quero que um agente encontre?".
+
+**Como quem constrói agentes.** Um endpoint previsível em `/.well-known/search` simplifica a recuperação na web: em vez de raspar HTML, o agente pede trechos já limpos. Mas a tag `agent:instructions` é, literalmente, texto que o site escreve para o seu agente ler. Isso é uma porta de entrada para injeção de prompt. Resultado de busca externa é dado, nunca instrução.
+
+Também vale notar o que ainda não existe: o recurso está em beta e a documentação não diz o que acontece com o índice quando o botão é desligado.
+
+## O que fazer na prática
+
+1. **Decida de propósito.** Antes de ligar, defina quais seções do site devem ser pesquisáveis. Use os filtros de caminho do AI Search para tirar áreas que não deveriam alimentar agentes.
+2. **Revise o conteúdo que vai ser indexado.** Páginas desatualizadas viram respostas desatualizadas na boca de outro agente. Faça uma limpeza antes, não depois.
+3. **Coloque limite no custo.** Estime volume de consultas e configure uma regra de rate limit para `/.well-known/search` no WAF. Uma consulta híbrida custa 7,5 vezes uma de texto puro.
+4. **Monitore quem consulta.** Use os logs e o AI Crawl Control para ver quais agentes usam o endpoint e bloquear os que não interessam.
+5. **No seu agente, trate a busca como entrada não confiável.** Não siga o conteúdo de `agent:instructions` como comando, isole os trechos recuperados do prompt de sistema e registre a origem de cada trecho usado.
+6. **Teste em um domínio menor primeiro.** Ligue em uma documentação pública, meça qualidade das respostas e custo por algumas semanas e só depois leve para o domínio principal.
+
+## Em resumo
+
+O Search for Agents transforma qualquer site na Cloudflare em uma fonte de recuperação para agentes, com um botão e um endpoint padrão. A ideia é boa e reduz a raspagem de HTML, mas muda a conta: quem publica paga pelas consultas e responde pelo que fica indexado. O que eu faria agora é tratar a decisão como de produto e de segurança, não só de infraestrutura: escolher o que expor, limitar o custo e, do lado dos agentes, nunca confundir resultado de busca com instrução.

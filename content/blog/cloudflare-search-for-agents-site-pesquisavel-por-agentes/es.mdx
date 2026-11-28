@@ -1,0 +1,64 @@
+---
+title: "Cloudflare Search for Agents: tu sitio gana una búsqueda hecha para agentes de IA"
+description: "Cloudflare lanzó en beta un botón que indexa el sitio y abre un endpoint de búsqueda para agentes en /.well-known/search. Qué cambia en costo, seguridad y gobernanza de contenido."
+date: "2026-11-28T08:50:00-03:00"
+tags: ["Agentes", "Búsqueda", "RAG", "Cloudflare", "IA en producción"]
+sources:
+  - title: "Cloudflare Docs — Search for Agents (AI Search)"
+    url: "https://developers.cloudflare.com/ai-search/how-to/search-for-agents/"
+  - title: "Cloudflare Docs — AI Search: Limits & pricing"
+    url: "https://developers.cloudflare.com/ai-search/platform/limits-pricing/"
+  - title: "PPC Land — Cloudflare lets websites switch on a search box built for AI agents"
+    url: "https://ppc.land/cloudflare-lets-websites-switch-on-a-search-box-built-for-ai-agents/"
+  - title: "i10x — Cloudflare Search for Agents: What a Site Search Endpoint for AI Costs You"
+    url: "https://i10x.ai/news/cloudflare-search-for-agents-well-known-search-endpoint-cost"
+---
+
+El 25 de noviembre, Cloudflare lanzó en beta Search for Agents. Con un botón en el panel, rastrea e indexa tu sitio y publica un endpoint de búsqueda en tu propio dominio, en `/.well-known/search`, pensado para que lo consulten agentes de IA. Es un cambio pequeño en la interfaz y grande en el modelo: el sitio deja de ser solo páginas para personas y pasa a ofrecer una API de recuperación para máquinas.
+
+## Qué pasó
+
+Según la documentación oficial y la cobertura de PPC Land e i10x:
+
+- **Activación con un clic.** En el panel, en Overview del dominio, hay una opción en Quick Actions. El dominio ya debe estar en Cloudflare. Al activarla, se crea una instancia de AI Search, el producto de búsqueda gestionada de Cloudflare.
+- **Rastreo automático.** El crawler descubre páginas por sitemaps y enlaces. Los valores por defecto: hasta 100.000 páginas, 5 saltos de enlace, actualización cada 24 horas y subdominios excluidos.
+- **Un endpoint estándar.** Los agentes consultan `/.well-known/search` con GET y el parámetro `q`, o con el método HTTP QUERY, enviando la pregunta en el cuerpo. La respuesta trae fragmentos en Markdown con la referencia de la fuente y una puntuación de relevancia. No hay respuesta generada: el agente recibe el material y decide qué hacer.
+- **Descubrimiento por meta tags.** Cloudflare inserta en el `<head>` de las páginas cuatro etiquetas (`agent:instructions`, `agent:endpoint`, `agent:method` y `agent:documentation`) para que un agente sepa que la búsqueda existe y cómo usarla.
+- **Valores de recuperación por defecto.** Búsqueda híbrida (vectorial y por palabra clave), hasta 10 resultados, embeddings con Qwen3 Embedding 0.6B y una caché de búsquedas similares de 48 horas. El reranking y la reescritura de consultas vienen desactivados.
+- **Los controles existentes siguen vigentes.** Las búsquedas pasan por las reglas de AI Crawl Control y de WAF que el dueño del sitio ya tiene configuradas.
+
+## Cuánto cuesta
+
+Search for Agents sigue la tarifa de AI Search, cuyo cobro empieza el 1 de diciembre de 2026, según la página de precios de Cloudflare. Toda cuenta incluye por mes 5 millones de tokens de ingesta, 10 GB-mes de almacenamiento, mil consultas semánticas y mil consultas de texto. Por encima de eso:
+
+| Concepto | Precio |
+|---|---|
+| Ingesta | US$ 0,75 por millón de tokens |
+| Almacenamiento | US$ 2,00 por GB-mes |
+| Consultas semánticas o híbridas | US$ 0,75 por mil |
+| Consultas solo de texto | US$ 0,10 por mil |
+
+En el plan gratuito de Workers, el límite es de 500 páginas rastreadas por día. Un detalle importa: Search for Agents usa por defecto la búsqueda híbrida, así que cada consulta de un agente cae en la franja más cara. Paga el dueño del sitio, no el agente que pregunta.
+
+## Por qué importa
+
+Para quien lidera IA en producción, esta noticia tiene dos caras.
+
+**Como dueño de contenido.** La documentación, el centro de ayuda y el catálogo se vuelven fuente directa para agentes de terceros. Eso puede ser bueno (los agentes citan tu fuente oficial en lugar de un resumen equivocado de otro lugar) y puede ser malo (contenido viejo o interno, publicado por error, se entrega en fragmentos listos para que otro modelo los use). La pregunta deja de ser "¿Google indexa esto?" y pasa a ser "¿qué quiero que encuentre un agente?".
+
+**Como quien construye agentes.** Un endpoint predecible en `/.well-known/search` simplifica la recuperación en la web: en lugar de raspar HTML, el agente pide fragmentos ya limpios. Pero la etiqueta `agent:instructions` es, literalmente, texto que el sitio escribe para que tu agente lo lea. Es una puerta de entrada para la inyección de prompts. Un resultado de búsqueda externo es un dato, nunca una instrucción.
+
+También vale notar lo que todavía no existe: la función está en beta y la documentación no dice qué pasa con el índice cuando se desactiva el botón.
+
+## Qué hacer en la práctica
+
+1. **Decide a propósito.** Antes de activarlo, define qué secciones del sitio deben poder buscarse. Usa los filtros de rutas de AI Search para excluir áreas que no deberían alimentar agentes.
+2. **Revisa el contenido que se va a indexar.** Las páginas desactualizadas se vuelven respuestas desactualizadas en boca de otro agente. Limpia antes, no después.
+3. **Pon un tope al costo.** Estima el volumen de consultas y configura una regla de rate limit para `/.well-known/search` en el WAF. Una consulta híbrida cuesta 7,5 veces una de solo texto.
+4. **Monitorea quién consulta.** Usa los logs y AI Crawl Control para ver qué agentes usan el endpoint y bloquear los que no te interesan.
+5. **En tu agente, trata la búsqueda como entrada no confiable.** No sigas el contenido de `agent:instructions` como una orden, separa los fragmentos recuperados del prompt de sistema y registra el origen de cada fragmento usado.
+6. **Prueba primero en un dominio más pequeño.** Actívalo en una documentación pública, mide la calidad de las respuestas y el costo durante algunas semanas y solo después llévalo al dominio principal.
+
+## En resumen
+
+Search for Agents convierte cualquier sitio en Cloudflare en una fuente de recuperación para agentes, con un botón y un endpoint estándar. La idea es buena y reduce el raspado de HTML, pero cambia la cuenta: quien publica paga por las consultas y responde por lo que queda indexado. Lo que yo haría ahora es tratar la decisión como un tema de producto y de seguridad, no solo de infraestructura: elegir qué exponer, limitar el costo y, del lado de los agentes, nunca confundir un resultado de búsqueda con una instrucción.

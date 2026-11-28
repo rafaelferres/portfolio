@@ -1,0 +1,64 @@
+---
+title: "Cloudflare Search for Agents: your website gets a search built for AI agents"
+description: "Cloudflare launched in beta a toggle that indexes your site and opens a search endpoint for agents at /.well-known/search. What changes in cost, security and content governance."
+date: "2026-11-28T08:50:00-03:00"
+tags: ["Agents", "Search", "RAG", "Cloudflare", "AI in production"]
+sources:
+  - title: "Cloudflare Docs — Search for Agents (AI Search)"
+    url: "https://developers.cloudflare.com/ai-search/how-to/search-for-agents/"
+  - title: "Cloudflare Docs — AI Search: Limits & pricing"
+    url: "https://developers.cloudflare.com/ai-search/platform/limits-pricing/"
+  - title: "PPC Land — Cloudflare lets websites switch on a search box built for AI agents"
+    url: "https://ppc.land/cloudflare-lets-websites-switch-on-a-search-box-built-for-ai-agents/"
+  - title: "i10x — Cloudflare Search for Agents: What a Site Search Endpoint for AI Costs You"
+    url: "https://i10x.ai/news/cloudflare-search-for-agents-well-known-search-endpoint-cost"
+---
+
+On November 25, Cloudflare launched Search for Agents in beta. With one toggle in the dashboard, it crawls and indexes your site and publishes a search endpoint on your own domain, at `/.well-known/search`, designed to be queried by AI agents. It is a small change in the interface and a big one in the model: the website stops being only pages for humans and starts offering a retrieval API for machines.
+
+## What happened
+
+According to the official documentation and coverage by PPC Land and i10x:
+
+- **One-click activation.** In the dashboard, under the domain's Overview, there is an item in Quick Actions. The domain must already be on Cloudflare. Turning it on creates an instance of AI Search, Cloudflare's managed search product.
+- **Automatic crawling.** The crawler finds pages through sitemaps and links. Defaults: up to 100,000 pages, 5 link hops, a refresh every 24 hours, and subdomains excluded.
+- **A standard endpoint.** Agents query `/.well-known/search` with GET and the `q` parameter, or with the HTTP QUERY method, sending the question in the body. The response returns Markdown passages with a source reference and a relevance score. There is no generated answer: the agent gets the material and decides what to do with it.
+- **Discovery through meta tags.** Cloudflare injects four tags into the page `<head>` (`agent:instructions`, `agent:endpoint`, `agent:method` and `agent:documentation`) so an agent can learn that the search exists and how to use it.
+- **Retrieval defaults.** Hybrid search (vector plus keyword), up to 10 results, embeddings from Qwen3 Embedding 0.6B, and a 48-hour cache for similar searches. Reranking and query rewriting are off by default.
+- **Existing controls still apply.** Searches go through the AI Crawl Control and WAF rules the site owner already has in place.
+
+## What it costs
+
+Search for Agents follows the AI Search price list, and billing for AI Search starts on December 1, 2026, according to Cloudflare's pricing page. Every account gets, per month, 5 million ingestion tokens, 10 GB-month of storage, 1,000 semantic queries and 1,000 full-text queries. Beyond that:
+
+| Item | Price |
+|---|---|
+| Ingestion | US$0.75 per million tokens |
+| Storage | US$2.00 per GB-month |
+| Semantic or hybrid queries | US$0.75 per 1,000 |
+| Full-text-only queries | US$0.10 per 1,000 |
+
+On the Workers Free plan, the limit is 500 crawled pages per day. One detail matters: Search for Agents defaults to hybrid search, so every agent query lands in the more expensive tier. The site owner pays, not the agent asking.
+
+## Why it matters
+
+For anyone leading AI in production, this news has two sides.
+
+**As a content owner.** Documentation, help centers and catalogs become a direct source for third-party agents. That can be good (agents cite your official source instead of a wrong summary from somewhere else) and it can be bad (stale or internal content published by mistake gets served as ready-made passages for another model to use). The question stops being "does Google index this?" and becomes "what do I want an agent to find?".
+
+**As someone building agents.** A predictable endpoint at `/.well-known/search` simplifies web retrieval: instead of scraping HTML, the agent asks for clean passages. But the `agent:instructions` tag is, literally, text the website writes for your agent to read. That is an entry point for prompt injection. External search results are data, never instructions.
+
+It is also worth noting what does not exist yet: the feature is in beta, and the documentation does not say what happens to the index when the toggle is turned off.
+
+## What to do in practice
+
+1. **Decide on purpose.** Before turning it on, define which sections of the site should be searchable. Use AI Search path filters to exclude areas that should not feed agents.
+2. **Review the content that will be indexed.** Outdated pages become outdated answers in another agent's mouth. Clean up before, not after.
+3. **Cap the cost.** Estimate query volume and set a rate-limit rule for `/.well-known/search` in the WAF. A hybrid query costs 7.5 times a plain-text one.
+4. **Monitor who is querying.** Use logs and AI Crawl Control to see which agents use the endpoint and block the ones you don't want.
+5. **In your own agent, treat search as untrusted input.** Do not follow `agent:instructions` content as a command, keep retrieved passages separate from the system prompt, and log the origin of every passage used.
+6. **Test on a smaller domain first.** Turn it on for public documentation, measure answer quality and cost for a few weeks, and only then bring it to your main domain.
+
+## In short
+
+Search for Agents turns any site on Cloudflare into a retrieval source for agents, with one toggle and a standard endpoint. The idea is good and reduces HTML scraping, but it changes the math: the publisher pays for the queries and answers for what gets indexed. What I would do now is treat the decision as a product and security call, not just an infrastructure one: choose what to expose, cap the cost and, on the agent side, never confuse a search result with an instruction.
